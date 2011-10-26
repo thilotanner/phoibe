@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+
+<h1>Contacts</h1>
+
+<a href="@{Contacts.form}" class="btn">Create Contact</a>
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <td>First Name</td>
+            <td>Last Name</td>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:contacts, as:'contact'}
+        <tr>
+            <td>${contact.firstName}</td>
+            <td>${contact.lastName}</td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>

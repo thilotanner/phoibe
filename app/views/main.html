@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>#{get 'title' /}</title>
+    <meta charset="${_response_encoding}">
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+    #{get 'moreStyles' /}
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"
+            charset="${_response_encoding}"></script>
+    #{get 'moreScripts' /}
+
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+</head>
+<body>
+<div class="topbar">
+    <div class="fill">
+        <div class="container">
+            <h3><a href="#">${play.configuration.get('application.name')}</a></h3>
+            <ul class="nav">
+                <li class="active"><a href="@{Dashboard.index}">Dashboard</a></li>
+                <li><a href="@{Contacts.index}">Contacts</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <section id="content">
+        #{ifErrors}
+        <div class="alert-message error">
+            <p>
+                <strong>Error</strong>
+                Please correct these errors!
+            </p>
+        </div>
+        #{/ifErrors}
+
+        #{doLayout /}
+    </section>
+
+    <footer>
+        <blockquote>
+            <p>
+                I went to the woods because I wanted to live deliberately,<br />
+                I wanted to live deep and suck out all the marrow of life,<br />
+                To put to rout all that was not life and not when I had come to die<br />
+                Discover that I had not lived.
+            </p>
+            <small>Henry David Thoreau</small>
+        </blockquote>
+    </footer>
+
+</div>
+<!-- /container -->
+
+
+</body>
+</html>

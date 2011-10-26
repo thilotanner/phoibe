@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+
+#{form @save()}
+    <fieldset>
+        <legend>Contact Information</legend>
+
+        #{field 'contact.firstName'}
+        <div class="clearfix">
+            <label for="${field.id}">First Name</label>
+            <div class="input">
+                <input type="text" id="${field.id}" name="${field.name}" value="${field.value}">
+            </div>
+        </div>
+        #{/field}
+
+        #{field 'contact.lastName'}
+        <div class="clearfix #{if play.data.validation.Validation.errors(field.name)}error#{/if}">
+            <label for="${field.id}">Last Name</label>
+            <div class="input">
+                <input type="text" id="${field.id}" name="${field.name}" value="${field.value}">
+                <span class="help-inline">#{error field.name /}</span>
+            </div>
+        </div>
+        #{/field}
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" class="btn primary" value="Save">
+        <button type="reset" class="btn">Cancel</button>
+    </div>
+
+#{/form}
