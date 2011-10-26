@@ -1,0 +1,9 @@
+#{field _arg}
+<div class="clearfix ${field.errorClass}">
+    <label for="${field.id}">&{field.name}</label>
+    <div class="input">
+        <textarea class="xxlarge" id="${field.id}" name="${field.name}" rows="3" cols="80">${field.value}</textarea>
+        <span class="help-block">${field.error}</span>
+    </div>
+</div>
+#{/field}

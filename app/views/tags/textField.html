@@ -1,0 +1,9 @@
+#{field _arg}
+<div class="clearfix ${field.errorClass}">
+    <label for="${field.id}">&{field.name}</label>
+    <div class="input">
+        <input type="text" id="${field.id}" name="${field.name}" value="${field.value}">
+        <span class="help-inline">${field.error}</span>
+    </div>
+</div>
+#{/field}

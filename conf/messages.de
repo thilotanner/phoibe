@@ -1,0 +1,24 @@
+cancel=Abbrechen
+submit=Senden
+
+# Models
+# ~~~~~
+contact=Kontakt
+contacts=Kontakte
+contact.company=Firma
+contact.firstName=Vorname
+contact.lastName=Nachname
+contact.street=Strasse
+contact.postalCode=PLZ
+contact.city=Ort
+contact.phone=Telefon
+contact.fax=Fax
+contact.mobile=Natel
+contact.email=E-Mail
+contact.website=Webseite
+contact.comments=Kommentare
+
+# Validations
+# ~~~~~
+validation.pleaseCorrectTheseErrors=Bitte korrigieren Sie die folgenden Fehler
+validation.required=Pflichtfeld

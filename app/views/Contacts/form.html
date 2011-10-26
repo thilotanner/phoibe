@@ -2,31 +2,36 @@
 
 #{form @save()}
     <fieldset>
-        <legend>Contact Information</legend>
+        <legend>&{'contact'}</legend>
 
-        #{field 'contact.firstName'}
-        <div class="clearfix">
-            <label for="${field.id}">First Name</label>
-            <div class="input">
-                <input type="text" id="${field.id}" name="${field.name}" value="${field.value}">
-            </div>
-        </div>
-        #{/field}
+        #{textField 'contact.company' /}
 
-        #{field 'contact.lastName'}
-        <div class="clearfix #{if play.data.validation.Validation.errors(field.name)}error#{/if}">
-            <label for="${field.id}">Last Name</label>
-            <div class="input">
-                <input type="text" id="${field.id}" name="${field.name}" value="${field.value}">
-                <span class="help-inline">#{error field.name /}</span>
-            </div>
-        </div>
-        #{/field}
+        #{textField 'contact.firstName' /}
+
+        #{textField 'contact.lastName' /}
+
+        #{textField 'contact.street' /}
+
+        #{textField 'contact.postalCode' /}
+
+        #{textField 'contact.city' /}
+
+        #{textField 'contact.phone' /}
+
+        #{textField 'contact.fax' /}
+
+        #{textField 'contact.mobile' /}
+
+        #{textField 'contact.email' /}
+
+        #{textField 'contact.website' /}
+
+        #{textArea 'contact.comments' /}
     </fieldset>
 
     <div class="actions">
-        <input type="submit" class="btn primary" value="Save">
-        <button type="reset" class="btn">Cancel</button>
+        <input type="submit" class="btn primary" value="&{'submit'}">
+        <button type="reset" class="btn">&{'cancel'}</button>
     </div>
 
 #{/form}
