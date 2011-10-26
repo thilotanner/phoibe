@@ -1,5 +1,8 @@
+actions=Aktionen
 cancel=Abbrechen
+create=%s erstellen
 submit=Senden
+successfullySaved=%s wurde erfolgreich gespeichert
 
 # Models
 # ~~~~~

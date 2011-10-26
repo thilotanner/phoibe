@@ -26,7 +26,7 @@ public class AdvancedTags extends FastTags {
      */
     public static void _field(Map<?, ?> args, Closure body, PrintWriter out, GroovyTemplate.ExecutableTemplate template, int fromLine) {
         Map<String,Object> field = new HashMap<String,Object>();
-        String _arg = args.get("arg").toString();
+        String _arg = args.get("property").toString();
         field.put("name", _arg);
         field.put("id", _arg.replace('.', '_'));
         field.put("flash", Scope.Flash.current().get(_arg));
@@ -35,7 +35,8 @@ public class AdvancedTags extends FastTags {
         String errorClass = Play.configuration.getProperty("error.class", "hasError");
         field.put("errorClass", field.get("error") != null ? errorClass : "");
         String[] pieces = _arg.split("\\.");
-        Object obj = body.getProperty(pieces[0]);
+        //Object obj = body.getProperty(pieces[0]);
+        Object obj = args.get("object");
         if(obj != null){
             if(pieces.length > 1){
                 for(int i = 1; i < pieces.length; i++){

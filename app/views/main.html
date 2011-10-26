@@ -1,25 +1,9 @@
-<!DOCTYPE html>
+#{extends 'page.html' /}
 
-<html>
-<head>
-    <title>#{get 'title' /}</title>
-    <meta charset="${_response_encoding}">
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
-    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-    #{get 'moreStyles' /}
+#{set 'moreScripts'}
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+#{/set}
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"
-            charset="${_response_encoding}"></script>
-    #{get 'moreScripts' /}
-
-    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-</head>
-<body>
 <div class="topbar">
     <div class="fill">
         <div class="container">
@@ -34,6 +18,38 @@
 
 <div class="container">
     <section id="content">
+        #{if flash.success}
+        <div class="alert-message success">
+            <p>
+                <strong>${flash.success}</strong>
+            </p>
+        </div>
+        #{/if}
+
+        #{if flash.get('info')}
+        <div class="alert-message info">
+            <p>
+                <strong>${flash.get('info')}</strong>
+            </p>
+        </div>
+        #{/if}
+
+        #{if flash.get('warning')}
+        <div class="alert-message warning">
+            <p>
+                <strong>${flash.get('warning')}</strong>
+            </p>
+        </div>
+        #{/if}
+
+        #{if flash.error}
+        <div class="alert-message error">
+            <p>
+                <strong>${flash.error}</strong>
+            </p>
+        </div>
+        #{/if}
+
         #{ifErrors}
         <div class="alert-message error">
             <p>
@@ -56,7 +72,3 @@
 
 </div>
 <!-- /container -->
-
-
-</body>
-</html>

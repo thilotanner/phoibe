@@ -1,20 +1,33 @@
 #{extends 'main.html' /}
+#{set title:messages.get('contacts') /}
 
-<h1>Contacts</h1>
+<h1>#{get 'title' /}</h1>
 
-<a href="@{Contacts.form}" class="btn">Create Contact</a>
+<div class="well">
+    <a href="@{Contacts.form}" class="btn primary">&{'create', messages.get('contact')}</a>
+</div>
 <table class="zebra-striped">
     <thead>
         <tr>
-            <td>First Name</td>
-            <td>Last Name</td>
+            <th>&{'contact.company'}</th>
+            <th>&{'contact.firstName'}</th>
+            <th>&{'contact.lastName'}</th>
+            <th>&{'contact.city'}</th>
+            <th>&{'actions'}</th>
         </tr>
     </thead>
     <tbody>
         #{list items:contacts, as:'contact'}
         <tr>
+            <td>${contact.company}</td>
             <td>${contact.firstName}</td>
             <td>${contact.lastName}</td>
+            <td>${contact.city}</td>
+            <td>
+                <a href="@{show(contact.id)}">anzeigen</a>
+                <a href="@{form(contact.id)}">bearbeiten</a>
+                <a href="tet">löschen</a>
+            </td>
         </tr>
         #{/list}
     </tbody>
