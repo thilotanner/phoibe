@@ -1,0 +1,77 @@
+%{
+    pagingSize = 5;
+    if (_pageSize!=null && _pageSize>0) {
+    	pageSize = _pageSize;
+    } else {
+        pageSize = Integer.valueOf(play.configuration.get('paging.pageSize'));
+	}
+    if(_count > 0) {
+        lastPage = (int) Math.ceil(_count / pageSize);
+    } else {
+        lastPage = 1;
+    }
+
+    if(params.get("page")) {
+        page = Integer.valueOf(params.get("page"));
+        if(page == 0) {
+            page = 1;
+        }
+    } else {
+        page = 1;
+    }
+
+    beginPage = Math.max(page - pagingSize, 1);
+    if(beginPage <= 3) {
+        beginPage = 1;
+    }
+    endPage = Math.min(page + pagingSize, lastPage);
+    if(endPage > (lastPage - 3)) {
+        endPage = lastPage;
+    }
+
+    def pageLink = {
+        args = new java.util.HashMap<String, Object>();
+        args.put('search', params.get("search"));
+        args.put('orderBy', params.get("orderBy"));
+        args.put('order', params.get("order"));
+        args.put('page', it);
+        if(_args != null) {
+            args.putAll(_args);
+        }
+        play.mvc.Router.getFullUrl(request.action, args);
+    }
+}%
+
+<div>
+    &{'paging.numberOfObjects'}: ${_count}
+</div>
+
+<div class="pagination">
+    <ul>
+        #{if page > 1}
+        <li><a href="${pageLink(page - 1)}">« &{'paging.previous'}</a></li>
+        #{/if}
+
+        #{if beginPage >= 4}
+        <li><a href="${pageLink(1)}">1</a></li>
+        <li><a href="${pageLink(2)}">2</a></li>
+        <li>...</li>
+        #{/if}
+
+        #{if beginPage != endPage}
+            #{list items:beginPage..endPage, as:'i'}
+            <li#{if i == page} class="active"#{/if}><a href="${pageLink(i)}">${i}</a></li>
+            #{/list}
+        #{/if}
+
+        #{if endPage <= (lastPage - 3)}
+        <li>...</li>
+        <li><a href="${pageLink(lastPage - 1)}">${lastPage - 1}</a></li>
+        <li><a href="${pageLink(lastPage)}">${lastPage}</a></li>
+        #{/if}
+
+        #{if page < lastPage}
+        <li><a href="${pageLink(page + 1)}">&{'paging.next'} »</a></li>
+        #{/if}
+    </ul>
+</div>

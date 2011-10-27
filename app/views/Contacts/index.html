@@ -6,13 +6,15 @@
 <div class="well">
     <a href="@{Contacts.form}" class="btn primary">&{'create', messages.get('contact')}</a>
 </div>
+
+#{tableSearch /}
 <table class="zebra-striped">
     <thead>
         <tr>
-            <th>&{'contact.company'}</th>
-            <th>&{'contact.firstName'}</th>
-            <th>&{'contact.lastName'}</th>
-            <th>&{'contact.city'}</th>
+            #{tableSorter objectName:'contact', fieldName:'company' /}
+            #{tableSorter objectName:'contact', fieldName:'firstName' /}
+            #{tableSorter objectName:'contact', fieldName:'lastName' /}
+            #{tableSorter objectName:'contact', fieldName:'city' /}
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -32,3 +34,5 @@
         #{/list}
     </tbody>
 </table>
+
+#{pagination count:count, pageSize:pageSize /}

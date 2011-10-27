@@ -1,7 +1,9 @@
 actions=Aktionen
-cancel=Abbrechen
+cancel=abbrechen
 create=%s erstellen
-submit=Senden
+dashboard=Dashboard
+search=suchen
+submit=senden
 successfullySaved=%s wurde erfolgreich gespeichert
 
 # Models
@@ -20,6 +22,12 @@ contact.mobile=Natel
 contact.email=E-Mail
 contact.website=Webseite
 contact.comments=Kommentare
+
+# Paging
+# ~~~~~
+paging.next=vorwärts
+paging.numberOfObjects=Anzahl Objekte
+paging.previous=zurück
 
 # Validations
 # ~~~~~

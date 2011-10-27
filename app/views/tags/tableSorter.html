@@ -1,0 +1,31 @@
+%{
+    def pageLink = {
+        order = 'ASC'
+        if(params.get("orderBy") == _fieldName) {
+            if(params.get("order") == 'ASC') {
+                order = 'DESC'
+            }
+        }
+
+        args = new java.util.HashMap<String, Object>()
+        args.put('search', params.get("search"))
+        args.put('orderBy', _fieldName)
+        args.put('order', order)
+        args.put('page', params.get("page"))
+        if(_args != null) {
+            args.putAll(_args);
+        }
+        play.mvc.Router.getFullUrl(request.action, args)
+    }
+}%
+
+<th class="header
+#{if params.get("orderBy") == _fieldName && params.get("order") == 'ASC'}
+ headerSortDown
+#{/if}
+#{elseif params.get("orderBy") == _fieldName && params.get("order") == 'DESC'}
+ headerSortUp
+#{/elseif}
+">
+<a href="${pageLink()}">&{_objectName + "." + _fieldName}</a>
+</th>
