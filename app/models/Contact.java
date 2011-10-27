@@ -39,4 +39,8 @@ public class Contact extends Model {
 
     @Lob
     public String comments;
+
+    public String getLabel() {
+        return String.format("%s, %s %s, %s", company, firstName, lastName, city);
+    }
 }

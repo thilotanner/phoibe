@@ -1,0 +1,13 @@
+#{field property:_property, object:_object}
+<div class="clearfix">
+    <label for="${field.id}_chooser">&{field.name}</label>
+    <div class="input">
+        <input type="text"
+               id="${field.id}_chooser"
+               name="${field.id}_chooser"
+               value="${_label}" />
+    </div>
+
+    <input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>
+</div>
+#{/field}

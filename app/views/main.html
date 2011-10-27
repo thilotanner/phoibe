@@ -1,9 +1,5 @@
 #{extends 'page.html' /}
 
-#{set 'moreScripts'}
-<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-#{/set}
-
 <div class="topbar">
     <div class="fill">
         <div class="container">
@@ -11,6 +7,14 @@
             <ul class="nav">
                 <li><a href="@{Dashboard.index}">&{'dashboard'}</a></li>
                 <li><a href="@{Contacts.index}">&{'contacts'}</a></li>
+                <li><a href="@{Orders.index}">&{'orders'}</a></li>
+                <li class="dropdown" data-dropdown="dropdown">
+                    <a href="#" class="dropdown-toggle">&{'administration'}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@{Metrics.index}">&{'metrics'}</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </ul>
         </div>
     </div>

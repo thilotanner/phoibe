@@ -1,5 +1,9 @@
 package controllers;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import models.Contact;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
@@ -7,6 +11,7 @@ import play.db.Model;
 import play.i18n.Messages;
 import play.mvc.Controller;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,4 +64,27 @@ public class Contacts extends ApplicationController {
         index(1, null, null, null);
     }
 
+    public static void search(String search) {
+        List<Model> contacts = Model.Manager.factoryFor(Contact.class).fetch(
+                0,
+                getPageSize(),
+                null,
+                null,
+                new ArrayList<String>(),
+                search,
+                null
+        );
+
+        renderJSON(contacts, new JsonSerializer<Contact>() {
+
+			public JsonElement serialize(Contact contact, Type type,
+					JsonSerializationContext jsonSerializationContext)
+			{
+				JsonObject object = new JsonObject();
+				object.addProperty("id", contact.id);
+				object.addProperty("label", contact.getLabel());
+				return object;
+			}
+		});
+    }
 }

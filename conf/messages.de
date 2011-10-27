@@ -1,8 +1,11 @@
 actions=Aktionen
+administration=Administration
 cancel=abbrechen
 create=%s erstellen
 dashboard=Dashboard
+edit=bearbeiten
 search=suchen
+show=anzeigen
 submit=senden
 successfullySaved=%s wurde erfolgreich gespeichert
 
@@ -22,6 +25,19 @@ contact.mobile=Natel
 contact.email=E-Mail
 contact.website=Webseite
 contact.comments=Kommentare
+
+metric=Metrik
+metrics=Metriken
+metric.name=Name
+metric.symbol=Symbol
+
+order=Auftrag
+orders=Aufträge
+order.description=Beschreibung
+order.orderingContact.id=Auftraggeber
+order.shippingContact.id=Auftragskontakt
+order.billingContact.id=Rechnungsadresse
+order.comments=Kommentare
 
 # Paging
 # ~~~~~

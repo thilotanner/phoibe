@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:messages.get('metrics') /}
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{Metrics.form}" class="btn primary">&{'create', messages.get('metric')}</a>
+</div>
+
+#{tableSearch /}
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            #{tableSorter objectName:'metric', fieldName:'name' /}
+            #{tableSorter objectName:'metric', fieldName:'symbol' /}
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:metrics, as:'metric'}
+        <tr>
+            <td>${metric.name}</td>
+            <td>${metric.symbol}</td>
+            <td>
+                <a href="@{form(metric.id)}">&{'edit'}</a>
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

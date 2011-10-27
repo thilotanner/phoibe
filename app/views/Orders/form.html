@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        createAutocomplete($('#order_orderingContact_id'), "@{Contacts.search}");
+
+        createAutocomplete($('#order_shippingContact_id'), "@{Contacts.search}");
+
+        createAutocomplete($('#order_billingContact_id'), "@{Contacts.search}");
+    });
+</script>
+#{/set}
+
+#{form @save()}
+    <fieldset>
+        <legend>&{'order'}</legend>
+
+        #{textField property:'order.description', object:order /}
+
+        #{autocompleteTextField property:'order.orderingContact.id', object:order, label:order?.orderingContact?.label /}
+
+        #{autocompleteTextField property:'order.shippingContact.id', object:order, label:order?.shippingContact?.label  /}
+
+        #{autocompleteTextField property:'order.billingContact.id', object:order, label:order?.billingContact?.label  /}
+
+        #{textArea property:'order.comments', object:order /}
+    </fieldset>
+
+    <div class="actions">
+        <input type="submit" class="btn primary" value="&{'submit'}">
+        <button type="reset" class="btn">&{'cancel'}</button>
+    </div>
+
+#{/form}

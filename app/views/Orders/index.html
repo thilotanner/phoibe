@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:messages.get('orders') /}
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{Orders.form}" class="btn primary">&{'create', messages.get('order')}</a>
+</div>
+
+#{tableSearch /}
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            #{tableSorter objectName:'order', fieldName:'description' /}
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:orders, as:'order'}
+        <tr>
+            <td>${order.description}</td>
+            <td>
+                <a href="@{show(order.id)}">anzeigen</a>
+                <a href="@{form(order.id)}">bearbeiten</a>
+                <a href="tet">löschen</a>
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}
