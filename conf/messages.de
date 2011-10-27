@@ -4,6 +4,7 @@ cancel=abbrechen
 create=%s erstellen
 dashboard=Dashboard
 edit=bearbeiten
+products=Produkte
 search=suchen
 show=anzeigen
 submit=senden
@@ -30,6 +31,12 @@ metric=Metrik
 metrics=Metriken
 metric.name=Name
 metric.symbol=Symbol
+
+metricProduct=Metrisches Produkt
+metricProducts=Metrische Produkte
+metricProduct.name=Name
+metricProduct.description=Beschreibung
+metricProduct.metric.id=Metrik
 
 order=Auftrag
 orders=Aufträge

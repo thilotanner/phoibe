@@ -1,0 +1,31 @@
+#{extends 'main.html' /}
+#{set title:messages.get('metricProducts') /}
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{MetricProducts.form}" class="btn primary">&{'create', messages.get('metricProduct')}</a>
+</div>
+
+#{tableSearch /}
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            #{tableSorter objectName:'metricProduct', fieldName:'name' /}
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:metricProducts, as:'metricProduct'}
+        <tr>
+            <td>${metricProduct.name}</td>
+            <td>
+                <a href="@{show(metricProduct.id)}">&{'show'}</a>
+                <a href="@{form(metricProduct.id)}">&{'edit'}</a>
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}
