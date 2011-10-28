@@ -13,23 +13,27 @@
 #{/set}
 
 #{form @save()}
-    <fieldset>
-        <legend>&{'order'}</legend>
+#{field property:'order.id', object:order}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
 
-        #{textField property:'order.description', object:order /}
+<fieldset>
+    <legend>&{'order'}</legend>
 
-        #{autocompleteTextField property:'order.orderingContact.id', object:order, label:order?.orderingContact?.label /}
+    #{textField property:'order.description', object:order /}
 
-        #{autocompleteTextField property:'order.shippingContact.id', object:order, label:order?.shippingContact?.label  /}
+    #{autocompleteTextField property:'order.orderingContact.id', object:order, label:order?.orderingContact?.label /}
 
-        #{autocompleteTextField property:'order.billingContact.id', object:order, label:order?.billingContact?.label  /}
+    #{autocompleteTextField property:'order.shippingContact.id', object:order, label:order?.shippingContact?.label  /}
 
-        #{textArea property:'order.comments', object:order /}
-    </fieldset>
+    #{autocompleteTextField property:'order.billingContact.id', object:order, label:order?.billingContact?.label  /}
 
-    <div class="actions">
-        <input type="submit" class="btn primary" value="&{'submit'}">
-        <button type="reset" class="btn">&{'cancel'}</button>
-    </div>
+    #{textArea property:'order.comments', object:order /}
+</fieldset>
+
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
 
 #{/form}

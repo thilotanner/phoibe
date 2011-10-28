@@ -1,10 +1,10 @@
-    #{form @index()}
-    #{field property:'search'}
-        <input type="text"
-               id="${field.id}"
-               name="${field.name}"
-               value="${params.get('search')}" />
-    #{/field}
+#{form @index()}
+#{field property:'search'}
+<input type="text"
+       id="${field.id}"
+       name="${field.name}"
+       value="${params.get('search')}" />
+#{/field}
 
-    <input type="submit" id="send" value="&{'search'}" class="btn"/>
-    #{/form}
+<input type="submit" id="send" value="&{'search'}" class="btn"/>
+#{/form}

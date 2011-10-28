@@ -1,26 +1,29 @@
 #{extends 'main.html' /}
 
 #{form @save()}
-    <fieldset>
-        <legend>&{'metricProduct'}</legend>
+#{field property:'metricProduct.id', object:metricProduct}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
 
-        #{textField property:'metricProduct.name', object:metricProduct /}
+<fieldset>
+    <legend>&{'metricProduct'}</legend>
 
-        #{textArea property:'metricProduct.description', object:metricProduct /}
+    #{textField property:'metricProduct.name', object:metricProduct /}
 
-        #{field property:'metricProduct.metric.id', object:metricProduct}
-        <div class="clearfix">
-            <label for="${field.id}">&{field.name}</label>
-            <div class="input">
-                #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:metricProduct?.metric?.id, id:field.id /}
-            </div>
+    #{textArea property:'metricProduct.description', object:metricProduct /}
+
+    #{field property:'metricProduct.metric.id', object:metricProduct}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:metricProduct?.metric?.id, id:field.id /}
         </div>
-        #{/field}
-    </fieldset>
-
-    <div class="actions">
-        <input type="submit" class="btn primary" value="&{'submit'}">
-        <button type="reset" class="btn">&{'cancel'}</button>
     </div>
+    #{/field}
+</fieldset>
 
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
 #{/form}

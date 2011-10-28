@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set title:messages.get('countries') /}
+
+<h1>#{get 'title' /}</h1>
+
+<h2>&{'country.preferredCountries'}</h2>
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'country.isoCode'}</th>
+            <th>&{'country.iso3Code'}</th>
+            <th>&{'country.name'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:preferredCountries, as:'country'}
+        <tr>
+            <td>${country.getCountry()}</td>
+            <td>${country.getISO3Country()}</td>
+            <td>${country.getDisplayCountry()}</td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+<h2>&{'country.allCountries'}</h2>
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'country.isoCode'}</th>
+            <th>&{'country.iso3Code'}</th>
+            <th>&{'country.name'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:allCountries, as:'country'}
+        <tr>
+            <td>${country.getCountry()}</td>
+            <td>${country.getISO3Country()}</td>
+            <td>${country.getDisplayCountry()}</td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>

@@ -3,7 +3,7 @@
 <div class="topbar">
     <div class="fill">
         <div class="container">
-            <h3><a href="#">${play.configuration.get('application.name')}</a></h3>
+            <h3><a href="@{Dashboard.index}">${play.configuration.get('application.name')}</a></h3>
             <ul class="nav">
                 <li><a href="@{Dashboard.index}">&{'dashboard'}</a></li>
                 <li><a href="@{Contacts.index}">&{'contacts'}</a></li>
@@ -18,6 +18,8 @@
                     <a href="#" class="dropdown-toggle">&{'administration'}</a>
                     <ul class="dropdown-menu">
                         <li><a href="@{Metrics.index}">&{'metrics'}</a></li>
+                        <li><a href="@{Currencies.index}">&{'currencies'}</a></li>
+                        <li><a href="@{Countries.index}">&{'countries'}</a></li>
                     </ul>
                 </li>
             </ul>

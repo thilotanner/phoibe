@@ -1,17 +1,20 @@
 #{extends 'main.html' /}
 
 #{form @save()}
-    <fieldset>
-        <legend>&{'metric'}</legend>
+#{field property:'metric.id', object:metric}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
 
-        #{textField property:'metric.name', object:metric /}
+<fieldset>
+    <legend>&{'metric'}</legend>
 
-        #{textField property:'metric.symbol', object:metric /}
-    </fieldset>
+    #{textField property:'metric.name', object:metric /}
 
-    <div class="actions">
-        <input type="submit" class="btn primary" value="&{'submit'}">
-        <button type="reset" class="btn">&{'cancel'}</button>
-    </div>
+    #{textField property:'metric.symbol', object:metric /}
+</fieldset>
 
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
 #{/form}

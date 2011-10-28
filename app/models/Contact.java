@@ -7,6 +7,7 @@ import play.db.jpa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import java.util.*;
 
 @Entity
 public class Contact extends Model {

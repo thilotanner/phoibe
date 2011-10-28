@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set title:messages.get('currencies') /}
+
+<h1>#{get 'title' /}</h1>
+
+<h2>&{'currency.preferredCurrencies'}</h2>
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'currency.currencyCode'}</th>
+            <th>&{'currency.symbol'}</th>
+            <th>&{'currency.fractionDigits'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:preferredCurrencies, as:'currency'}
+        <tr>
+            <td>${currency.getCurrencyCode()}</td>
+            <td>${currency.getSymbol()}</td>
+            <td>${currency.getDefaultFractionDigits()}</td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+<h2>&{'currency.allCurrencies'}</h2>
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'currency.currencyCode'}</th>
+            <th>&{'currency.symbol'}</th>
+            <th>&{'currency.fractionDigits'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:allCurrencies, as:'currency'}
+        <tr>
+            <td>${currency.getCurrencyCode()}</td>
+            <td>${currency.getSymbol()}</td>
+            <td>${currency.getDefaultFractionDigits()}</td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>

@@ -27,6 +27,23 @@ contact.email=E-Mail
 contact.website=Webseite
 contact.comments=Kommentare
 
+country=Land
+countries=Länder
+country.isoCode=ISO-Code
+country.iso3Code=ISO3-Code
+country.name=Name
+country.allCountries=Alle Länder
+country.preferredCountries=Bevorzugte Länder
+
+
+currency=Währung
+currencies=Währungen
+currency.currencyCode=ISO-Code
+currency.symbol=Symbol
+currency.fractionDigits=Dezimalstellen
+currency.allCurrencies=Alle Währungen
+currency.preferredCurrencies=Bevorzugte Währungen
+
 metric=Metrik
 metrics=Metriken
 metric.name=Name
@@ -54,5 +71,6 @@ paging.previous=zurück
 
 # Validations
 # ~~~~~
+validation.invalid=Unzulässiger Wert
 validation.pleaseCorrectTheseErrors=Bitte korrigieren Sie die folgenden Fehler
 validation.required=Pflichtfeld
