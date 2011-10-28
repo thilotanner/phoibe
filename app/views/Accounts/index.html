@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:messages.get('accounts') /}
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{Accounts.form}" class="btn primary">&{'create', messages.get('account')}</a>
+</div>
+
+#{tableSearch /}
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            #{tableSorter objectName:'account', fieldName:'number' /}
+            #{tableSorter objectName:'account', fieldName:'description' /}
+            #{tableSorter objectName:'account', fieldName:'accountType' /}
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:accounts, as:'account'}
+        <tr>
+            <td>${account.number}</td>
+            <td>${account.description}</td>
+            <td>&{'account.accountType.' + account.accountType}</td>
+            <td>
+                <a href="@{show(account.id)}">&{'show'}</a>
+                <a href="@{form(account.id)}">&{'edit'}</a>
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

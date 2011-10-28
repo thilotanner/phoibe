@@ -1,3 +1,4 @@
+accounting=Buchhaltung
 actions=Aktionen
 administration=Administration
 cancel=abbrechen
@@ -12,6 +13,16 @@ successfullySaved=%s wurde erfolgreich gespeichert
 
 # Models
 # ~~~~~
+account=Konto
+accounts=Konten
+account.number=Kontonummer
+account.description=Bezeichnung
+account.accountType=Kontentyp
+account.accountType.ASSET=Aktiv
+account.accountType.LIABILITY=Passiv
+account.accountType.EXPENSE=Aufwand
+account.accountType.REVENUE=Ertrag
+
 contact=Kontakt
 contacts=Kontakte
 contact.company=Firma
@@ -20,6 +31,7 @@ contact.lastName=Nachname
 contact.street=Strasse
 contact.postalCode=PLZ
 contact.city=Ort
+contact.countryCode=Land
 contact.phone=Telefon
 contact.fax=Fax
 contact.mobile=Natel
@@ -35,7 +47,6 @@ country.name=Name
 country.allCountries=Alle Länder
 country.preferredCountries=Bevorzugte Länder
 
-
 currency=Währung
 currencies=Währungen
 currency.currencyCode=ISO-Code
@@ -43,6 +54,15 @@ currency.symbol=Symbol
 currency.fractionDigits=Dezimalstellen
 currency.allCurrencies=Alle Währungen
 currency.preferredCurrencies=Bevorzugte Währungen
+
+entry=Buchung
+entries=Buchungen
+entry.date=Datum
+entry.description=Beschreibung
+entry.voucher=Beleg
+entry.debit.id=Soll
+entry.credit.id=Haben
+entry.amount.rawAmount=Betrag
 
 metric=Metrik
 metrics=Metriken

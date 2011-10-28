@@ -26,6 +26,8 @@ public class Contact extends Model {
     @Required
     public String city;
 
+    public String countryCode;
+
     public String phone;
 
     public String fax;

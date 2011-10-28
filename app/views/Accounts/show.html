@@ -1,0 +1,50 @@
+#{extends 'main.html' /}
+#{set title:messages.get('account') /}
+
+<h1>#{get 'title' /}</h1>
+
+<dl>
+    <dt>&{'account.number'}</dt>
+    <dd>${account.number}</dd>
+
+    <dt>&{'account.description'}</dt>
+    <dd>${account.description}</dd>
+
+    <dt>&{'account.accountType'}</dt>
+    <dd>&{'account.accountType.' + account.accountType}</dd>
+</dl>
+
+<h2>&{'entries'}</h2>
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'entry.date'}</th>
+            <th>&{'entry.description'}</th>
+            <th>&{'entry.voucher'}</th>
+            <th>&{'entry.debit.id'}</th>
+            <th>&{'entry.credit.id'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:account.debitEntries, as:'entry'}
+        <tr>
+            <td>${entry.date}</td>
+            <td>${entry.description}</td>
+            <td>${entry.voucher}</td>
+            <td>${entry.amount}</td>
+            <td></td>
+        </tr>
+        #{/list}
+        #{list items:account.creditEntries, as:'entry'}
+        <tr>
+            <td>${entry.date}</td>
+            <td>${entry.description}</td>
+            <td>${entry.voucher}</td>
+            <td></td>
+            <td>${entry.amount}</td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+

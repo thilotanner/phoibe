@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('#entry_date').datepicker( $.datepicker.regional[ "de" ] );
+
+        createAutocomplete($('#entry_debit_id'), "@{Accounts.search}");
+
+        createAutocomplete($('#entry_credit_id'), "@{Accounts.search}");
+    });
+</script>
+#{/set}
+
+#{form @save()}
+#{field property:'entry.id', object:entry}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'entry'}</legend>
+
+    #{textField property:'entry.date', object:entry /}
+
+    #{textField property:'entry.description', object:entry /}
+
+    #{textField property:'entry.voucher', object:entry /}
+
+    #{autocompleteTextField property:'entry.debit.id', object:entry, label:entry?.debit?.label /}
+
+    #{autocompleteTextField property:'entry.credit.id', object:entry, label:entry?.credit?.label /}
+
+    #{textField property:'entry.amount.rawAmount', object:entry, label:defaultCurrency.getCurrencyCode() /}
+
+    #{field property:'entry.amount.currencyCode', object:entry}
+    <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+    #{/field}
+</fieldset>
+
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
+#{/form}

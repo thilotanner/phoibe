@@ -1,0 +1,34 @@
+#{extends 'main.html' /}
+
+#{form @save()}
+#{field property:'account.id', object:account}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'account'}</legend>
+
+    #{textField property:'account.number', object:account /}
+
+    #{textField property:'account.description', object:account /}
+
+    #{field property:'account.accountType', object:account}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            <select name="${field.name}" id="${field.id}">
+                <option value="ASSET"#{if field.value.toString()=='ASSET'} selected="selected"#{/if}>&{'account.accountType.ASSET'}</option>
+                <option value="LIABILITY"#{if field.value.toString()=='LIABILITY'} selected="selected"#{/if}>&{'account.accountType.LIABILITY'}</option>
+                <option value="EXPENSE"#{if field.value.toString()=='EXPENSE'} selected="selected"#{/if}>&{'account.accountType.EXPENSE'}</option>
+                <option value="REVENUE"#{if field.value.toString()=='REVENUE'} selected="selected"#{/if}>&{'account.accountType.REVENUE'}</option>
+            </select>
+        </div>
+    </div>
+    #{/field}
+</fieldset>
+
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
+#{/form}

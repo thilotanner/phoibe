@@ -4,25 +4,23 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import models.Contact;
+import models.Account;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
-import play.mvc.Controller;
-import util.CountryProvider;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contacts extends ApplicationController {
+public class Accounts extends ApplicationController {
     public static void index(int page, String orderBy, String order, String search) {
         if (page < 1) {
             page = 1;
         }
 
-        List<Model> contacts = Model.Manager.factoryFor(Contact.class).fetch(
+        List<Model> accounts = Model.Manager.factoryFor(Account.class).fetch(
                 (page - 1) * getPageSize(),
                 getPageSize(),
                 orderBy,
@@ -32,43 +30,42 @@ public class Contacts extends ApplicationController {
                 null
         );
 
-        Long count = Model.Manager.factoryFor(Contact.class).count(new ArrayList<String>(), search, null);
+        Long count = Model.Manager.factoryFor(Account.class).count(new ArrayList<String>(), search, null);
 
         renderArgs.put("pageSize", getPageSize());
-        render(contacts, count);
+        render(accounts, count);
     }
 
     public static void show(Long id) {
-        Contact contact = Contact.findById(id);
-        notFoundIfNull(contact);
-        render(contact);
+        notFoundIfNull(id);
+        Account account = Account.findById(id);
+        notFoundIfNull(account);
+        render(account);
     }
 
     public static void form(Long id) {
-        initRenderArgs();
         if (id == null) {
             render();
         }
 
-        Contact contact = Contact.findById(id);
-        notFoundIfNull(contact);
+        Account account = Account.findById(id);
+        notFoundIfNull(account);
 
-        render(contact);
+        render(account);
     }
 
-    public static void save(@Valid Contact contact) {
+    public static void save(@Valid Account account) {
         if(Validation.hasErrors()) {
-            initRenderArgs();
-            render("@form", contact);
+            render("@form", account);
         }
 
-        contact.save();
-        flash.success(Messages.get("successfullySaved", Messages.get("contact")));
+        account.save();
+        flash.success(Messages.get("successfullySaved", Messages.get("account")));
         index(1, null, null, null);
     }
 
     public static void search(String search) {
-        List<Model> contacts = Model.Manager.factoryFor(Contact.class).fetch(
+        List<Model> contacts = Model.Manager.factoryFor(Account.class).fetch(
                 0,
                 getPageSize(),
                 null,
@@ -78,21 +75,16 @@ public class Contacts extends ApplicationController {
                 null
         );
 
-        renderJSON(contacts, new JsonSerializer<Contact>() {
+        renderJSON(contacts, new JsonSerializer<Account>() {
 
-			public JsonElement serialize(Contact contact, Type type,
+			public JsonElement serialize(Account account, Type type,
 					JsonSerializationContext jsonSerializationContext)
 			{
 				JsonObject object = new JsonObject();
-				object.addProperty("id", contact.id);
-				object.addProperty("label", contact.getLabel());
+				object.addProperty("id", account.id);
+				object.addProperty("label", account.getLabel());
 				return object;
 			}
 		});
-    }
-
-    private static void initRenderArgs() {
-        renderArgs.put("preferredCountries", CountryProvider.getPreferredCountries());
-        renderArgs.put("allCountries", CountryProvider.getAllCountries());
     }
 }

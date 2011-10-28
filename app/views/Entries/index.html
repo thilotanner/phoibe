@@ -1,0 +1,40 @@
+#{extends 'main.html' /}
+#{set title:messages.get('entries') /}
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{Entries.form}" class="btn primary">&{'create', messages.get('entry')}</a>
+</div>
+
+#{tableSearch /}
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            #{tableSorter objectName:'entry', fieldName:'date' /}
+            #{tableSorter objectName:'entry', fieldName:'description' /}
+            #{tableSorter objectName:'entry', fieldName:'voucher' /}
+            <th>&{'entry.debit.id'}</th>
+            <th>&{'entry.credit.id'}</th>
+            <th>&{'entry.amount'}</th>
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:entries, as:'entry'}
+        <tr>
+            <td>${entry.date}</td>
+            <td>${entry.description}</td>
+            <td>${entry.voucher}</td>
+            <td>${entry.debit?.label}</td>
+            <td>${entry.credit?.label}</td>
+            <td>${entry.amount.label}</td>
+            <td>
+                <a href="@{form(entry.id)}">&{'edit'}</a>
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

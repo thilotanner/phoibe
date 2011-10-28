@@ -38,4 +38,9 @@ public class CurrencyProvider {
         }
         return new ImmutableList.Builder<Currency>().addAll(currencies).build();
     }
+
+    public static Currency getDefaultCurrency() {
+        String[] currencyCodes = Play.configuration.getProperty(PREFERRED_CURRENCIES_KEY).split(",");
+        return Currency.getInstance(currencyCodes[0]);
+    }
 }

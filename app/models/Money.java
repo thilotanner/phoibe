@@ -1,30 +1,34 @@
 package models;
 
 import org.apache.commons.lang.StringUtils;
+import play.data.validation.CheckWith;
 import play.data.validation.Required;
+import util.check.NumericalCheck;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Currency;
+import java.util.Locale;
 
 @Embeddable
 public class Money {
 
-    @Required
     public Long amount;
 
     @Required
-    @ManyToOne
     public String currencyCode;
 
+    @Required
+    @CheckWith(NumericalCheck.class)
     @Transient
-    public String rawPrice;
+    public String rawAmount;
 
     public void buildPrice()
     {
-        double priceValue = Double.parseDouble(rawPrice);
+        double priceValue = Double.parseDouble(rawAmount);
         amount = (long) (priceValue * getConversionFactor());
     }
 
@@ -35,8 +39,9 @@ public class Money {
 
     public String getLabel()
     {
-        // return String.format("%s %s", currency.symbol, getShownFormattedPrice());
-        return null;
+        NumberFormat numberFormat = DecimalFormat.getCurrencyInstance(Locale.GERMAN);
+        numberFormat.setCurrency(getCurrency(currencyCode));
+        return numberFormat.format(amount / getConversionFactor());
     }
 
     @Override

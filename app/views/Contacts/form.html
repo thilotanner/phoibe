@@ -20,6 +20,23 @@
 
     #{textField property:'contact.city', object:contact /}
 
+    #{field property:'contact.countryCode', object:contact}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            #{select field.name, value:field.value, id:field.id}
+                #{list items:preferredCountries, as:'country'}
+                #{option country.getCountry()}${country.getDisplayCountry()}#{/option}
+                #{/list}
+                <option disabled="disabled">--------</option>
+                #{list items:allCountries, as:'country'}
+                #{option country.getCountry()}${country.getDisplayCountry()}#{/option}
+                #{/list}
+            #{/select}
+        </div>
+    </div>
+    #{/field}
+
     #{textField property:'contact.phone', object:contact /}
 
     #{textField property:'contact.fax', object:contact /}
