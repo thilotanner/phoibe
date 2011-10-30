@@ -1,14 +1,13 @@
 package models;
 
-import org.apache.commons.lang.StringUtils;
 import play.data.validation.CheckWith;
 import play.data.validation.Required;
 import util.check.NumericalCheck;
 
 import javax.persistence.Embeddable;
-import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
@@ -26,22 +25,30 @@ public class Money {
     @Transient
     public String rawAmount;
 
-    public void buildPrice()
-    {
-        double priceValue = Double.parseDouble(rawAmount);
-        amount = (long) (priceValue * getConversionFactor());
+    public String getRawAmount() {
+        if(rawAmount == null && amount != null && currencyCode != null) {
+            calculateRawAmount();
+        }
+        return rawAmount;
     }
 
-    public double getConversionFactor()
-    {
-        return Math.pow(10.0, getCurrency(currencyCode).getDefaultFractionDigits());
+    public void setRawAmount(String rawAmount) {
+        this.rawAmount = rawAmount;
+        if(currencyCode != null && this.rawAmount != null) {
+            calculateAmount();
+        }
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+        if(this.currencyCode != null && rawAmount != null) {
+            calculateAmount();
+        }
     }
 
     public String getLabel()
     {
-        NumberFormat numberFormat = DecimalFormat.getCurrencyInstance(Locale.GERMAN);
-        numberFormat.setCurrency(getCurrency(currencyCode));
-        return numberFormat.format(amount / getConversionFactor());
+        return String.format("%s %s", getCurrency(currencyCode).getCurrencyCode(), getRawAmount());
     }
 
     @Override
@@ -60,6 +67,30 @@ public class Money {
     {
         checkCurrency(otherMoney);
         amount -= otherMoney.amount;
+    }
+
+    private void calculateAmount()
+    {
+        try {
+            double priceValue = Double.parseDouble(rawAmount);
+            amount = (long) (priceValue * getConversionFactor());
+        } catch (NumberFormatException e) {
+            // Do nothing => errors are covered by NumericalCheck.class
+        }
+    }
+
+    private void calculateRawAmount() {
+        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+        symbols.setDecimalSeparator('.');
+
+        DecimalFormat decimalFormat = new DecimalFormat("##.00", symbols);
+
+        rawAmount = decimalFormat.format(amount / getConversionFactor());
+    }
+
+    private double getConversionFactor()
+    {
+        return Math.pow(10.0, getCurrency(currencyCode).getDefaultFractionDigits());
     }
 
     private Currency getCurrency(String currencyCode) {

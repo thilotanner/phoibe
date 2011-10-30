@@ -6,6 +6,7 @@ import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
+import util.CurrencyProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +64,6 @@ public class MetricProducts extends ApplicationController {
 
     private static void initRenderArgs() {
         renderArgs.put("metrics", Metric.all().<Metric>fetch());
+        renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());
     }
 }

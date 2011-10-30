@@ -1,8 +1,10 @@
 package models;
 
 import play.data.validation.Required;
+import play.data.validation.Valid;
 import play.db.jpa.Model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -18,4 +20,8 @@ public class MetricProduct extends Model {
 
     @ManyToOne
     public Metric metric;
+
+    @Valid
+    @Embedded
+    public Money price;
 }

@@ -74,6 +74,7 @@ metricProducts=Metrische Produkte
 metricProduct.name=Name
 metricProduct.description=Beschreibung
 metricProduct.metric.id=Metrik
+metricProduct.price.rawAmount=Preis
 
 order=Auftrag
 orders=Aufträge

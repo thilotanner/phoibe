@@ -12,6 +12,7 @@
     <thead>
         <tr>
             #{tableSorter objectName:'metricProduct', fieldName:'name' /}
+            <th>&{'metricProduct.price.rawAmount'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -19,6 +20,7 @@
         #{list items:metricProducts, as:'metricProduct'}
         <tr>
             <td>${metricProduct.name}</td>
+            <td>${metricProduct.price.label}</td>
             <td>
                 <a href="@{show(metricProduct.id)}">&{'show'}</a>
                 <a href="@{form(metricProduct.id)}">&{'edit'}</a>
