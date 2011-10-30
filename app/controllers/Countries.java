@@ -1,6 +1,6 @@
 package controllers;
 
-import util.CountryProvider;
+import util.i18n.CountryProvider;
 
 import java.util.List;
 import java.util.Locale;

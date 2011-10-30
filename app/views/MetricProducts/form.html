@@ -21,7 +21,7 @@
     </div>
     #{/field}
 
-    #{textField property:'metricProduct.price.rawAmount', object:metricProduct, label:defaultCurrency.getCurrencyCode() /}
+    #{textField property:'metricProduct.price.rawValue', object:metricProduct, label:defaultCurrency.getCurrencyCode() /}
 
     #{field property:'metricProduct.price.currencyCode', object:metricProduct}
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>

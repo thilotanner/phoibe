@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Order;
+import models.ReportType;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
@@ -34,7 +35,8 @@ public class Orders extends ApplicationController {
     public static void show(Long id) {
         Order order = Order.findById(id);
         notFoundIfNull(order);
-        render(order);
+        List<ReportType> rootReportTypes = ReportType.find("rootReportType=true").fetch();
+        render(order, rootReportTypes);
     }
 
     public static void form(Long id) {

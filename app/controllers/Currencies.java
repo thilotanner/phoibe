@@ -1,6 +1,6 @@
 package controllers;
 
-import util.CurrencyProvider;
+import util.i18n.CurrencyProvider;
 
 import java.util.Currency;
 import java.util.List;

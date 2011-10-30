@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:messages.get('reportTypes') /}
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{ReportTypes.form}" class="btn primary">&{'create', messages.get('reportType')}</a>
+</div>
+
+#{tableSearch /}
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            #{tableSorter objectName:'reportType', fieldName:'name' /}
+            <th>&{'reportType.rootReportType'}</th>
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:reportTypes, as:'reportType'}
+        <tr>
+            <td>${reportType.name}</td>
+            <td>&{reportType.rootReportType}</td>
+            <td>
+                <a href="@{form(reportType.id)}">&{'edit'}</a>
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

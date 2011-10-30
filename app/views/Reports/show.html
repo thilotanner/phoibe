@@ -1,0 +1,53 @@
+#{extends 'main.html' /}
+#{set title:messages.get(report.reportType.name) /}
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('#modal-from-dom').bind('show', function() {
+            $('#modal-from-dom').load('@{AdditionalReportItems.create(report.id)}')
+        });
+    });
+</script>
+#{/set}
+
+
+
+<h1>#{get 'title' /}</h1>
+
+<dl>
+    <dt>&{'order.description'}</dt>
+    <dd>${report.order.description}</dd>
+</dl>
+
+<div class="well">
+    <button data-controls-modal="modal-from-dom" data-backdrop="true" data-keyboard="true" class="btn danger">Launch Modal</button>
+</div>
+
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'reportItem.amount'}</th>
+            <th>&{'reportItem.description'}</th>
+            <th>&{'reportItem.price'}</th>
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:report.reportItems, as:'reportItem'}
+        <tr>
+            <td>${reportItem.amount}</td>
+            <td>${reportItem.description}</td>
+            <td>${reportItem.price}</td>
+            <td>
+
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+<div id="modal-from-dom" class="modal hide fade" />
+
+
+

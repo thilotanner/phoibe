@@ -6,7 +6,7 @@ import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
-import util.CurrencyProvider;
+import util.i18n.CurrencyProvider;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,14 +8,12 @@ import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.Currency;
-import java.util.Locale;
 
 @Embeddable
 public class Money {
 
-    public Long amount;
+    public Long value;
 
     @Required
     public String currencyCode;
@@ -23,32 +21,32 @@ public class Money {
     @Required
     @CheckWith(NumericalCheck.class)
     @Transient
-    public String rawAmount;
+    public String rawValue;
 
-    public String getRawAmount() {
-        if(rawAmount == null && amount != null && currencyCode != null) {
-            calculateRawAmount();
+    public String getRawValue() {
+        if(rawValue == null && value != null && currencyCode != null) {
+            calculateRawValue();
         }
-        return rawAmount;
+        return rawValue;
     }
 
-    public void setRawAmount(String rawAmount) {
-        this.rawAmount = rawAmount;
-        if(currencyCode != null && this.rawAmount != null) {
-            calculateAmount();
+    public void setRawValue(String rawValue) {
+        this.rawValue = rawValue;
+        if(currencyCode != null && this.rawValue != null) {
+            calculateValue();
         }
     }
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
-        if(this.currencyCode != null && rawAmount != null) {
-            calculateAmount();
+        if(this.currencyCode != null && rawValue != null) {
+            calculateValue();
         }
     }
 
     public String getLabel()
     {
-        return String.format("%s %s", getCurrency(currencyCode).getCurrencyCode(), getRawAmount());
+        return String.format("%s %s", getCurrency(currencyCode).getCurrencyCode(), getRawValue());
     }
 
     @Override
@@ -60,32 +58,32 @@ public class Money {
     public void add(Money otherMoney)
     {
         checkCurrency(otherMoney);
-        amount += otherMoney.amount;
+        value += otherMoney.value;
     }
 
     public void subtract(Money otherMoney)
     {
         checkCurrency(otherMoney);
-        amount -= otherMoney.amount;
+        value -= otherMoney.value;
     }
 
-    private void calculateAmount()
+    private void calculateValue()
     {
         try {
-            double priceValue = Double.parseDouble(rawAmount);
-            amount = (long) (priceValue * getConversionFactor());
+            double priceValue = Double.parseDouble(rawValue);
+            value = (long) (priceValue * getConversionFactor());
         } catch (NumberFormatException e) {
             // Do nothing => errors are covered by NumericalCheck.class
         }
     }
 
-    private void calculateRawAmount() {
+    private void calculateRawValue() {
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
 
         DecimalFormat decimalFormat = new DecimalFormat("##.00", symbols);
 
-        rawAmount = decimalFormat.format(amount / getConversionFactor());
+        rawValue = decimalFormat.format(value / getConversionFactor());
     }
 
     private double getConversionFactor()

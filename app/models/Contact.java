@@ -3,14 +3,12 @@ package models;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.data.validation.URL;
-import play.db.jpa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import java.util.*;
 
 @Entity
-public class Contact extends Model {
+public class Contact extends EnhancedModel {
 
     public String company;
 

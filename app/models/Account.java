@@ -1,7 +1,5 @@
 package models;
 
-import play.db.jpa.Model;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,7 +7,7 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class Account extends Model {
+public class Account extends EnhancedModel {
     public String number;
 
     public String description;

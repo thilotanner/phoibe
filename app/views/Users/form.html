@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+
+#{form @save()}
+#{field property:'user.id', object:user}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'user'}</legend>
+
+    #{textField property:'user.username', object:user /}
+
+    #{textField property:'user.firstName', object:user /}
+
+    #{textField property:'user.lastName', object:user /}
+
+    #{passwordField property:'user.password', object:user /}
+
+    #{passwordField property:'user.passwordConfirmation', object:user /}
+
+    #{textField property:'user.email', object:user /}
+</fieldset>
+
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
+#{/form}

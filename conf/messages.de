@@ -5,11 +5,14 @@ cancel=abbrechen
 create=%s erstellen
 dashboard=Dashboard
 edit=bearbeiten
+false=Nein
+logout=%s abmelden
 products=Produkte
 search=suchen
 show=anzeigen
 submit=senden
 successfullySaved=%s wurde erfolgreich gespeichert
+true=Ja
 
 # Models
 # ~~~~~
@@ -22,6 +25,11 @@ account.accountType.ASSET=Aktiv
 account.accountType.LIABILITY=Passiv
 account.accountType.EXPENSE=Aufwand
 account.accountType.REVENUE=Ertrag
+
+additionalReportItem=Zusatzposition
+additionalReportItem.amount=Menge
+additionalReportItem.description=Beschreibung
+additionalReportItem.price.rawValue=Preis
 
 contact=Kontakt
 contacts=Kontakte
@@ -62,7 +70,7 @@ entry.description=Beschreibung
 entry.voucher=Beleg
 entry.debit.id=Soll
 entry.credit.id=Haben
-entry.amount.rawAmount=Betrag
+entry.amount.rawValue=Betrag
 
 metric=Metrik
 metrics=Metriken
@@ -74,7 +82,7 @@ metricProducts=Metrische Produkte
 metricProduct.name=Name
 metricProduct.description=Beschreibung
 metricProduct.metric.id=Metrik
-metricProduct.price.rawAmount=Preis
+metricProduct.price.rawValue=Preis
 
 order=Auftrag
 orders=Aufträge
@@ -83,6 +91,21 @@ order.orderingContact.id=Auftraggeber
 order.shippingContact.id=Auftragskontakt
 order.billingContact.id=Rechnungsadresse
 order.comments=Kommentare
+
+reportType=Bericht
+reportTypes=Berichte
+reportType.name=Name
+reportType.rootReportType=Grundbericht
+
+user=Benutzer
+users=Benutzer
+user.username=Benutzername
+user.firstName=Vorname
+user.lastName=Nachname
+user.password=Passwort
+user.passwordConfirmation=Passwort wiederholen
+user.email=E-Mail
+user.emptyPasswordInfo=Passwort bleibt erhalten, wenn das Passwordfeld leer bleibt
 
 # Paging
 # ~~~~~

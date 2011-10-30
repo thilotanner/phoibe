@@ -9,8 +9,7 @@ import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
-import play.mvc.Controller;
-import util.CountryProvider;
+import util.i18n.CountryProvider;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

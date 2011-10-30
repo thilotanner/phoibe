@@ -6,6 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
+    <content url="file://$USER_HOME$/play-1.2.3/modules/secure">
+      <sourceFolder url="file://$USER_HOME$/play-1.2.3/modules/secure/app" isTestSource="false" />
+    </content>
     <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />

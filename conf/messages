@@ -1,3 +1,9 @@
-# You can specialize this file for each language.
-# For example, for French create a messages.fr file
-#
+# Secure
+# ~~~~~
+secure.title=Anmeldung
+secure.username=Benutzername
+secure.password=Passwort
+secure.remember=Angemeldet bleiben
+secure.signin=anmelden
+secure.error=Benutzer oder Passwort unbekannt
+secure.logout=Sie wurden erfolgreich abgemeldet

@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+
+#{form @save()}
+#{field property:'reportType.id', object:reportType}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'reportType'}</legend>
+
+    #{textField property:'reportType.name', object:reportType /}
+
+    #{field property:'reportType.rootReportType', object:reportType}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            <select name="${field.name}" id="${field.id}">
+                <option value="false"#{if field.value==false} selected="selected"#{/if}>&{'false'}</option>
+                <option value="true"#{if field.value==true} selected="selected"#{/if}>&{'true'}</option>
+            </select>
+        </div>
+    </div>
+    #{/field}
+</fieldset>
+
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
+#{/form}

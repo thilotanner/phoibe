@@ -1,12 +1,12 @@
 package models;
 
-import play.db.jpa.Model;
-
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
-public class Report extends Model {
+@Entity
+public class Report extends EnhancedModel {
 
     @ManyToOne
     public ReportType reportType;

@@ -1,4 +1,4 @@
-package util;
+package util.i18n;
 
 import com.google.common.collect.ImmutableList;
 import play.Play;

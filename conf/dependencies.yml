@@ -2,4 +2,5 @@
 
 require:
     - play
+    - play -> secure
     - com.google.guava -> guava 10.0.1

@@ -2,7 +2,6 @@ package models;
 
 import play.data.validation.Required;
 import play.data.validation.Valid;
-import play.db.jpa.Model;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -12,7 +11,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-public class Entry extends Model {
+public class Entry extends EnhancedModel {
 
     @Required
     @Temporal(TemporalType.DATE)

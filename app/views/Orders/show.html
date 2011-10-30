@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:messages.get('order') /}
+
+<h1>#{get 'title' /}</h1>
+
+<dl>
+    <dt>&{'order.description'}</dt>
+    <dd>${order.description}</dd>
+
+    <dt>&{'order.orderingContact.id'}</dt>
+    <dd><a href="@{Contacts.show(order.orderingContact.id)}">${order.orderingContact?.label}</a></dd>
+
+    <dt>&{'order.shippingContact.id'}</dt>
+    <dd><a href="@{Contacts.show(order.shippingContact.id)}">${order.shippingContact?.label}</a></dd>
+
+    <dt>&{'order.billingContact.id'}</dt>
+    <dd><a href="@{Contacts.show(order.billingContact.id)}">${order.billingContact?.label}</a></dd>
+
+    <dt>&{'order.comments'}</dt>
+    <dd>${order.comments}</dd>
+</dl>
+
+<div class="well">
+    #{list items:rootReportTypes, as:'rootReportType'}
+    <a href="@{Reports.create(order.id, rootReportType.id)}" class="btn primary">&{'create', rootReportType.name}</a>
+    #{/list}
+</div>
+

@@ -1,7 +1,6 @@
 package models;
 
 import play.data.validation.Required;
-import play.db.jpa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -9,8 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "orders")
-public class Order extends Model {
+@Table(name = "Orders")
+public class Order extends EnhancedModel {
 
     @Required
     public String description;

@@ -1,0 +1,35 @@
+#{form @save()}
+<div class="modal-header">
+  <a href="#" class="close">&times;</a>
+  <h3>&{'additionalReportItem'}</h3>
+</div>
+<div class="modal-body">
+
+    #{field property:'additionalReportItem.id', object:additionalReportItem}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+    #{field property:'additionalReportItem.report.id', object:additionalReportItem}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+    <fieldset>
+        <legend>&{'additionalReportItem'}</legend>
+
+        #{textField property:'additionalReportItem.amount', object:additionalReportItem /}
+
+        #{textField property:'additionalReportItem.description', object:additionalReportItem /}
+
+        #{textField property:'additionalReportItem.price.rawValue', object:additionalReportItem, label:defaultCurrency.getCurrencyCode() /}
+
+        #{field property:'additionalReportItem.price.currencyCode', object:additionalReportItem}
+        <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+        #{/field}
+    </fieldset>
+</div>
+
+<div class="modal-footer">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
+#{/form}

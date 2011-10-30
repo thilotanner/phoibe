@@ -24,11 +24,17 @@
                 <li class="dropdown" data-dropdown="dropdown">
                     <a href="#" class="dropdown-toggle">&{'administration'}</a>
                     <ul class="dropdown-menu">
+                        <li><a href="@{ReportTypes.index}">&{'reportTypes'}</a></li>
                         <li><a href="@{Metrics.index}">&{'metrics'}</a></li>
                         <li><a href="@{Currencies.index}">&{'currencies'}</a></li>
                         <li><a href="@{Countries.index}">&{'countries'}</a></li>
+                        <li class="divider"></li>
+                        <li><a href="@{Users.index}">&{'users'}</a></li>
                     </ul>
                 </li>
+            </ul>
+            <ul class="nav secondary-nav">
+                <li><a href="@{Secure.logout}">&{'logout', user?.username}</a></li>
             </ul>
         </div>
     </div>
