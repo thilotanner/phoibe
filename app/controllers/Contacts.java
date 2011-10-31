@@ -61,7 +61,7 @@ public class Contacts extends ApplicationController {
             render("@form", contact);
         }
 
-        contact.save();
+        contact.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("contact")));
         index(1, null, null, null);
     }

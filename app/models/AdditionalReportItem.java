@@ -31,4 +31,13 @@ public class AdditionalReportItem extends ReportItem {
     public Money getPrice() {
         return price;
     }
+
+    @Override
+    public ReportItem duplicate() {
+        AdditionalReportItem additionalReportItem = new AdditionalReportItem();
+        additionalReportItem.amount = amount;
+        additionalReportItem.description = description;
+        additionalReportItem.price = price;
+        return additionalReportItem;
+    }
 }

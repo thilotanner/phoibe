@@ -1,0 +1,26 @@
+#{extends 'main.html' /}
+#{set title:messages.get('activityLogEntries') /}
+
+<h1>#{get 'title' /}</h1>
+
+#{tableSearch /}
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'activityLogEntry.date'}</th>
+            <th>&{'activityLogEntry.message'}</th>
+            <th>&{'activityLogEntry.activityLogAction'}</th>
+            <th>&{'activityLogEntry.user.username'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:activityLogEntries, as:'activityLogEntry'}
+        <tr>
+            <td>${activityLogEntry.date}</td>
+            <td>${activityLogEntry.message}</td>
+            <td>&{'activityLogEntry.activityLogAction.' + activityLogEntry.activityLogAction}</td>
+            <td>${activityLogEntry.user.username}</td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>

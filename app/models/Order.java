@@ -5,7 +5,9 @@ import play.data.validation.Required;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "Orders")
@@ -25,4 +27,10 @@ public class Order extends EnhancedModel {
 
     @ManyToOne
     public Contact billingContact;
+
+    @OneToMany(mappedBy = "order")
+    public List<Report> reports;
+
+    @ManyToOne
+    public Report currentReport;
 }

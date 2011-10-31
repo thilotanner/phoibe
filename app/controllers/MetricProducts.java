@@ -63,7 +63,7 @@ public class MetricProducts extends ApplicationController {
     }
 
     private static void initRenderArgs() {
-        renderArgs.put("metrics", Metric.all().<Metric>fetch());
+        renderArgs.put("metrics", Metric.findAll());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());
     }
 }

@@ -26,6 +26,15 @@ account.accountType.LIABILITY=Passiv
 account.accountType.EXPENSE=Aufwand
 account.accountType.REVENUE=Ertrag
 
+activityLogEntry=Änderungseintrag
+activityLogEntries=Änderungsprotokoll
+activityLogEntry.date=Datum
+activityLogEntry.message=Meldung
+activityLogEntry.activityLogAction=Aktion
+activityLogEntry.activityLogAction.SAVE=Sichern
+activityLogEntry.activityLogAction.DELETE=Löschen
+activityLogEntry.user.username=Benutzer
+
 additionalReportItem=Zusatzposition
 additionalReportItem.amount=Menge
 additionalReportItem.description=Beschreibung
@@ -92,10 +101,21 @@ order.shippingContact.id=Auftragskontakt
 order.billingContact.id=Rechnungsadresse
 order.comments=Kommentare
 
+reportTransition=Berichts-Transition
+reportTransitions=Berichts-Transitionen
+reportTransition.targetReportType.id=Zielbericht
+reportTransition.transitionStrategyClassName=Transitions-Strategie
+
 reportType=Bericht
 reportTypes=Berichte
 reportType.name=Name
 reportType.rootReportType=Grundbericht
+reportType.reportColor=Farbe
+reportType.reportColor.GREY=grau
+reportType.reportColor.GREEN=grün
+reportType.reportColor.YELLOW=gelb
+reportType.reportColor.RED=rot
+reportType.reportColor.BLUE=blau
 
 user=Benutzer
 users=Benutzer

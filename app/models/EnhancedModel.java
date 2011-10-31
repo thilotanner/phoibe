@@ -1,14 +1,17 @@
 package models;
 
+import controllers.ApplicationSecurity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import play.db.jpa.JPA;
+import play.db.jpa.JPABase;
 import play.db.jpa.Model;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Date;
 
 public class EnhancedModel extends Model {
 
@@ -16,6 +19,25 @@ public class EnhancedModel extends Model {
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
+    }
+
+    public <T extends JPABase> T loggedSave(User user) {
+        T object = super.save();
+
+        // Log
+        ActivityLogEntry activityLogEntry = new ActivityLogEntry();
+        activityLogEntry.date = new Date();
+        activityLogEntry.message = object.toString();
+        activityLogEntry.activityLogAction = ActivityLogAction.SAVE;
+        activityLogEntry.user = user;
+        activityLogEntry.save();
+
+        return object;
+    }
+
+    @Override
+    public <T extends JPABase> T delete() {
+        return super.delete();    //To change body of overridden methods use File | Settings | File Templates.
     }
 
     public boolean isReferenced(Class<? extends Model>[] classes)

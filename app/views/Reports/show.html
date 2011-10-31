@@ -11,8 +11,6 @@
 </script>
 #{/set}
 
-
-
 <h1>#{get 'title' /}</h1>
 
 <dl>
@@ -21,7 +19,15 @@
 </dl>
 
 <div class="well">
-    <button data-controls-modal="modal-from-dom" data-backdrop="true" data-keyboard="true" class="btn danger">Launch Modal</button>
+    <a href="@{download(report.id)}" class="btn primary">&{'download'}</a>
+
+    #{list items:report.reportType.reportTransitions, as:'reportTransition'}
+    <a href="@{transition(report.id, reportTransition.id)}" class="btn primary">&{'transition', reportTransition.targetReportType.name}</a>
+    #{/list}
+</div>
+
+<div class="well">
+    <a href="@{AdditionalReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('additionalReportItem')}</a>
 </div>
 
 <table class="zebra-striped">

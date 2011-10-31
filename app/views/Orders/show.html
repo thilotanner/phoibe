@@ -26,3 +26,22 @@
     #{/list}
 </div>
 
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'reportType.name'}</th>
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:order.reports, as:'report'}
+        <tr>
+            <td>${report.reportType.name}</td>
+            <td>
+                <a href="@{Reports.show(report.id)}">anzeigen</a>
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+

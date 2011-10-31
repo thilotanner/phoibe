@@ -31,6 +31,13 @@ public class ReportTypes extends ApplicationController {
         render(reportTypes, count);
     }
 
+    public static void show(Long id) {
+        notFoundIfNull(id);
+        ReportType reportType = ReportType.findById(id);
+        notFoundIfNull(reportType);
+        render(reportType);
+    }
+
     public static void form(Long id) {
         if (id == null) {
             render();

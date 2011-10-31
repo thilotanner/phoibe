@@ -21,6 +21,23 @@
         </div>
     </div>
     #{/field}
+
+    #{field property:'reportType.reportColor', object:reportType}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            <select name="${field.name}" id="${field.id}">
+                <option value="GREY"#{if field.value?.toString()=='GREY'} selected="selected"#{/if}>&{'reportType.reportColor.GREY'}</option>
+                <option value="GREEN"#{if field.value?.toString()=='GREEN'} selected="selected"#{/if}>&{'reportType.reportColor.GREEN'}</option>
+                <option value="YELLOW"#{if field.value?.toString()=='YELLOW'} selected="selected"#{/if}>&{'reportType.reportColor.YELLOW'}</option>
+                <option value="RED"#{if field.value?.toString()=='RED'} selected="selected"#{/if}>&{'reportType.reportColor.RED'}</option>
+                <option value="BLUE"#{if field.value?.toString()=='BLUE'} selected="selected"#{/if}>&{'reportType.reportColor.BLUE'}</option>
+            </select>
+        </div>
+    </div>
+    #{/field}
+
+    #{textArea property:'reportType.template', object:reportType /}
 </fieldset>
 
 <div class="actions">

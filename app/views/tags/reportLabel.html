@@ -1,0 +1,15 @@
+%{
+additionalClass = '';
+if(_arg.reportType.reportColor.toString() == 'GREEN') {
+    additionalClass = 'success';
+} else if(_arg.reportType.reportColor.toString() == 'YELLOW') {
+    additionalClass = 'warning';
+} else if(_arg.reportType.reportColor.toString() == 'RED') {
+    additionalClass = 'important';
+} else if(_arg.reportType.reportColor.toString() == 'BLUE') {
+    additionalClass = 'notice';
+}
+
+}%
+
+<span class="label ${additionalClass}">${_arg.reportType.name}</span>

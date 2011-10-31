@@ -1,0 +1,31 @@
+#{extends 'main.html' /}
+
+#{form @save()}
+#{field property:'reportTransition.id', object:reportTransition}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+#{field property:'reportTransition.reportType.id', object:reportTransition}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'reportTransition'}</legend>
+
+    #{field property:'reportTransition.targetReportType.id', object:reportTransition}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            #{select field.name, items:reportTypes, valueProperty:'id', labelProperty:'name', value:reportTransition?.targetReportType?.id, id:field.id /}
+        </div>
+    </div>
+    #{/field}
+
+    #{textField property:'reportTransition.transitionStrategyClassName', object:reportTransition /}
+</fieldset>
+
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
+#{/form}
