@@ -3,6 +3,8 @@ package models;
 import play.data.validation.Required;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,12 +21,15 @@ public class Order extends EnhancedModel {
     @Lob
     public String comments;
 
+    @Required
     @ManyToOne
     public Contact orderingContact;
 
+    @Required
     @ManyToOne
     public Contact shippingContact;
 
+    @Required
     @ManyToOne
     public Contact billingContact;
 
@@ -33,4 +38,7 @@ public class Order extends EnhancedModel {
 
     @ManyToOne
     public Report currentReport;
+
+    @Enumerated(EnumType.STRING)
+    public OrderStatus orderStatus;
 }

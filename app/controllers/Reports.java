@@ -1,10 +1,10 @@
 package controllers;
 
 import models.Order;
+import models.OrderStatus;
 import models.Report;
 import models.ReportTransition;
 import models.ReportType;
-import play.Logger;
 import util.reporting.ReportPDFCreator;
 import util.transition.TransitionStrategy;
 
@@ -25,6 +25,10 @@ public class Reports extends ApplicationController {
         report.order = order;
         report.reportType = reportType;
         report.save();
+
+        order.currentReport = report;
+        order.orderStatus = OrderStatus.IN_PROGRESS;
+        order.save();
 
         show(report.id);
     }

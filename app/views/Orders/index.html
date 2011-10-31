@@ -11,7 +11,7 @@
 <table class="zebra-striped">
     <thead>
         <tr>
-            <th>&{'order.status'}</th>
+            <th>&{'order.orderStatus'}</th>
             #{tableSorter objectName:'order', fieldName:'description' /}
             <th>&{'actions'}</th>
         </tr>
@@ -19,7 +19,7 @@
     <tbody>
         #{list items:orders, as:'order'}
         <tr>
-            <td>#{reportLabel order.currentReport /}</td>
+            <td>#{orderStatus order /}</td>
             <td>${order.description}</td>
             <td>
                 <a href="@{show(order.id)}">anzeigen</a>

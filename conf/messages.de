@@ -1,11 +1,15 @@
+abort=abbrechen
 accounting=Buchhaltung
 actions=Aktionen
 administration=Administration
 cancel=abbrechen
 create=%s erstellen
 dashboard=Dashboard
+downloadPdf=PDF herunterladen
 edit=bearbeiten
 false=Nein
+finish=beenden
+functions=Funktionen
 logout=%s abmelden
 products=Produkte
 search=suchen
@@ -13,6 +17,7 @@ show=anzeigen
 submit=senden
 successfullySaved=%s wurde erfolgreich gespeichert
 true=Ja
+workflow=Auftragsdurchlauf
 
 # Models
 # ~~~~~
@@ -100,6 +105,22 @@ order.orderingContact.id=Auftraggeber
 order.shippingContact.id=Auftragskontakt
 order.billingContact.id=Rechnungsadresse
 order.comments=Kommentare
+order.orderStatus=Auftragsstatus
+order.orderStatus.NEW=neu
+order.orderStatus.IN_PROGRESS=in Bearbeitung
+order.orderStatus.FINISHED=beendet
+order.orderStatus.ABORTED=abgebrochen
+order.currentReport=Aktueller Bericht
+
+report=Bericht
+reports=Berichte
+report.allReports=Alle Berichte
+
+reportItem=Position
+reportItems=Positionen
+reportItem.amount=Menge
+reportItem.description=Beschreibung
+reportItem.price=Preis
 
 reportTransition=Berichts-Transition
 reportTransitions=Berichts-Transitionen

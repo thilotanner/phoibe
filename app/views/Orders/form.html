@@ -17,6 +17,10 @@
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
 
+#{field property:'order.status', object:order}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
 <fieldset>
     <legend>&{'order'}</legend>
 

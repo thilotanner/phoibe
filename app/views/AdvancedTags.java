@@ -31,7 +31,13 @@ public class AdvancedTags extends FastTags {
         field.put("id", _arg.replace('.', '_'));
         field.put("flash", Scope.Flash.current().get(_arg));
         field.put("flashArray", field.get("flash") != null && !StringUtils.isEmpty(field.get("flash").toString()) ? field.get("flash").toString().split(",") : new String[0]);
-        field.put("error", Validation.error(_arg));
+
+        String objectName = _arg;
+        if(_arg.endsWith(".id")) {
+            objectName = _arg.substring(0, _arg.length() - ".id".length());
+        }
+        field.put("error", Validation.error(objectName));
+
         String errorClass = Play.configuration.getProperty("error.class", "hasError");
         field.put("errorClass", field.get("error") != null ? errorClass : "");
         String[] pieces = _arg.split("\\.");

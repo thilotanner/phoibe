@@ -1,0 +1,23 @@
+%{
+if(_arg.orderStatus.toString() == 'IN_PROGRESS') {
+    label = _arg.currentReport.reportType.name;
+} else {
+    label = messages.get('order.orderStatus.' + _arg.orderStatus.toString());
+}
+
+additionalClass = '';
+if(_arg.orderStatus.toString() == 'IN_PROGRESS') {
+    if(_arg.currentReport.reportType.reportColor.toString() == 'GREEN') {
+        additionalClass = 'success';
+    } else if(_arg.currentReport.reportType.reportColor.toString() == 'YELLOW') {
+        additionalClass = 'warning';
+    } else if(_arg.currentReport.reportType.reportColor.toString() == 'RED') {
+        additionalClass = 'important';
+    } else if(_arg.currentReport.reportType.reportColor.toString() == 'BLUE') {
+        additionalClass = 'notice';
+    }
+}
+
+}%
+
+<span class="label ${additionalClass}">${label}</span>

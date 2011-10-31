@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Order;
+import models.OrderStatus;
 import models.ReportType;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
@@ -33,19 +34,25 @@ public class Orders extends ApplicationController {
     }
 
     public static void show(Long id) {
+        notFoundIfNull(id);
         Order order = Order.findById(id);
         notFoundIfNull(order);
-        List<ReportType> rootReportTypes = ReportType.find("rootReportType=true").fetch();
-        render(order, rootReportTypes);
+
+        if(order.orderStatus == OrderStatus.NEW) {
+            renderArgs.put("rootReportTypes", ReportType.find("rootReportType=true").fetch());
+        }
+        render(order);
     }
 
     public static void form(Long id) {
+        Order order;
         if (id == null) {
-            render();
+            order = new Order();
+            order.orderStatus = OrderStatus.NEW;
+        } else {
+            order = Order.findById(id);
+            notFoundIfNull(order);
         }
-
-        Order order = Order.findById(id);
-        notFoundIfNull(order);
 
         render(order);
     }
@@ -56,7 +63,26 @@ public class Orders extends ApplicationController {
         }
 
         order.save();
-        flash.success(Messages.get("successfullySaved", Messages.get("contact")));
+        flash.success(Messages.get("successfullySaved", Messages.get("order")));
+        index(1, null, null, null);
+    }
+
+    public static void finish(Long id) {
+        changeOrderStatus(id, OrderStatus.FINISHED);
+    }
+
+    public static void abort(Long id) {
+        changeOrderStatus(id, OrderStatus.ABORTED);
+    }
+
+    private static void changeOrderStatus(Long id, OrderStatus orderStatus) {
+        notFoundIfNull(id);
+        Order order = Order.findById(id);
+        notFoundIfNull(order);
+
+        order.orderStatus = orderStatus;
+        order.save();
+
         index(1, null, null, null);
     }
 }

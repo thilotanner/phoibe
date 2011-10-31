@@ -1,6 +1,5 @@
 package models;
 
-import controllers.ApplicationSecurity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import play.db.jpa.JPA;

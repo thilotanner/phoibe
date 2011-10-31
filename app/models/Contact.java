@@ -3,6 +3,7 @@ package models;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.data.validation.URL;
+import util.string.StringUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -42,6 +43,7 @@ public class Contact extends EnhancedModel {
     public String comments;
 
     public String getLabel() {
-        return String.format("%s, %s %s, %s", company, firstName, lastName, city);
+        String firstLastName = StringUtils.nonEmptyJoin(new String[] {firstName, lastName}, " ");
+        return StringUtils.nonEmptyJoin(new String[] {company, firstLastName, city}, ", ");
     }
 }

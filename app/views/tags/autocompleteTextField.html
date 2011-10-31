@@ -1,11 +1,12 @@
 #{field property:_property, object:_object}
-<div class="clearfix">
+<div class="clearfix ${field.errorClass}">
     <label for="${field.id}_chooser">&{field.name}</label>
     <div class="input">
         <input type="text"
                id="${field.id}_chooser"
                name="${field.id}_chooser"
                value="${_label}" />
+        <span class="help-inline">${field.error}</span>
     </div>
 
     <input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>

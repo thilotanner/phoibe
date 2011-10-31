@@ -27,7 +27,7 @@ public class AdditionalReportItems extends ApplicationController {
         }
 
         additionalReportItem.save();
-        flash.success(Messages.get("successfullySaved", Messages.get("entry")));
+        flash.success(Messages.get("successfullySaved", Messages.get("additionalReportItem")));
         Reports.show(additionalReportItem.report.id);
     }
 

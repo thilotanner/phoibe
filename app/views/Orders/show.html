@@ -7,6 +7,9 @@
     <dt>&{'order.description'}</dt>
     <dd>${order.description}</dd>
 
+    <dt>&{'order.orderStatus'}</dt>
+    <dd>#{orderStatus order /}</dd>
+
     <dt>&{'order.orderingContact.id'}</dt>
     <dd><a href="@{Contacts.show(order.orderingContact.id)}">${order.orderingContact?.label}</a></dd>
 
@@ -20,12 +23,48 @@
     <dd>${order.comments}</dd>
 </dl>
 
+<h2>&{'workflow'}</h2>
 <div class="well">
-    #{list items:rootReportTypes, as:'rootReportType'}
-    <a href="@{Reports.create(order.id, rootReportType.id)}" class="btn primary">&{'create', rootReportType.name}</a>
-    #{/list}
+    #{if order.orderStatus.toString() == 'NEW'}
+        #{list items:rootReportTypes, as:'rootReportType'}
+        <a href="@{Reports.create(order.id, rootReportType.id)}" class="btn primary">&{'create', rootReportType.name}</a>
+        #{/list}
+    #{/if}
+    #{else}
+        #{list items:order.currentReport.reportType.reportTransitions, as:'reportTransition'}
+        <a href="@{Reports.transition(order.currentReport.id, reportTransition.id)}" class="btn primary">&{'create', reportTransition.targetReportType.name}</a>
+        #{/list}
+    #{/else}
+
+    #{if (order.orderStatus.toString() == 'NEW' || order.orderStatus.toString() == 'IN_PROGRESS')}
+        <a href="@{Orders.finish(order.id)}" class="btn success">&{'finish'}</a>
+        <a href="@{Orders.abort(order.id)}" class="btn danger">&{'abort'}</a>
+    #{/if}
 </div>
 
+#{if order.currentReport}
+<h2>&{'order.currentReport'}</h2>
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'reportType.name'}</th>
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>${order.currentReport.reportType.name}</td>
+            <td>
+                <a href="@{Reports.show(order.currentReport.id)}">&{'show'}</a>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+#{/if}
+
+<h2>&{'report.allReports'}</h2>
 <table class="zebra-striped">
     <thead>
         <tr>
@@ -38,7 +77,7 @@
         <tr>
             <td>${report.reportType.name}</td>
             <td>
-                <a href="@{Reports.show(report.id)}">anzeigen</a>
+                <a href="@{Reports.show(report.id)}">&{'show'}</a>
             </td>
         </tr>
         #{/list}

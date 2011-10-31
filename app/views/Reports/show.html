@@ -16,16 +16,39 @@
 <dl>
     <dt>&{'order.description'}</dt>
     <dd>${report.order.description}</dd>
+
+    <dt>&{'order.orderStatus'}</dt>
+    <dd>#{orderStatus report.order /}</dd>
+
+    <dt>&{'order.orderingContact.id'}</dt>
+    <dd><a href="@{Contacts.show(report.order.orderingContact.id)}">${report.order.orderingContact?.label}</a></dd>
+
+    <dt>&{'order.shippingContact.id'}</dt>
+    <dd><a href="@{Contacts.show(report.order.shippingContact.id)}">${report.order.shippingContact?.label}</a></dd>
+
+    <dt>&{'order.billingContact.id'}</dt>
+    <dd><a href="@{Contacts.show(report.order.billingContact.id)}">${report.order.billingContact?.label}</a></dd>
 </dl>
 
-<div class="well">
-    <a href="@{download(report.id)}" class="btn primary">&{'download'}</a>
 
+
+<h2>&{'workflow'}</h2>
+<div class="well">
     #{list items:report.reportType.reportTransitions, as:'reportTransition'}
-    <a href="@{transition(report.id, reportTransition.id)}" class="btn primary">&{'transition', reportTransition.targetReportType.name}</a>
+    <a href="@{transition(report.id, reportTransition.id)}" class="btn primary">&{'create', reportTransition.targetReportType.name}</a>
     #{/list}
+    #{if (report.order.orderStatus.toString() == 'NEW' || report.order.orderStatus.toString() == 'IN_PROGRESS')}
+        <a href="@{Orders.finish(report.order.id)}" class="btn success">&{'finish'}</a>
+        <a href="@{Orders.abort(report.order.id)}" class="btn danger">&{'abort'}</a>
+    #{/if}
 </div>
 
+<h2>&{'functions'}</h2>
+<div class="well">
+    <a href="@{download(report.id)}" class="btn primary">&{'downloadPdf'}</a>
+</div>
+
+<h2>&{'reportItems'}</h2>
 <div class="well">
     <a href="@{AdditionalReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('additionalReportItem')}</a>
 </div>
