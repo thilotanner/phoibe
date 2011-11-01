@@ -43,7 +43,8 @@ activityLogEntry.user.username=Benutzer
 additionalReportItem=Zusatzposition
 additionalReportItem.amount=Menge
 additionalReportItem.description=Beschreibung
-additionalReportItem.price.rawValue=Preis
+additionalReportItem.pricePerUnit.rawValue=Preis pro Einheit
+additionalReportItem.valueAddedTaxRate.id=Mehrwertsteuersatz
 
 contact=Kontakt
 contacts=Kontakte
@@ -115,12 +116,19 @@ order.currentReport=Aktueller Bericht
 report=Bericht
 reports=Berichte
 report.allReports=Alle Berichte
+report.onlyCurrentReportsAreChangeable=Nur aktuelle Berichte können verändert werden
+report.totalPrice=Total
+report.tax=MWSt.
+report.taxedTotalPrice=Total inkl. MWSt.
 
 reportItem=Position
 reportItems=Positionen
 reportItem.amount=Menge
+reportItem.metric.symbol=Einheit
 reportItem.description=Beschreibung
-reportItem.price=Preis
+reportItem.pricePerUnit=Preis pro Einheit
+reportItem.totalPrice=Total
+reportItem.taxedTotalPrice=Total inkl. MWSt.
 
 reportTransition=Berichts-Transition
 reportTransitions=Berichts-Transitionen
@@ -147,6 +155,11 @@ user.password=Passwort
 user.passwordConfirmation=Passwort wiederholen
 user.email=E-Mail
 user.emptyPasswordInfo=Passwort bleibt erhalten, wenn das Passwordfeld leer bleibt
+
+valueAddedTaxRate=Mehrwertsteuersatz
+valueAddedTaxRates=Mehrwertsteuersätze
+valueAddedTaxRate.description=Beschreibung
+valueAddedTaxRate.rate=Steuersatz
 
 # Paging
 # ~~~~~

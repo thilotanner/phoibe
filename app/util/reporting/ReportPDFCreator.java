@@ -24,19 +24,16 @@ public class ReportPDFCreator {
 
     private Report report;
 
-	private JasperReport jasperReport;
+    private JasperReport jasperReport;
     private Map<String, Object> parameters;
 
 
-    public ReportPDFCreator(Report report)
-    {
+    public ReportPDFCreator(Report report) {
         this.report = report;
         init();
     }
 
-    public ByteArrayOutputStream createPDF()
-    {
-
+    public ByteArrayOutputStream createPDF() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         parameters.put("report", report);
@@ -63,29 +60,10 @@ public class ReportPDFCreator {
         return baos;
     }
 
-    private void init()
-	{
-    	try {
+    private void init() {
+        try {
             JasperDesign jasperDesign =
                     JRXmlLoader.load(new ByteArrayInputStream(report.reportType.template.getBytes()));
-
-            JRDesignStyle normalStyle = new JRDesignStyle();
-            normalStyle.setDefault(true);
-            normalStyle.setName("TTF_defaultStyle");
-
-            //Need following special encoding! see
-            //http://anamasry.wordpress.com/2008/12/23/exporting-pdf-using-jasperreport-in-arabic/
-            normalStyle.setPdfEncoding("Identity-H");
-            normalStyle.setPdfEmbedded(true);
-
-            //# before printing, call style.setPdfFontName(...)
-            //following is the default install path on Ubuntu!
-            //normalStyle.setPdfFontName("/usr/share/fonts/truetype/msttcorefonts/Arial.ttf");
-            normalStyle.setPdfFontName("fonts/Arial.ttf");
-
-            jasperDesign.addStyle(normalStyle);
-
-            jasperDesign.setDefaultStyle(normalStyle);
 
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
 
@@ -95,5 +73,5 @@ public class ReportPDFCreator {
             Logger.error(e, "Error while init Jasperreports");
             throw new RuntimeException("Error while init Jasperreports", e);
         }
-	}
+    }
 }

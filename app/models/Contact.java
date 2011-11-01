@@ -46,4 +46,31 @@ public class Contact extends EnhancedModel {
         String firstLastName = StringUtils.nonEmptyJoin(new String[] {firstName, lastName}, " ");
         return StringUtils.nonEmptyJoin(new String[] {company, firstLastName, city}, ", ");
     }
+
+    public String getFormattedContact() {
+        StringBuilder sb = new StringBuilder();
+
+        if(company != null) {
+            sb.append(company).append("\n");
+        }
+
+        if(firstName != null || lastName != null) {
+            sb.append(StringUtils.nonEmptyJoin(new String[] {firstName, lastName}, " ")).append("\n");
+        }
+
+        sb.append(getFormattedAddress());
+        return sb.toString();
+    }
+
+    public String getFormattedAddress() {
+        StringBuilder sb = new StringBuilder();
+
+        if(street != null) {
+            sb.append(street).append("\n");
+        }
+
+        sb.append(StringUtils.nonEmptyJoin(new String[]{postalCode, city}, " "));
+
+        return sb.toString();
+    }
 }

@@ -1,6 +1,6 @@
 package controllers;
 
-import models.User;
+import models.ValueAddedTaxRate;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
@@ -9,13 +9,13 @@ import play.i18n.Messages;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Users extends ApplicationController {
+public class ValueAddedTaxRates extends ApplicationController {
     public static void index(int page, String orderBy, String order, String search) {
         if (page < 1) {
             page = 1;
         }
 
-        List<Model> users = Model.Manager.factoryFor(User.class).fetch(
+        List<Model> valueAddedTaxRates = Model.Manager.factoryFor(ValueAddedTaxRate.class).fetch(
                 (page - 1) * getPageSize(),
                 getPageSize(),
                 orderBy,
@@ -25,10 +25,10 @@ public class Users extends ApplicationController {
                 null
         );
 
-        Long count = Model.Manager.factoryFor(User.class).count(new ArrayList<String>(), search, null);
+        Long count = Model.Manager.factoryFor(ValueAddedTaxRate.class).count(new ArrayList<String>(), search, null);
 
         renderArgs.put("pageSize", getPageSize());
-        render(users, count);
+        render(valueAddedTaxRates, count);
     }
 
     public static void form(Long id) {
@@ -36,20 +36,19 @@ public class Users extends ApplicationController {
             render();
         }
 
-        User user = User.findById(id);
-        notFoundIfNull(user);
+        ValueAddedTaxRate valueAddedTaxRate = ValueAddedTaxRate.findById(id);
+        notFoundIfNull(valueAddedTaxRate);
 
-        flash.now("info", Messages.get("user.emptyPasswordInfo"));
-        render(user);
+        render(valueAddedTaxRate);
     }
 
-    public static void save(@Valid User user) {
+    public static void save(@Valid ValueAddedTaxRate valueAddedTaxRate) {
         if(Validation.hasErrors()) {
-            render("@form", user);
+            render("@form", valueAddedTaxRate);
         }
 
-        user.save();
-        flash.success(Messages.get("successfullySaved", Messages.get("user")));
+        valueAddedTaxRate.save();
+        flash.success(Messages.get("successfullySaved", Messages.get("valueAddedTaxRate")));
         index(1, null, null, null);
     }
 }

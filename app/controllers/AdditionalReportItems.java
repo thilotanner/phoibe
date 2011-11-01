@@ -1,7 +1,9 @@
 package controllers;
 
 import models.AdditionalReportItem;
+import models.Metric;
 import models.Report;
+import models.ValueAddedTaxRate;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.i18n.Messages;
@@ -32,6 +34,8 @@ public class AdditionalReportItems extends ApplicationController {
     }
 
     private static void initRenderArgs() {
+        renderArgs.put("metrics", Metric.findAll());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());
+        renderArgs.put("valueAddedTaxRates", ValueAddedTaxRate.findAll());
     }
 }

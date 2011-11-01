@@ -4,22 +4,34 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import java.math.BigDecimal;
 
 @Entity
 @Access(AccessType.FIELD)
 public class AdditionalReportItem extends ReportItem {
 
-    public Double amount;
+    public BigDecimal amount;
+
+    @ManyToOne
+    public Metric metric;
 
     public String description;
 
     @Embedded
-    public Money price;
+    public Money pricePerUnit;
 
+    @ManyToOne
+    public ValueAddedTaxRate valueAddedTaxRate;
 
     @Override
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
+    }
+
+    @Override
+    public Metric getMetric() {
+        return metric;
     }
 
     @Override
@@ -28,8 +40,13 @@ public class AdditionalReportItem extends ReportItem {
     }
 
     @Override
-    public Money getPrice() {
-        return price;
+    public Money getPricePerUnit() {
+        return pricePerUnit;
+    }
+
+    @Override
+    public ValueAddedTaxRate getValueAddedTaxRate() {
+        return valueAddedTaxRate;
     }
 
     @Override
@@ -37,7 +54,7 @@ public class AdditionalReportItem extends ReportItem {
         AdditionalReportItem additionalReportItem = new AdditionalReportItem();
         additionalReportItem.amount = amount;
         additionalReportItem.description = description;
-        additionalReportItem.price = price;
+        additionalReportItem.pricePerUnit = pricePerUnit;
         return additionalReportItem;
     }
 }

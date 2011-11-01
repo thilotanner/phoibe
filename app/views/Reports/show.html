@@ -1,5 +1,6 @@
 #{extends 'main.html' /}
 #{set title:messages.get(report.reportType.name) /}
+
 #{set 'moreScripts'}
 <script type="text/javascript">
     $(document).ready(function()
@@ -31,7 +32,7 @@
 </dl>
 
 
-
+#{if report.currentReport}
 <h2>&{'workflow'}</h2>
 <div class="well">
     #{list items:report.reportType.reportTransitions, as:'reportTransition'}
@@ -42,23 +43,29 @@
         <a href="@{Orders.abort(report.order.id)}" class="btn danger">&{'abort'}</a>
     #{/if}
 </div>
+#{/if}
 
 <h2>&{'functions'}</h2>
 <div class="well">
     <a href="@{download(report.id)}" class="btn primary">&{'downloadPdf'}</a>
 </div>
 
+#{if report.currentReport}
 <h2>&{'reportItems'}</h2>
 <div class="well">
     <a href="@{AdditionalReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('additionalReportItem')}</a>
 </div>
+#{/if}
 
 <table class="zebra-striped">
     <thead>
         <tr>
             <th>&{'reportItem.amount'}</th>
+            <th>&{'reportItem.metric.symbol'}</th>
             <th>&{'reportItem.description'}</th>
-            <th>&{'reportItem.price'}</th>
+            <th>&{'reportItem.pricePerUnit'}</th>
+            <th>&{'reportItem.totalPrice'}</th>
+            <th>&{'reportItem.taxedTotalPrice'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -66,8 +73,11 @@
         #{list items:report.reportItems, as:'reportItem'}
         <tr>
             <td>${reportItem.amount}</td>
+            <td>${reportItem.metric.symbol}</td>
             <td>${reportItem.description}</td>
-            <td>${reportItem.price}</td>
+            <td>${reportItem.pricePerUnit}</td>
+            <td>${reportItem.totalPrice}</td>
+            <td>${reportItem.taxedTotalPrice}</td>
             <td>
 
             </td>
@@ -75,6 +85,25 @@
         #{/list}
     </tbody>
 </table>
+
+<table class="zebra-striped">
+    <tbody>
+        <tr>
+            <td><strong>&{'report.totalPrice'}</strong></td>
+            <td>${report.totalPrice.label}</td>
+        </tr>
+        <tr>
+            <td><strong>&{'report.tax'}</strong></td>
+            <td>${report.tax.label}</td>
+        </tr>
+        <tr>
+            <td><strong>&{'report.taxedTotalPrice'}</strong></td>
+            <td>${report.taxedTotalPrice.label}</td>
+        </tr>
+    </tbody>
+</table>
+
+
 
 <div id="modal-from-dom" class="modal hide fade" />
 

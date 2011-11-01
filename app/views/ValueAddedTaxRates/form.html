@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+
+#{form @save()}
+#{field property:'valueAddedTaxRate.id', object:valueAddedTaxRate}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'valueAddedTaxRate'}</legend>
+
+    #{textField property:'valueAddedTaxRate.description', object:valueAddedTaxRate /}
+
+    #{textField property:'valueAddedTaxRate.rate', object:valueAddedTaxRate, label:'%' /}
+</fieldset>
+
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <button type="reset" class="btn">&{'cancel'}</button>
+</div>
+#{/form}

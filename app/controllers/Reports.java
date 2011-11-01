@@ -5,6 +5,7 @@ import models.OrderStatus;
 import models.Report;
 import models.ReportTransition;
 import models.ReportType;
+import play.i18n.Messages;
 import util.reporting.ReportPDFCreator;
 import util.transition.TransitionStrategy;
 
@@ -37,6 +38,11 @@ public class Reports extends ApplicationController {
         notFoundIfNull(id);
         Report report = Report.findById(id);
         notFoundIfNull(report);
+
+        if(!report.isCurrentReport()) {
+            flash.now("info", Messages.get("report.onlyCurrentReportsAreChangeable"));
+        }
+
         render(report);
     }
 

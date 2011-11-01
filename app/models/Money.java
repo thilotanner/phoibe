@@ -6,6 +6,7 @@ import util.check.NumericalCheck;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Currency;
@@ -46,7 +47,7 @@ public class Money {
 
     public String getLabel()
     {
-        return String.format("%s %s", getCurrency(currencyCode).getCurrencyCode(), getRawValue());
+        return getRawValue();
     }
 
     @Override
@@ -55,16 +56,34 @@ public class Money {
         return getLabel();
     }
 
-    public void add(Money otherMoney)
+    public Money add(Money otherMoney)
     {
         checkCurrency(otherMoney);
-        value += otherMoney.value;
+
+        Money result = new Money();
+        result.currencyCode = currencyCode;
+        result.value = value += otherMoney.value;
+        return result;
     }
 
-    public void subtract(Money otherMoney)
+    public Money subtract(Money otherMoney)
     {
         checkCurrency(otherMoney);
-        value -= otherMoney.value;
+
+        Money result = new Money();
+        result.currencyCode = currencyCode;
+        result.value = value -= otherMoney.value;
+        return result;
+    }
+
+    public Money multiply(BigDecimal factor) {
+        BigDecimal bigDecimalValue = new BigDecimal(value);
+        BigDecimal resultValue = bigDecimalValue.multiply(factor);
+
+        Money result = new Money();
+        result.currencyCode = currencyCode;
+        result.value = resultValue.longValue();
+        return result;
     }
 
     private void calculateValue()
@@ -80,8 +99,9 @@ public class Money {
     private void calculateRawValue() {
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
+        symbols.setGroupingSeparator('\'');
 
-        DecimalFormat decimalFormat = new DecimalFormat("##.00", symbols);
+        DecimalFormat decimalFormat = new DecimalFormat(",###.00", symbols);
 
         rawValue = decimalFormat.format(value / getConversionFactor());
     }

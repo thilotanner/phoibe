@@ -16,12 +16,30 @@
 
     #{textField property:'additionalReportItem.amount', object:additionalReportItem /}
 
+    #{field property:'metricProduct.metric.id', object:metricProduct}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:metricProduct?.metric?.id, id:field.id /}
+        </div>
+    </div>
+    #{/field}
+
     #{textField property:'additionalReportItem.description', object:additionalReportItem /}
 
-    #{textField property:'additionalReportItem.price.rawValue', object:additionalReportItem, label:defaultCurrency.getCurrencyCode() /}
+    #{textField property:'additionalReportItem.pricePerUnit.rawValue', object:additionalReportItem, label:defaultCurrency.getCurrencyCode() /}
 
-    #{field property:'additionalReportItem.price.currencyCode', object:additionalReportItem}
+    #{field property:'additionalReportItem.pricePerUnit.currencyCode', object:additionalReportItem}
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+    #{/field}
+
+    #{field property:'additionalReportItem.valueAddedTaxRate.id', object:additionalReportItem}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:additionalReportItem?.valueAddedTaxRate?.id, id:field.id /}
+        </div>
+    </div>
     #{/field}
 </fieldset>
 
