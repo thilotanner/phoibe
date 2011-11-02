@@ -8,7 +8,6 @@ import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 @Entity
-@Access(AccessType.FIELD)
 public class AdditionalReportItem extends ReportItem {
 
     public BigDecimal amount;

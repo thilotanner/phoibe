@@ -3,6 +3,7 @@ package models;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.data.validation.URL;
+import util.string.NonEmptyStringBuilder;
 import util.string.StringUtils;
 
 import javax.persistence.Entity;
@@ -48,29 +49,17 @@ public class Contact extends EnhancedModel {
     }
 
     public String getFormattedContact() {
-        StringBuilder sb = new StringBuilder();
-
-        if(company != null) {
-            sb.append(company).append("\n");
-        }
-
-        if(firstName != null || lastName != null) {
-            sb.append(StringUtils.nonEmptyJoin(new String[] {firstName, lastName}, " ")).append("\n");
-        }
-
-        sb.append(getFormattedAddress());
-        return sb.toString();
+        NonEmptyStringBuilder nesb = new NonEmptyStringBuilder();
+        nesb.append(company).addLine();
+        nesb.append(firstName).append(lastName).addLine();
+        nesb.append(getFormattedAddress());
+        return nesb.toString();
     }
 
     public String getFormattedAddress() {
-        StringBuilder sb = new StringBuilder();
-
-        if(street != null) {
-            sb.append(street).append("\n");
-        }
-
-        sb.append(StringUtils.nonEmptyJoin(new String[]{postalCode, city}, " "));
-
-        return sb.toString();
+        NonEmptyStringBuilder nesb = new NonEmptyStringBuilder();
+        nesb.append(street).addLine();
+        nesb.append(postalCode).append(city);
+        return nesb.toString();
     }
 }

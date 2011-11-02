@@ -42,6 +42,7 @@ activityLogEntry.user.username=Benutzer
 
 additionalReportItem=Zusatzposition
 additionalReportItem.amount=Menge
+additionalReportItem.metric.id=Einheit
 additionalReportItem.description=Beschreibung
 additionalReportItem.pricePerUnit.rawValue=Preis pro Einheit
 additionalReportItem.valueAddedTaxRate.id=Mehrwertsteuersatz

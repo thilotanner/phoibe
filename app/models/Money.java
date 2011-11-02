@@ -24,6 +24,13 @@ public class Money {
     @Transient
     public String rawValue;
 
+    public Money() { }
+
+    public Money(Currency currency) {
+        currencyCode = currency.getCurrencyCode();
+        value = 0l;
+    }
+
     public String getRawValue() {
         if(rawValue == null && value != null && currencyCode != null) {
             calculateRawValue();
@@ -101,7 +108,7 @@ public class Money {
         symbols.setDecimalSeparator('.');
         symbols.setGroupingSeparator('\'');
 
-        DecimalFormat decimalFormat = new DecimalFormat(",###.00", symbols);
+        DecimalFormat decimalFormat = new DecimalFormat(",##0.00", symbols);
 
         rawValue = decimalFormat.format(value / getConversionFactor());
     }

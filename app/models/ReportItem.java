@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Access(AccessType.FIELD)
-public abstract class ReportItem extends EnhancedModel implements Cloneable {
+public abstract class ReportItem extends EnhancedModel {
 
     @ManyToOne
     public Report report;
