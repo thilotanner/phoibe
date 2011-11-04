@@ -67,8 +67,24 @@ public class Orders extends ApplicationController {
         index(1, null, null, null);
     }
 
+    public static void confirmFinish(Long id) {
+        notFoundIfNull(id);
+        Order order = Order.findById(id);
+        notFoundIfNull(order);
+
+        render(order);
+    }
+
     public static void finish(Long id) {
         changeOrderStatus(id, OrderStatus.FINISHED);
+    }
+
+    public static void confirmAbort(Long id) {
+        notFoundIfNull(id);
+        Order order = Order.findById(id);
+        notFoundIfNull(order);
+
+        render(order);
     }
 
     public static void abort(Long id) {
@@ -82,7 +98,12 @@ public class Orders extends ApplicationController {
 
         order.orderStatus = orderStatus;
         order.save();
+        if(orderStatus.equals(OrderStatus.FINISHED)) {
+            flash.success(Messages.get("successfullyFinished", order.description));
+        } else if (orderStatus.equals(OrderStatus.ABORTED)) {
+            flash.error(Messages.get("successfullyAborted", order.description));
+        }
 
-        index(1, null, null, null);
+        show(order.id);
     }
 }

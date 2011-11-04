@@ -27,18 +27,26 @@
 <div class="well">
     #{if order.orderStatus.toString() == 'NEW'}
         #{list items:rootReportTypes, as:'rootReportType'}
-        <a href="@{Reports.create(order.id, rootReportType.id)}" class="btn primary">&{'create', rootReportType.name}</a>
+        <a href="@{Reports.confirmCreate(order.id, rootReportType.id)}"
+           class="btn primary"
+           modal="modal">&{'create', rootReportType.name}</a>
         #{/list}
     #{/if}
     #{else}
         #{list items:order.currentReport.reportType.reportTransitions, as:'reportTransition'}
-        <a href="@{Reports.transition(order.currentReport.id, reportTransition.id)}" class="btn primary">&{'create', reportTransition.targetReportType.name}</a>
+        <a href="@{Reports.confirmTransition(order.currentReport.id, reportTransition.id)}"
+           class="btn primary"
+           modal="modal">&{'create', reportTransition.targetReportType.name}</a>
         #{/list}
     #{/else}
 
     #{if (order.orderStatus.toString() == 'NEW' || order.orderStatus.toString() == 'IN_PROGRESS')}
-        <a href="@{Orders.finish(order.id)}" class="btn success">&{'finish'}</a>
-        <a href="@{Orders.abort(order.id)}" class="btn danger">&{'abort'}</a>
+        <a href="@{Orders.confirmFinish(order.id)}"
+           class="btn success"
+           modal="modal">&{'finish'}</a>
+        <a href="@{Orders.confirmAbort(order.id)}"
+           class="btn danger"
+           modal="modal">&{'abort'}</a>
     #{/if}
 </div>
 
@@ -84,3 +92,4 @@
     </tbody>
 </table>
 
+<div id="modal" class="modal fade hide"></div>

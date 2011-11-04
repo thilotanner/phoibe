@@ -1,28 +1,10 @@
 #{extends 'main.html' /}
 #{set title:messages.get('contacts') /}
-#{set 'moreScripts'}
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $('#delete-modal').modal({
-            backdrop: 'static',
-            keyboard: true
-        });
-
-        $('[delete-modal]').click(function(e) {
-            e.preventDefault();
-            $('#delete-modal').load(e.target.href, function() {
-                $('#delete-modal').modal('show');
-            });
-        });
-    });
-</script>
-#{/set}
 
 <h1>#{get 'title' /}</h1>
 
 <div class="well">
-    <a href="@{Contacts.form}" class="btn primary">&{'create', messages.get('contact')}</a>
+    <a href="@{form}" class="btn primary">&{'create', messages.get('contact')}</a>
 </div>
 
 #{tableSearch /}
@@ -46,7 +28,7 @@
             <td>
                 <a href="@{show(contact.id)}">&{'show'}</a>
                 <a href="@{form(contact.id)}">&{'edit'}</a>
-                <a delete-modal="delete-modal" href="@{Contacts.delete(contact.id)}">&{'delete'}</a>
+                <a modal="modal" href="@{delete(contact.id)}">&{'delete'}</a>
             </td>
         </tr>
         #{/list}
@@ -55,4 +37,4 @@
 
 #{pagination count:count, pageSize:pageSize /}
 
-<div id="delete-modal" class="modal fade hide"></div>
+<div id="modal" class="modal fade hide"></div>

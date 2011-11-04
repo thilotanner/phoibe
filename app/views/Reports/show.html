@@ -25,11 +25,17 @@
 <h2>&{'workflow'}</h2>
 <div class="well">
     #{list items:report.reportType.reportTransitions, as:'reportTransition'}
-    <a href="@{transition(report.id, reportTransition.id)}" class="btn primary">&{'create', reportTransition.targetReportType.name}</a>
+    <a href="@{confirmTransition(report.id, reportTransition.id)}"
+       class="btn primary"
+       modal="modal">&{'create', reportTransition.targetReportType.name}</a>
     #{/list}
     #{if (report.order.orderStatus.toString() == 'NEW' || report.order.orderStatus.toString() == 'IN_PROGRESS')}
-        <a href="@{Orders.finish(report.order.id)}" class="btn success">&{'finish'}</a>
-        <a href="@{Orders.abort(report.order.id)}" class="btn danger">&{'abort'}</a>
+        <a href="@{Orders.confirmFinish(report.order.id)}"
+           class="btn success"
+           modal="modal">&{'finish'}</a>
+        <a href="@{Orders.confirmAbort(report.order.id)}"
+           class="btn danger"
+           modal="modal">&{'abort'}</a>
     #{/if}
 </div>
 #{/if}
@@ -92,5 +98,6 @@
     </tbody>
 </table>
 
+<div id="modal" class="modal fade hide"></div>
 
 
