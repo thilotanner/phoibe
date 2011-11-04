@@ -1,0 +1,12 @@
+%{
+
+additionalClass = '';
+if(_arg.creditorStatus.toString() == 'DUE') {
+    additionalClass = 'important';
+} else if(_arg.creditorStatus.toString() == 'PAID') {
+    additionalClass = 'success';
+}
+
+}%
+
+<span class="label ${additionalClass}">&{'creditor.creditorStatus.' + _arg.creditorStatus}</span>

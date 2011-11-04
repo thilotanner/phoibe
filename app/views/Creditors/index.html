@@ -1,0 +1,45 @@
+#{extends 'main.html' /}
+#{set title:messages.get('creditors') /}
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{form}" class="btn primary">&{'create', messages.get('creditor')}</a>
+</div>
+
+#{tableSearch /}
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'creditor.creditorStatus'}</th>
+            <th>&{'creditor.supplier.id'}</th>
+            #{tableSorter objectName:'creditor', fieldName:'reference' /}
+            <th>&{'creditor.amount.rawValue'}</th>
+            <th>&{'creditor.due'}</th>
+            <th>&{'creditor.amountPaid.rawValue'}</th>
+            <th>&{'creditor.paid'}</th>
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:creditors, as:'creditor'}
+        <tr>
+            <td>#{creditorStatus creditor /}</td>
+            <td>${creditor.supplier.label}</td>
+            <td>${creditor.reference}</td>
+            <td>${creditor.amount.label}</td>
+            <td>${creditor.due.format()}</td>
+            <td>${creditor.amountPaid?.label}</td>
+            <td>${creditor.paid?.format()}</td>
+            <td>
+                #{if creditor.creditorStatus.toString() != 'PAID'}
+                <a href="@{form(creditor.id)}">&{'edit'}</a>
+                <a href="@{payForm(creditor.id)}">&{'pay'}</a>
+                #{/if}
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

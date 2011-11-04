@@ -38,6 +38,7 @@ public class Contacts extends ApplicationController {
     }
 
     public static void show(Long id) {
+        notFoundIfNull(id);
         Contact contact = Contact.findById(id);
         notFoundIfNull(contact);
         render(contact);
@@ -63,6 +64,22 @@ public class Contacts extends ApplicationController {
 
         contact.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("contact")));
+        index(1, null, null, null);
+    }
+
+    public static void delete(Long id) {
+        notFoundIfNull(id);
+        Contact contact = Contact.findById(id);
+        notFoundIfNull(contact);
+        render(contact);
+    }
+
+    public static void destroy(Long id) {
+        notFoundIfNull(id);
+        Contact contact = Contact.findById(id);
+        notFoundIfNull(contact);
+        contact.loggedDelete(getCurrentUser());
+        flash.success(Messages.get("successfullyDeleted", Messages.get("contact")));
         index(1, null, null, null);
     }
 

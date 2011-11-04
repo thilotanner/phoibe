@@ -44,8 +44,8 @@ public class Contact extends EnhancedModel {
     public String comments;
 
     public String getLabel() {
-        String firstLastName = StringUtils.nonEmptyJoin(new String[] {firstName, lastName}, " ");
-        return StringUtils.nonEmptyJoin(new String[] {company, firstLastName, city}, ", ");
+        String firstLastName = StringUtils.nonEmptyJoin(" ", firstName, lastName);
+        return StringUtils.nonEmptyJoin(", ", company, firstLastName, city);
     }
 
     public String getFormattedContact() {

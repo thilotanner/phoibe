@@ -1,17 +1,6 @@
 #{extends 'main.html' /}
 #{set title:messages.get(report.reportType.name) /}
 
-#{set 'moreScripts'}
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $('#modal-from-dom').bind('show', function() {
-            $('#modal-from-dom').load('@{AdditionalReportItems.create(report.id)}')
-        });
-    });
-</script>
-#{/set}
-
 <h1>#{get 'title' /}</h1>
 
 <dl>
@@ -102,10 +91,6 @@
         </tr>
     </tbody>
 </table>
-
-
-
-<div id="modal-from-dom" class="modal hide fade" />
 
 
 

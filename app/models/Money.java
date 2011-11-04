@@ -24,7 +24,8 @@ public class Money {
     @Transient
     public String rawValue;
 
-    public Money() { }
+    public Money() {
+    }
 
     public Money(Currency currency) {
         currencyCode = currency.getCurrencyCode();
@@ -32,7 +33,7 @@ public class Money {
     }
 
     public String getRawValue() {
-        if(rawValue == null && value != null && currencyCode != null) {
+        if (rawValue == null && value != null && currencyCode != null) {
             calculateRawValue();
         }
         return rawValue;
@@ -40,31 +41,38 @@ public class Money {
 
     public void setRawValue(String rawValue) {
         this.rawValue = rawValue;
-        if(currencyCode != null && this.rawValue != null) {
+        if (currencyCode != null && this.rawValue != null) {
             calculateValue();
         }
     }
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
-        if(this.currencyCode != null && rawValue != null) {
+        if (this.currencyCode != null && rawValue != null) {
             calculateValue();
         }
     }
 
-    public String getLabel()
-    {
-        return getRawValue();
+    public String getLabel() {
+        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+        symbols.setDecimalSeparator('.');
+        symbols.setGroupingSeparator('\'');
+
+        DecimalFormat decimalFormat = new DecimalFormat(",##0.00", symbols);
+
+        return decimalFormat.format(value / getConversionFactor());
+    }
+
+    public String getLabelWithCurrency() {
+        return String.format("%s %s", currencyCode, getLabel());
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return getLabel();
     }
 
-    public Money add(Money otherMoney)
-    {
+    public Money add(Money otherMoney) {
         checkCurrency(otherMoney);
 
         Money result = new Money();
@@ -73,8 +81,7 @@ public class Money {
         return result;
     }
 
-    public Money subtract(Money otherMoney)
-    {
+    public Money subtract(Money otherMoney) {
         checkCurrency(otherMoney);
 
         Money result = new Money();
@@ -93,8 +100,7 @@ public class Money {
         return result;
     }
 
-    private void calculateValue()
-    {
+    private void calculateValue() {
         try {
             double priceValue = Double.parseDouble(rawValue);
             value = (long) (priceValue * getConversionFactor());
@@ -106,15 +112,13 @@ public class Money {
     private void calculateRawValue() {
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
-        symbols.setGroupingSeparator('\'');
 
-        DecimalFormat decimalFormat = new DecimalFormat(",##0.00", symbols);
+        DecimalFormat decimalFormat = new DecimalFormat("##0.00", symbols);
 
         rawValue = decimalFormat.format(value / getConversionFactor());
     }
 
-    private double getConversionFactor()
-    {
+    private double getConversionFactor() {
         return Math.pow(10.0, getCurrency(currencyCode).getDefaultFractionDigits());
     }
 

@@ -1,5 +1,23 @@
 #{extends 'main.html' /}
 #{set title:messages.get('contacts') /}
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('#delete-modal').modal({
+            backdrop: 'static',
+            keyboard: true
+        });
+
+        $('[delete-modal]').click(function(e) {
+            e.preventDefault();
+            $('#delete-modal').load(e.target.href, function() {
+                $('#delete-modal').modal('show');
+            });
+        });
+    });
+</script>
+#{/set}
 
 <h1>#{get 'title' /}</h1>
 
@@ -26,9 +44,9 @@
             <td>${contact.lastName}</td>
             <td>${contact.city}</td>
             <td>
-                <a href="@{show(contact.id)}">anzeigen</a>
-                <a href="@{form(contact.id)}">bearbeiten</a>
-                <a href="tet">löschen</a>
+                <a href="@{show(contact.id)}">&{'show'}</a>
+                <a href="@{form(contact.id)}">&{'edit'}</a>
+                <a delete-modal="delete-modal" href="@{Contacts.delete(contact.id)}">&{'delete'}</a>
             </td>
         </tr>
         #{/list}
@@ -36,3 +54,5 @@
 </table>
 
 #{pagination count:count, pageSize:pageSize /}
+
+<div id="delete-modal" class="modal fade hide"></div>

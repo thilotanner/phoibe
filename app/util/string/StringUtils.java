@@ -1,10 +1,16 @@
 package util.string;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class StringUtils {
-    public static String nonEmptyJoin(String[] strings,
-                                      String delimiter) {
+    public static String nonEmptyJoin(String delimiter,
+                                      String... strings) {
+        return nonEmptyJoin(delimiter, Arrays.asList(strings));
+    }
+
+    public static String nonEmptyJoin(String delimiter,
+                                      List<String> strings) {
         StringBuilder sb = new StringBuilder();
         for (String string : strings) {
             if (string != null && !string.isEmpty()) {
@@ -15,11 +21,5 @@ public class StringUtils {
             }
         }
         return sb.toString();
-    }
-
-    public static String nonEmptyJoin(List<String> strings,
-                                      String delimiter) {
-        String[] string = new String[strings.size()];
-        return nonEmptyJoin(strings.toArray(string), delimiter);
     }
 }
