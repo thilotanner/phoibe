@@ -1,8 +1,11 @@
 package controllers;
 
+import models.AdditionalReportItem;
+import models.MetricProductReportItem;
 import models.Order;
 import models.OrderStatus;
 import models.Report;
+import models.ReportItem;
 import models.ReportTransition;
 import models.ReportType;
 import play.i18n.Messages;
@@ -105,6 +108,20 @@ public class Reports extends ApplicationController {
             show(resultReport.id);
         } catch (Exception e) {
             throw new IllegalArgumentException("Unable to create transition strategy", e);
+        }
+    }
+
+    public static void reportItemForm(Long reportItemId) {
+        notFoundIfNull(reportItemId);
+        ReportItem reportItem = ReportItem.findById(reportItemId);
+        notFoundIfNull(reportItem);
+
+        if(reportItem instanceof AdditionalReportItem) {
+            AdditionalReportItems.form(reportItemId);
+        } else if(reportItem instanceof MetricProductReportItem) {
+            MetricProductReportItems.form(reportItemId);
+        } else {
+            throw new UnsupportedOperationException("Unknown report item class: " + reportItem.getClass().getName());
         }
     }
 }

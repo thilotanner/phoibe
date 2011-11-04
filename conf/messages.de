@@ -121,7 +121,13 @@ metricProducts=Metrische Produkte
 metricProduct.name=Name
 metricProduct.description=Beschreibung
 metricProduct.metric.id=Metrik
-metricProduct.price.rawValue=Preis
+metricProduct.pricePerMetric.rawValue=Preis
+metricProduct.valueAddedTaxRate.id=Mehrwertsteuersatz
+
+metricProductReportItem=Metrische Produktposition
+metricProductReportItems=Metrische Produktpositionen
+metricProductReportItem.amount=Menge
+metricProductReportItem.metricProduct.id=Metrisches Produkt
 
 order=Auftrag
 orders=Aufträge

@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:messages.get('metricProductReportItem') /}
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        createAutocomplete($('#metricProductReportItem_metricProduct_id'), "@{MetricProducts.search}");
+    });
+</script>
+#{/set}
+
+
+#{form @save()}
+
+#{field property:'metricProductReportItem.id', object:metricProductReportItem}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+#{field property:'metricProductReportItem.report.id', object:metricProductReportItem}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'metricProductReportItem'}</legend>
+
+    #{autocompleteTextField property:'metricProductReportItem.metricProduct.id', object:metricProductReportItem, label:metricProductReportItem?.metricProduct?.name /}
+
+    #{textField property:'metricProductReportItem.amount', object:metricProductReportItem /}
+</fieldset>
+
+<div class="actions">
+<input type="submit" class="btn primary" value="&{'submit'}">
+<button type="reset" class="btn">&{'cancel'}</button>
+</div>
+#{/form}

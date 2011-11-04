@@ -1,13 +1,19 @@
 package controllers;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import models.Metric;
 import models.MetricProduct;
+import models.ValueAddedTaxRate;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
 import util.i18n.CurrencyProvider;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +68,33 @@ public class MetricProducts extends ApplicationController {
         index(1, null, null, null);
     }
 
+    public static void search(String search) {
+        List<Model> metricProducts = Model.Manager.factoryFor(MetricProduct.class).fetch(
+                0,
+                getPageSize(),
+                null,
+                null,
+                new ArrayList<String>(),
+                search,
+                null
+        );
+
+        renderJSON(metricProducts, new JsonSerializer<MetricProduct>() {
+
+			public JsonElement serialize(MetricProduct metricProduct, Type type,
+					JsonSerializationContext jsonSerializationContext)
+			{
+				JsonObject object = new JsonObject();
+				object.addProperty("id", metricProduct.id);
+				object.addProperty("label", metricProduct.name);
+				return object;
+			}
+		});
+    }
+
     private static void initRenderArgs() {
         renderArgs.put("metrics", Metric.findAll());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());
+        renderArgs.put("valueAddedTaxRates", ValueAddedTaxRate.findAll());
     }
 }

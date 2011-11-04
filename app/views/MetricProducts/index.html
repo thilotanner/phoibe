@@ -12,7 +12,9 @@
     <thead>
         <tr>
             #{tableSorter objectName:'metricProduct', fieldName:'name' /}
-            <th>&{'metricProduct.price.rawValue'}</th>
+            <th>&{'metricProduct.metric.id'}</th>
+            <th>&{'metricProduct.pricePerMetric.rawValue'}</th>
+            <th>&{'metricProduct.valueAddedTaxRate.id'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -20,7 +22,9 @@
         #{list items:metricProducts, as:'metricProduct'}
         <tr>
             <td>${metricProduct.name}</td>
-            <td>${metricProduct.price.label}</td>
+            <td>${metricProduct.metric.name}</td>
+            <td>${metricProduct.pricePerMetric.label}</td>
+            <td>${metricProduct.valueAddedTaxRate}</td>
             <td>
                 <a href="@{show(metricProduct.id)}">&{'show'}</a>
                 <a href="@{form(metricProduct.id)}">&{'edit'}</a>

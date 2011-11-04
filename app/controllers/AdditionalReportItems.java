@@ -22,6 +22,15 @@ public class AdditionalReportItems extends ApplicationController {
         render("@form", additionalReportItem);
     }
 
+    public static void form(Long id) {
+        notFoundIfNull(id);
+        AdditionalReportItem additionalReportItem = AdditionalReportItem.findById(id);
+        notFoundIfNull(additionalReportItem);
+
+        initRenderArgs();
+        render(additionalReportItem);
+    }
+
     public static void save(@Valid AdditionalReportItem additionalReportItem) {
         if(Validation.hasErrors()) {
             initRenderArgs();

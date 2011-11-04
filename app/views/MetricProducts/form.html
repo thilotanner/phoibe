@@ -21,10 +21,19 @@
     </div>
     #{/field}
 
-    #{textField property:'metricProduct.price.rawValue', object:metricProduct, label:defaultCurrency.getCurrencyCode() /}
+    #{textField property:'metricProduct.pricePerMetric.rawValue', object:metricProduct, label:defaultCurrency.getCurrencyCode() /}
 
-    #{field property:'metricProduct.price.currencyCode', object:metricProduct}
+    #{field property:'metricProduct.pricePerMetric.currencyCode', object:metricProduct}
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+    #{/field}
+
+    #{field property:'metricProduct.valueAddedTaxRate.id', object:metricProduct}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:metricProduct?.valueAddedTaxRate?.id, id:field.id /}
+        </div>
+    </div>
     #{/field}
 </fieldset>
 

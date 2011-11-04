@@ -32,13 +32,13 @@
            modal="modal">&{'create', rootReportType.name}</a>
         #{/list}
     #{/if}
-    #{else}
+    #{elseif order.orderStatus.toString() == 'IN_PROGRESS'}
         #{list items:order.currentReport.reportType.reportTransitions, as:'reportTransition'}
         <a href="@{Reports.confirmTransition(order.currentReport.id, reportTransition.id)}"
            class="btn primary"
            modal="modal">&{'create', reportTransition.targetReportType.name}</a>
         #{/list}
-    #{/else}
+    #{/elseif}
 
     #{if (order.orderStatus.toString() == 'NEW' || order.orderStatus.toString() == 'IN_PROGRESS')}
         <a href="@{Orders.confirmFinish(order.id)}"

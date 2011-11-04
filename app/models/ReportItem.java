@@ -1,7 +1,5 @@
 package models;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -10,7 +8,6 @@ import java.math.BigDecimal;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Access(AccessType.FIELD)
 public abstract class ReportItem extends EnhancedModel {
 
     @ManyToOne

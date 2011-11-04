@@ -24,11 +24,13 @@
 #{if report.currentReport}
 <h2>&{'workflow'}</h2>
 <div class="well">
+    #{if report.order.orderStatus.toString() == 'IN_PROGRESS'}
     #{list items:report.reportType.reportTransitions, as:'reportTransition'}
     <a href="@{confirmTransition(report.id, reportTransition.id)}"
        class="btn primary"
        modal="modal">&{'create', reportTransition.targetReportType.name}</a>
     #{/list}
+    #{/if}
     #{if (report.order.orderStatus.toString() == 'NEW' || report.order.orderStatus.toString() == 'IN_PROGRESS')}
         <a href="@{Orders.confirmFinish(report.order.id)}"
            class="btn success"
@@ -45,9 +47,10 @@
     <a href="@{download(report.id)}" class="btn primary">&{'downloadPdf'}</a>
 </div>
 
-#{if report.currentReport}
+#{if report.currentReport && report.order.orderStatus.toString() == 'IN_PROGRESS'}
 <h2>&{'reportItems'}</h2>
 <div class="well">
+    <a href="@{MetricProductReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('metricProductReportItem')}</a>
     <a href="@{AdditionalReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('additionalReportItem')}</a>
 </div>
 #{/if}
@@ -74,7 +77,9 @@
             <td>${reportItem.totalPrice}</td>
             <td>${reportItem.taxedTotalPrice}</td>
             <td>
-
+                #{if report.currentReport && report.order.orderStatus.toString() == 'IN_PROGRESS'}
+                <a href="@{reportItemForm(reportItem.id)}">&{'edit'}</a>
+                #{/if}
             </td>
         </tr>
         #{/list}

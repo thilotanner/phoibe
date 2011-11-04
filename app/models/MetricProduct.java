@@ -5,22 +5,21 @@ import play.data.validation.Valid;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class MetricProduct extends EnhancedModel {
+public class MetricProduct extends Product {
 
     @Required
-    public String name;
-
-    @Lob
-    public String description;
-
     @ManyToOne
     public Metric metric;
 
+    @Required
     @Valid
     @Embedded
-    public Money price;
+    public Money pricePerMetric;
+
+    @Required
+    @ManyToOne
+    public ValueAddedTaxRate valueAddedTaxRate;
 }
