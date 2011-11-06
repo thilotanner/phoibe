@@ -54,6 +54,8 @@ public class AdditionalReportItem extends ReportItem {
         additionalReportItem.amount = amount;
         additionalReportItem.description = description;
         additionalReportItem.pricePerUnit = pricePerUnit;
+        additionalReportItem.metric = metric;
+        additionalReportItem.valueAddedTaxRate = valueAddedTaxRate;
         return additionalReportItem;
     }
 }

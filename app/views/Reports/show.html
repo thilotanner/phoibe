@@ -1,6 +1,12 @@
 #{extends 'main.html' /}
 #{set title:messages.get(report.reportType.name) /}
 
+<ul class="breadcrumb">
+  <li><a href="@{Orders.index}">&{'orders'}</a> <span class="divider">/</span></li>
+  <li><a href="@{Orders.show(report.order.id)}">${report.order.description}</a> <span class="divider">/</span></li>
+  <li class="active">#{get 'title' /}</li>
+</ul>
+
 <h1>#{get 'title' /}</h1>
 
 <dl>

@@ -1,6 +1,11 @@
 #{extends 'main.html' /}
 #{set title:messages.get('order') /}
 
+<ul class="breadcrumb">
+  <li><a href="@{Orders.index}">&{'orders'}</a> <span class="divider">/</span></li>
+  <li class="active">${order.description}</li>
+</ul>
+
 <h1>#{get 'title' /}</h1>
 
 <dl>

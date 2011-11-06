@@ -1,6 +1,11 @@
 #{extends 'main.html' /}
 #{set title:messages.get('contacts') /}
 
+<ul class="breadcrumb">
+  <li><a href="@{Contacts.index}">&{'contacts'}</a> <span class="divider">/</span></li>
+  <li class="active">${contact.label}</li>
+</ul>
+
 <h1>#{get 'title' /}</h1>
 
 <dl>

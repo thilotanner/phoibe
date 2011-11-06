@@ -1,6 +1,12 @@
 #{extends 'main.html' /}
 #{set title:messages.get('account') /}
 
+<ul class="breadcrumb">
+  <li class="active">&{'accounting'} <span class="divider">/</span></li>
+  <li><a href="@{index}">&{'accounts'}</a> <span class="divider">/</span></li>
+  <li class="active">${account.label}</li>
+</ul>
+
 <h1>#{get 'title' /}</h1>
 
 <dl>
