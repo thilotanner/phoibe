@@ -143,6 +143,20 @@ order.orderStatus.FINISHED=beendet
 order.orderStatus.ABORTED=abgebrochen
 order.currentReport=Aktueller Bericht
 
+precalculatedProduct=Vorkalkuliertes Produkt
+precalculatedProducts=Vorkalkulierte Produkte
+precalculatedProduct.name=Name
+precalculatedProduct.description=Beschreibungs-Vorlage
+precalculatedProduct.metric.id=Metrik
+precalculatedProduct.valueAddedTaxRate.id=Mehrwertsteuersatz
+
+precalculatedProductReportItem=Vorkalkulierte Produktposition
+precalculatedProductReportItems=Vorkalkulierte Produktpositionen
+precalculatedProductReportItem.precalculatedProduct.id=Vorkalkuliertes Produkt
+precalculatedProductReportItem.description=Beschreibung
+precalculatedProductReportItem.amount=Menge
+precalculatedProductReportItem.pricePerUnit.rawValue=Preis
+
 report=Bericht
 reports=Berichte
 report.allReports=Alle Berichte

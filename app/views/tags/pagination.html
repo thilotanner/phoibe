@@ -42,15 +42,14 @@
     }
 }%
 
-<div>
-    &{'paging.numberOfObjects'}: ${_count}
-</div>
-
 <div class="pagination">
     <ul>
         #{if page > 1}
-        <li><a href="${pageLink(page - 1)}">« &{'paging.previous'}</a></li>
+        <li><a href="${pageLink(page - 1)}">&larr; &{'paging.previous'}</a></li>
         #{/if}
+        #{else}
+        <li class="prev disabled"><a href="#">&{'paging.previous'} &larr;</a></li>
+        #{/else}
 
         #{if beginPage >= 4}
         <li><a href="${pageLink(1)}">1</a></li>
@@ -71,7 +70,14 @@
         #{/if}
 
         #{if page < lastPage}
-        <li><a href="${pageLink(page + 1)}">&{'paging.next'} »</a></li>
+        <li class="next"><a href="${pageLink(page + 1)}">&{'paging.next'} &rarr;</a></li>
         #{/if}
+        #{else}
+        <li class="next disabled"><a href="#">&{'paging.next'} &rarr;</a></li>
+        #{/else}
     </ul>
+</div>
+
+<div>
+    &{'paging.numberOfObjects'}: ${_count}
 </div>

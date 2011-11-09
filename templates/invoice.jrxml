@@ -147,8 +147,8 @@
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement mode="Transparent" x="0" y="4" width="223" height="12"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" isBold="true"/>
+				<textElement verticalAlignment="Top" markup="html">
+					<font fontName="Arial" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>

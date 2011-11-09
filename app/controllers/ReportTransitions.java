@@ -20,18 +20,17 @@ public class ReportTransitions extends ApplicationController {
     }
 
      public static void form(Long id) {
-        if (id == null) {
-            render();
-        }
-
+        notFoundIfNull(id);
         ReportTransition reportTransition = ReportTransition.findById(id);
         notFoundIfNull(reportTransition);
 
+        initRenderArgs();
         render(reportTransition);
     }
 
     public static void save(@Valid ReportTransition reportTransition) {
         if(Validation.hasErrors()) {
+            initRenderArgs();
             render("@form", reportTransition);
         }
 

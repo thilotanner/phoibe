@@ -1,5 +1,19 @@
 #{extends 'main.html' /}
 
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        CKEDITOR.replace('metricProduct_description', {
+            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
+            coreStyles_bold	: { element : 'b' },
+		    coreStyles_italic : { element : 'i' },
+            enterMode: CKEDITOR.ENTER_BR
+        });
+    });
+</script>
+#{/set}
+
 #{form @save()}
 #{field property:'metricProduct.id', object:metricProduct}
 <input type="hidden" value="${field.value}" name="${field.name}"/>

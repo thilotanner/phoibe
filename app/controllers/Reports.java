@@ -4,6 +4,7 @@ import models.AdditionalReportItem;
 import models.MetricProductReportItem;
 import models.Order;
 import models.OrderStatus;
+import models.PrecalculatedProductReportItem;
 import models.Report;
 import models.ReportItem;
 import models.ReportTransition;
@@ -74,7 +75,7 @@ public class Reports extends ApplicationController {
 
         String fileName = report.id + ".pdf";
 
-        renderBinary(new ByteArrayInputStream(outputStream.toByteArray()), fileName,"application/pdf", false);
+        renderBinary(new ByteArrayInputStream(outputStream.toByteArray()), fileName,"application/pdf", true);
     }
 
     public static void confirmTransition(Long id, Long reportTransitionId) {
@@ -120,6 +121,8 @@ public class Reports extends ApplicationController {
             AdditionalReportItems.form(reportItemId);
         } else if(reportItem instanceof MetricProductReportItem) {
             MetricProductReportItems.form(reportItemId);
+        } else if(reportItem instanceof PrecalculatedProductReportItem) {
+            PrecalculatedProductReportItems.form(reportItemId);
         } else {
             throw new UnsupportedOperationException("Unknown report item class: " + reportItem.getClass().getName());
         }

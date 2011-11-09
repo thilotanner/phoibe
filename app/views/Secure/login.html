@@ -42,7 +42,11 @@
                         <label for="remember">&{'secure.remember'}</label>
                         <div class="input">
                             <ul class="inputs-list">
-                                <li><input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} /></li>
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
+                                    </label>
+                                </li>
                             </ul>
                         </div>
                     </div>

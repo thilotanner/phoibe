@@ -1,6 +1,7 @@
 package models;
 
 import play.data.validation.Required;
+import play.data.validation.Valid;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;

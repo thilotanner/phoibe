@@ -1,5 +1,8 @@
 package models;
 
+import play.data.validation.Required;
+import play.data.validation.Valid;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embedded;
@@ -10,16 +13,21 @@ import java.math.BigDecimal;
 @Entity
 public class AdditionalReportItem extends ReportItem {
 
+    @Required
     public BigDecimal amount;
 
+    @Required
     @ManyToOne
     public Metric metric;
 
+    @Required
     public String description;
 
+    @Valid
     @Embedded
     public Money pricePerUnit;
 
+    @Required
     @ManyToOne
     public ValueAddedTaxRate valueAddedTaxRate;
 

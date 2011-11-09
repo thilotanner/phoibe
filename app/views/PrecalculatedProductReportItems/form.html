@@ -1,0 +1,98 @@
+#{extends 'main.html' /}
+#{set title:messages.get('precalculatedProductReportItem') /}
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        CKEDITOR.replace('precalculatedProductReportItem_description', {
+            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
+            coreStyles_bold	: { element : 'b' },
+		    coreStyles_italic : { element : 'i' },
+            enterMode: CKEDITOR.ENTER_BR
+        });
+
+        createAutocompleteForPrecalculatedProducts($('#precalculatedProductReportItem_precalculatedProduct_id'), "@{PrecalculatedProducts.search}");
+    });
+
+    function createAutocompleteForPrecalculatedProducts(hiddenElement, ajaxUrl) {
+        var chooserElement = $("#" + hiddenElement.attr('id') + "_chooser");
+        chooserElement.autocomplete({
+            source: function(request, response)
+            {
+                $.ajax({
+                    url: ajaxUrl,
+                    dataType: "json",
+                    data: {
+                        search: request.term
+                    },
+                    success: function(data)
+                    {
+                        response($.map(data, function(item)
+                        {
+                            return {
+                                label: item.label,
+                                value: item.id
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 1,
+            focus: function(event, ui)
+            {
+                chooserElement.val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui)
+            {
+                if (ui.item) {
+                    hiddenElement.val(ui.item.value);
+                    chooserElement.val(ui.item.label);
+
+                    var descriptionAction = #{jsAction @PrecalculatedProducts.description(':id') /}
+
+                    $.get(descriptionAction({id: ui.item.value}), function(data) {
+                        var oEditor = CKEDITOR.instances.precalculatedProductReportItem_description;
+                        oEditor.setData(data);
+                    });
+
+                    return false;
+                }
+            }
+        });
+    }
+</script>
+#{/set}
+
+
+#{form @save()}
+
+#{field property:'precalculatedProductReportItem.id', object:precalculatedProductReportItem}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+#{field property:'precalculatedProductReportItem.report.id', object:precalculatedProductReportItem}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'precalculatedProductReportItem'}</legend>
+
+    #{autocompleteTextField property:'precalculatedProductReportItem.precalculatedProduct.id', object:precalculatedProductReportItem, label:precalculatedProductReportItem?.precalculatedProduct?.name /}
+
+    #{textArea property:'precalculatedProductReportItem.description', object:precalculatedProductReportItem /}
+
+    #{textField property:'precalculatedProductReportItem.amount', object:precalculatedProductReportItem /}
+
+    #{textField property:'precalculatedProductReportItem.pricePerUnit.rawValue', object:precalculatedProductReportItem, label:defaultCurrency.getCurrencyCode() /}
+
+    #{field property:'precalculatedProductReportItem.pricePerUnit.currencyCode', object:precalculatedProductReportItem}
+    <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+    #{/field}
+</fieldset>
+
+<div class="actions">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <a href="@{Reports.show(precalculatedProductReportItem.report.id)}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}

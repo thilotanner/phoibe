@@ -57,6 +57,7 @@
 <h2>&{'reportItems'}</h2>
 <div class="well">
     <a href="@{MetricProductReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('metricProductReportItem')}</a>
+    <a href="@{PrecalculatedProductReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('precalculatedProductReportItem')}</a>
     <a href="@{AdditionalReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('additionalReportItem')}</a>
 </div>
 #{/if}
@@ -78,7 +79,7 @@
         <tr>
             <td>${reportItem.amount}</td>
             <td>${reportItem.metric.symbol}</td>
-            <td>${reportItem.description}</td>
+            <td>${reportItem.description?.raw()}</td>
             <td>${reportItem.pricePerUnit}</td>
             <td>${reportItem.totalPrice}</td>
             <td>${reportItem.taxedTotalPrice}</td>
