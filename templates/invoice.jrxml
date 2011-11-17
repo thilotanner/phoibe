@@ -16,19 +16,12 @@
 	</background>
 	<title>
 		<band height="314" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="258" width="95" height="19"/>
-				<textElement>
-					<font fontName="Arial" size="16" isBold="true" isPdfEmbedded="false"/>
-				</textElement>
-				<text><![CDATA[RECHNUNG]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="94" y="258" width="129" height="19"/>
+				<reportElement x="0" y="258" width="483" height="19"/>
 				<textElement>
-					<font fontName="Arial" size="16"/>
+					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" - Nr. " + $P{report}.id]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{report}.reportType.name + " - Nr. " + $P{report}.id]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="287" width="39" height="12"/>
@@ -73,7 +66,7 @@
 				<textFieldExpression><![CDATA[$P{report}.order.shippingContact.getFormattedAddress()]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd.MM.yyyy">
-				<reportElement x="330" y="244" width="151" height="12"/>
+				<reportElement x="330" y="244" width="153" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>

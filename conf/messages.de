@@ -198,6 +198,7 @@ reportType.reportColor.GREEN=grün
 reportType.reportColor.YELLOW=gelb
 reportType.reportColor.RED=rot
 reportType.reportColor.BLUE=blau
+reportType.template=Berichtsvorlage
 
 user=Benutzer
 users=Benutzer
