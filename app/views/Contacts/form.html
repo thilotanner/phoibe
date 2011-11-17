@@ -11,11 +11,26 @@
 
     #{textField property:'contact.company', object:contact /}
 
+    #{field property:'contact.title', object:contact}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            <select name="${field.name}" id="${field.id}">
+                <option value=""#{if field.value==null} selected="selected"#{/if}></option>
+                <option value="MS"#{if field.value.toString()=='MS'} selected="selected"#{/if}>&{'contact.title.MS'}</option>
+                <option value="MR"#{if field.value.toString()=='MR'} selected="selected"#{/if}>&{'contact.title.MR'}</option>
+            </select>
+        </div>
+    </div>
+    #{/field}
+
     #{textField property:'contact.firstName', object:contact /}
 
     #{textField property:'contact.lastName', object:contact /}
 
     #{textField property:'contact.street', object:contact /}
+
+    #{textField property:'contact.postOfficeBox', object:contact /}
 
     #{textField property:'contact.postalCode', object:contact /}
 

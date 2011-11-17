@@ -6,11 +6,19 @@
   <li class="active">${contact.label}</li>
 </ul>
 
+<div class="well">
+    <a href="@{form(contact.id)}" class="btn primary">&{'edit'}</a>
+</div>
+
+
 <h1>#{get 'title' /}</h1>
 
 <dl>
     <dt>&{'contact.company'}</dt>
     <dd>${contact.company}</dd>
+
+    <dt>&{'contact.title'}</dt>
+    <dd>#{if contact.title}&{"contact.title." + contact.title}#{/if}</dd>
 
     <dt>&{'contact.firstName'}</dt>
     <dd>${contact.firstName}</dd>
@@ -20,6 +28,9 @@
 
     <dt>&{'contact.street'}</dt>
     <dd>${contact.street}</dd>
+
+    <dt>&{'contact.postOfficeBox'}</dt>
+    <dd>${contact.postOfficeBox}</dd>
 
     <dt>&{'contact.postalCode'}</dt>
     <dd>${contact.postalCode}</dd>

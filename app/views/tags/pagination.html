@@ -54,7 +54,9 @@
         #{if beginPage >= 4}
         <li><a href="${pageLink(1)}">1</a></li>
         <li><a href="${pageLink(2)}">2</a></li>
-        <li>...</li>
+        <li class="disabled">
+            <a href="#">...</a>
+        </li>
         #{/if}
 
         #{if beginPage != endPage}
@@ -64,7 +66,9 @@
         #{/if}
 
         #{if endPage <= (lastPage - 3)}
-        <li>...</li>
+        <li class="disabled">
+            <a href="#">...</a>
+        </li>
         <li><a href="${pageLink(lastPage - 1)}">${lastPage - 1}</a></li>
         <li><a href="${pageLink(lastPage)}">${lastPage}</a></li>
         #{/if}

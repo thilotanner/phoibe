@@ -2,7 +2,7 @@
 <div class="clearfix ${field.errorClass}">
     <label for="${field.id}">&{field.name}</label>
     <div class="input">
-        <input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}">
+        <input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}" class="span6">
         <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_label}#{/else}</span>
     </div>
 </div>

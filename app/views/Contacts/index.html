@@ -18,6 +18,7 @@
             #{tableSorter objectName:'contact', fieldName:'company' /}
             #{tableSorter objectName:'contact', fieldName:'firstName' /}
             #{tableSorter objectName:'contact', fieldName:'lastName' /}
+            #{tableSorter objectName:'contact', fieldName:'street' /}
             #{tableSorter objectName:'contact', fieldName:'city' /}
             <th>&{'actions'}</th>
         </tr>
@@ -28,6 +29,7 @@
             <td>${contact.company}</td>
             <td>${contact.firstName}</td>
             <td>${contact.lastName}</td>
+            <td>${contact.street}</td>
             <td>${contact.city}</td>
             <td>
                 <a href="@{show(contact.id)}">&{'show'}</a>

@@ -7,6 +7,8 @@ import util.string.NonEmptyStringBuilder;
 import util.string.StringUtils;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 
 @Entity
@@ -14,12 +16,17 @@ public class Contact extends EnhancedModel {
 
     public String company;
 
+    @Enumerated(EnumType.STRING)
+    public Title title;
+
     public String firstName;
 
     @Required
     public String lastName;
 
     public String street;
+
+    public String postOfficeBox;
 
     public String postalCode;
 
@@ -45,7 +52,7 @@ public class Contact extends EnhancedModel {
 
     public String getLabel() {
         String firstLastName = StringUtils.nonEmptyJoin(" ", firstName, lastName);
-        return StringUtils.nonEmptyJoin(", ", company, firstLastName, city);
+        return StringUtils.nonEmptyJoin(", ", company, firstLastName, street, city);
     }
 
     public String getFormattedContact() {
