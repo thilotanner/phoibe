@@ -37,6 +37,11 @@ public class AdditionalReportItem extends ReportItem {
     }
 
     @Override
+    public BigDecimal getPriceUnit() {
+        return BigDecimal.ONE;
+    }
+
+    @Override
     public Metric getMetric() {
         return metric;
     }

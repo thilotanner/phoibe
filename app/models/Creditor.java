@@ -22,6 +22,7 @@ public class Creditor extends EnhancedModel {
 
     public String reference;
 
+    @Valid
     @Embedded
     public Money amount;
 

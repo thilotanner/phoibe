@@ -15,6 +15,8 @@ public abstract class ReportItem extends EnhancedModel {
 
     public abstract BigDecimal getAmount();
 
+    public abstract BigDecimal getPriceUnit();
+
     public abstract Metric getMetric();
 
     public abstract String getDescription();
@@ -26,7 +28,7 @@ public abstract class ReportItem extends EnhancedModel {
     public abstract ValueAddedTaxRate getValueAddedTaxRate();
 
     public Money getTotalPrice() {
-        return getPricePerUnit().multiply(getAmount());
+        return getPricePerUnit().multiply(getAmount().divide(getPriceUnit()));
     }
 
     public Money getTaxedTotalPrice() {

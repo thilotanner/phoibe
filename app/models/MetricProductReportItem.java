@@ -22,6 +22,11 @@ public class MetricProductReportItem extends ReportItem {
     }
 
     @Override
+    public BigDecimal getPriceUnit() {
+        return metricProduct.priceUnit;
+    }
+
+    @Override
     public Metric getMetric() {
         return metricProduct.metric;
     }
@@ -33,7 +38,7 @@ public class MetricProductReportItem extends ReportItem {
 
     @Override
     public Money getPricePerUnit() {
-        return metricProduct.pricePerMetric;
+        return metricProduct.retailPricePerMetric;
     }
 
     @Override

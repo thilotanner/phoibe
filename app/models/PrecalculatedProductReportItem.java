@@ -33,6 +33,11 @@ public class PrecalculatedProductReportItem extends ReportItem {
     }
 
     @Override
+    public BigDecimal getPriceUnit() {
+        return BigDecimal.ONE;
+    }
+
+    @Override
     public Metric getMetric() {
         return precalculatedProduct.metric;
     }
