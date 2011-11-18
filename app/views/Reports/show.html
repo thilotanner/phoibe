@@ -86,6 +86,7 @@
             <td>
                 #{if report.currentReport && report.order.orderStatus.toString() == 'IN_PROGRESS'}
                 <a href="@{reportItemForm(reportItem.id)}">&{'edit'}</a>
+                <a href="@{confirmDeleteItem(reportItem.id)}" modal=modal>&{'delete'}</a>
                 #{/if}
             </td>
         </tr>

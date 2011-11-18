@@ -33,7 +33,7 @@ public class MetricProductReportItem extends ReportItem {
 
     @Override
     public String getDescription() {
-        return metricProduct.name;
+        return metricProduct.description;
     }
 
     @Override

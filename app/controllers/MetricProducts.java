@@ -86,7 +86,7 @@ public class MetricProducts extends ApplicationController {
 			{
 				JsonObject object = new JsonObject();
 				object.addProperty("id", metricProduct.id);
-				object.addProperty("label", metricProduct.name);
+				object.addProperty("label", metricProduct.getLabel());
 				return object;
 			}
 		});

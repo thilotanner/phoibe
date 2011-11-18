@@ -1,6 +1,20 @@
 #{extends 'main.html' /}
 #{set title:messages.get('additionalReportItem') /}
 
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        CKEDITOR.replace('additionalReportItem_description', {
+            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
+            coreStyles_bold	: { element : 'b' },
+		    coreStyles_italic : { element : 'i' },
+            enterMode: CKEDITOR.ENTER_BR
+        });
+    });
+</script>
+#{/set}
+
 #{form @save()}
 
 #{field property:'additionalReportItem.id', object:additionalReportItem}
@@ -25,7 +39,7 @@
     </div>
     #{/field}
 
-    #{textField property:'additionalReportItem.description', object:additionalReportItem /}
+    #{textArea property:'additionalReportItem.description', object:additionalReportItem /}
 
     #{textField property:'additionalReportItem.pricePerUnit.rawValue', object:additionalReportItem, label:defaultCurrency.getCurrencyCode() /}
 

@@ -51,4 +51,12 @@ public class MetricProduct extends Product {
 
     @Lob
     public String comments;
+
+    public String getLabel() {
+        if(supplier != null && !supplier.company.isEmpty()) {
+            return String.format("%s (%s)", name, supplier.company);
+        } else {
+            return name;
+        }
+    }
 }

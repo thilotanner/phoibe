@@ -127,4 +127,22 @@ public class Reports extends ApplicationController {
             throw new UnsupportedOperationException("Unknown report item class: " + reportItem.getClass().getName());
         }
     }
+
+    public static void confirmDeleteItem(Long reportItemId) {
+        notFoundIfNull(reportItemId);
+        ReportItem reportItem = ReportItem.findById(reportItemId);
+        notFoundIfNull(reportItem);
+
+        render(reportItem);
+    }
+
+    public static void destroyItem(Long reportItemId) {
+        notFoundIfNull(reportItemId);
+        ReportItem reportItem = ReportItem.findById(reportItemId);
+        notFoundIfNull(reportItem);
+
+        reportItem.delete();
+        flash.success(Messages.get("successfullyDeleted", Messages.get("reportItem")));
+        show(reportItem.report.id);
+    }
 }
