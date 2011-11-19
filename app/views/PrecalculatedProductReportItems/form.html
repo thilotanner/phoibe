@@ -84,7 +84,7 @@
 
     #{textField property:'precalculatedProductReportItem.amount', object:precalculatedProductReportItem /}
 
-    #{textField property:'precalculatedProductReportItem.pricePerUnit.rawValue', object:precalculatedProductReportItem, label:defaultCurrency.getCurrencyCode() /}
+    #{textField property:'precalculatedProductReportItem.pricePerUnit.rawValue', object:precalculatedProductReportItem, help:defaultCurrency.getCurrencyCode() /}
 
     #{field property:'precalculatedProductReportItem.pricePerUnit.currencyCode', object:precalculatedProductReportItem}
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>

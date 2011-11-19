@@ -41,7 +41,7 @@
 
     #{textArea property:'additionalReportItem.description', object:additionalReportItem /}
 
-    #{textField property:'additionalReportItem.pricePerUnit.rawValue', object:additionalReportItem, label:defaultCurrency.getCurrencyCode() /}
+    #{textField property:'additionalReportItem.pricePerUnit.rawValue', object:additionalReportItem, help:defaultCurrency.getCurrencyCode() /}
 
     #{field property:'additionalReportItem.pricePerUnit.currencyCode', object:additionalReportItem}
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>

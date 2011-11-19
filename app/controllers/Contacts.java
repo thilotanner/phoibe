@@ -9,6 +9,7 @@ import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
+import play.mvc.Http;
 import util.i18n.CountryProvider;
 
 import java.lang.reflect.Type;
@@ -56,6 +57,11 @@ public class Contacts extends ApplicationController {
         render(contact);
     }
 
+    public static void modalForm() {
+        initRenderArgs();
+        render();
+    }
+
     public static void save(@Valid Contact contact) {
         if(Validation.hasErrors()) {
             initRenderArgs();
@@ -65,6 +71,18 @@ public class Contacts extends ApplicationController {
         contact.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("contact")));
         index(1, null, null, null);
+    }
+
+    public static void modalSave(@Valid Contact contact) {
+        if(Validation.hasErrors()) {
+            initRenderArgs();
+
+            response.status = Http.StatusCode.BAD_REQUEST;
+            render("@modalForm", contact);
+        }
+
+        contact.loggedSave(getCurrentUser());
+        renderJSON(String.format("{ \"id\" : %s, \"label\" : \"%s\" }", contact.id, contact.getLabel()));
     }
 
     public static void delete(Long id) {

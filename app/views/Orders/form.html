@@ -26,10 +26,19 @@
 
     #{textField property:'order.description', object:order /}
 
-    #{autocompleteTextField property:'order.orderingContact.id', object:order, label:order?.orderingContact?.label /}
+    %{
+        help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"order_orderingContact_id\">" + messages.get('create', messages.get('contact')) + "</a>";
+    }%
+    #{autocompleteTextField property:'order.orderingContact.id', object:order, label:order?.orderingContact?.label, help:help.raw() /}
 
+    %{
+        help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"order_shippingContact_id\">" + messages.get('create', messages.get('contact')) + "</a>";
+    }%
     #{autocompleteTextField property:'order.shippingContact.id', object:order, label:order?.shippingContact?.label  /}
 
+    %{
+        help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"order_billingContact_id\">" + messages.get('create', messages.get('contact')) + "</a>";
+    }%
     #{autocompleteTextField property:'order.billingContact.id', object:order, label:order?.billingContact?.label  /}
 
     #{textArea property:'order.comments', object:order /}
@@ -41,3 +50,5 @@
 </div>
 
 #{/form}
+
+<div id="modal" class="modal fade hide"></div>

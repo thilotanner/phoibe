@@ -9,6 +9,9 @@ $(document).ready(function() {
     $('[modal]').click(function(e) {
         e.preventDefault();
         $('#modal').load(e.target.href, function() {
+            if($(e.srcElement).attr('target')) {
+                $('#modal').attr('target', $(e.srcElement).attr('target'));
+            }
             $('#modal').modal('show');
         });
     });
@@ -51,5 +54,27 @@ function createAutocomplete(hiddenElement, ajaxUrl) {
                 return false;
             }
         }
+    });
+}
+
+function submitModal(modalElement, ajaxUrl) {
+    element = $('#' + modalElement);
+    form  = $('#' + modalElement + ' form');
+    data = form.serialize();
+
+    $.ajax({
+    type: "POST",
+    url: ajaxUrl,
+    data: data,
+    complete: function(data) {
+        if(data.status == 200) {
+            var object = jQuery.parseJSON(data.responseText);
+            $('#' + element.attr('target')).val(object.id);
+            $('#' + element.attr('target') + '_chooser').val(object.label);
+            element.modal('hide');
+        } else {
+            element.html(data.responseText);
+        }
+    }
     });
 }

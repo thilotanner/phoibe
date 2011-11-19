@@ -35,7 +35,10 @@
 
     #{textArea property:'metricProduct.description', object:metricProduct /}
 
-    #{autocompleteTextField property:'metricProduct.supplier.id', object:metricProduct, label:metricProduct?.supplier?.label /}
+    %{
+        help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"metricProduct_supplier_id\">" + messages.get('create', messages.get('contact')) + "</a>";
+    }%
+    #{autocompleteTextField property:'metricProduct.supplier.id', object:metricProduct, label:metricProduct?.supplier?.label, help:help.raw() /}
 
     #{textField property:'metricProduct.orderNumber', object:metricProduct /}
 
@@ -50,13 +53,13 @@
 
     #{textField property:'metricProduct.priceUnit', object:metricProduct /}
 
-    #{textField property:'metricProduct.purchasePricePerMetric.rawValue', object:metricProduct, label:defaultCurrency.getCurrencyCode() /}
+    #{textField property:'metricProduct.purchasePricePerMetric.rawValue', object:metricProduct, help:defaultCurrency.getCurrencyCode() /}
 
     #{field property:'metricProduct.purchasePricePerMetric.currencyCode', object:metricProduct}
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
     #{/field}
 
-    #{textField property:'metricProduct.retailPricePerMetric.rawValue', object:metricProduct, label:defaultCurrency.getCurrencyCode() /}
+    #{textField property:'metricProduct.retailPricePerMetric.rawValue', object:metricProduct, help:defaultCurrency.getCurrencyCode() /}
 
     #{field property:'metricProduct.retailPricePerMetric.currencyCode', object:metricProduct}
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
@@ -80,3 +83,5 @@
     <a href="@{index}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}
+
+<div id="modal" class="modal fade hide"></div>

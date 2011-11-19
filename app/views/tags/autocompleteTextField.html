@@ -7,7 +7,7 @@
                name="${field.id}_chooser"
                value="${_label}"
                class="span6" />
-        <span class="help-inline">${field.error}</span>
+        <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
     </div>
 
     <input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>

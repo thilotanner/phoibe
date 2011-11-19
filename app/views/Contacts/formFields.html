@@ -1,0 +1,63 @@
+#{field property:'contact.id', object:contact}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
+<fieldset>
+    <legend>&{'contact'}</legend>
+
+    #{textField property:'contact.company', object:contact /}
+
+    #{field property:'contact.title', object:contact}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            <select name="${field.name}" id="${field.id}">
+                <option value=""#{if field.value==null} selected="selected"#{/if}></option>
+                <option value="MS"#{if field.value.toString()=='MS'} selected="selected"#{/if}>&{'contact.title.MS'}</option>
+                <option value="MR"#{if field.value.toString()=='MR'} selected="selected"#{/if}>&{'contact.title.MR'}</option>
+            </select>
+        </div>
+    </div>
+    #{/field}
+
+    #{textField property:'contact.firstName', object:contact /}
+
+    #{textField property:'contact.lastName', object:contact /}
+
+    #{textField property:'contact.street', object:contact /}
+
+    #{textField property:'contact.postOfficeBox', object:contact /}
+
+    #{textField property:'contact.postalCode', object:contact /}
+
+    #{textField property:'contact.city', object:contact /}
+
+    #{field property:'contact.countryCode', object:contact}
+    <div class="clearfix">
+        <label for="${field.id}">&{field.name}</label>
+        <div class="input">
+            #{select field.name, value:field.value, id:field.id}
+                #{list items:preferredCountries, as:'country'}
+                #{option country.getCountry()}${country.getDisplayCountry()}#{/option}
+                #{/list}
+                <option disabled="disabled">--------</option>
+                #{list items:allCountries, as:'country'}
+                #{option country.getCountry()}${country.getDisplayCountry()}#{/option}
+                #{/list}
+            #{/select}
+        </div>
+    </div>
+    #{/field}
+
+    #{textField property:'contact.phone', object:contact /}
+
+    #{textField property:'contact.fax', object:contact /}
+
+    #{textField property:'contact.mobile', object:contact /}
+
+    #{textField property:'contact.email', object:contact /}
+
+    #{textField property:'contact.website', object:contact /}
+
+    #{textArea property:'contact.comments', object:contact /}
+</fieldset>

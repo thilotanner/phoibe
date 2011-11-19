@@ -32,7 +32,7 @@
 
     #{autocompleteTextField property:'entry.credit.id', object:entry, label:entry?.credit?.label /}
 
-    #{textField property:'entry.amount.rawValue', object:entry, label:defaultCurrency.getCurrencyCode() /}
+    #{textField property:'entry.amount.rawValue', object:entry, help:defaultCurrency.getCurrencyCode() /}
 
     #{field property:'entry.amount.currencyCode', object:entry}
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
