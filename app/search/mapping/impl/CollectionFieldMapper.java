@@ -1,19 +1,18 @@
 package search.mapping.impl;
 
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import search.annotations.ElasticSearchEmbedded;
+import search.mapping.FieldMapper;
+import search.mapping.MapperFactory;
+import search.mapping.MappingException;
+import search.util.ReflectionUtil;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.elasticsearch.common.xcontent.XContentBuilder;
-
-import search.annotations.ElasticSearchEmbedded;
-import search.mapping.FieldMapper;
-import search.mapping.MapperFactory;
-import search.mapping.MappingException;
-import search.util.ReflectionUtil;
 
 /**
  * Field mapper for collection type; maps to array by default

@@ -15,70 +15,84 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="314" splitType="Stretch">
+		<band height="132" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="258" width="483" height="19"/>
+				<reportElement x="0" y="0" width="483" height="19"/>
 				<textElement>
 					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{report}.reportType.name + " - Nr. " + $P{report}.id]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="287" width="39" height="12"/>
+				<reportElement x="0" y="45" width="110" height="12"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Betreff:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="299" width="39" height="12"/>
+				<reportElement positionType="Float" x="0" y="86" width="483" height="12"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Objekt:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="244" width="223" height="12"/>
+				<reportElement x="110" y="25" width="373" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Referenz-Nr. " + $P{report}.order.id]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{report}.order.id]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="263" y="125" width="220" height="93"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{report}.order.billingContact.getFormattedContact()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="39" y="287" width="273" height="12"/>
+				<reportElement x="110" y="45" width="373" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{report}.order.description]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="39" y="299" width="273" height="12"/>
+				<reportElement positionType="Float" x="110" y="86" width="373" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{report}.order.shippingContact.getFormattedContact()]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd.MM.yyyy">
-				<reportElement x="330" y="244" width="153" height="12"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{report}.order.shippingContact.getFormattedFullContact()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="263" y="244" width="65" height="12"/>
+				<reportElement x="0" y="65" width="110" height="12"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Auftraggeber:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="106" width="483" height="12"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rechnungsadresse:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="110" height="12"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referenz-Nr.:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="110" y="106" width="373" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<text><![CDATA[9100 Herisau, ]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{report}.order.billingContact.getFormattedFullContact()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="110" y="65" width="373" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.order.orderingContact.getFormattedFullContact()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

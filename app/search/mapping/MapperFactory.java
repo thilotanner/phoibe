@@ -1,14 +1,14 @@
 package search.mapping;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
-
 import play.db.jpa.Model;
 import search.annotations.ElasticSearchEmbedded;
 import search.mapping.impl.CollectionFieldMapper;
 import search.mapping.impl.EmbeddedFieldMapper;
 import search.mapping.impl.PlayModelMapper;
 import search.mapping.impl.SimpleFieldMapper;
+
+import java.lang.reflect.Field;
+import java.util.Collection;
 
 /**
  * Factory for {@link ModelMapper}s

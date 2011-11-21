@@ -18,6 +18,8 @@
  */
 package search.util;
 
+import play.Logger;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -31,8 +33,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import play.Logger;
 
 /**
  * The Class ReflectionUtil.

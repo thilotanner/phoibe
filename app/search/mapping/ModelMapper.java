@@ -1,8 +1,8 @@
 package search.mapping;
 
-import java.io.IOException;
-
 import org.elasticsearch.common.xcontent.XContentBuilder;
+
+import java.io.IOException;
 
 /**
  * Maps a model to an Elastic Search index

@@ -1,13 +1,13 @@
 package search.mapping.impl;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Date;
-
 import org.apache.commons.lang.Validate;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import search.annotations.ElasticSearchField;
 import search.mapping.FieldMapper;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Date;
 
 /**
  * Abstract base class for {@link FieldMapper}s

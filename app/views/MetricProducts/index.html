@@ -17,6 +17,7 @@
     <thead>
         <tr>
             #{tableSorter objectName:'metricProduct', fieldName:'name' /}
+            <th>&{'metricProduct.supplier.id'}</th>
             <th>&{'metricProduct.metric.id'}</th>
             <th>&{'metricProduct.retailPricePerMetric.rawValue'}</th>
             <th>&{'metricProduct.valueAddedTaxRate.id'}</th>
@@ -27,7 +28,8 @@
         #{list items:metricProducts, as:'metricProduct'}
         <tr>
             <td>${metricProduct.name}</td>
-            <td>${metricProduct.metric.name}</td>
+            <td><a href="@{Contacts.show(metricProduct.supplier.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(metricProduct.supplier.id)}">${metricProduct.supplier?.company}</a></td>
+            <td>${metricProduct.metric.symbol}</td>
             <td>${metricProduct.retailPricePerMetric.label}</td>
             <td>${metricProduct.valueAddedTaxRate}</td>
             <td>

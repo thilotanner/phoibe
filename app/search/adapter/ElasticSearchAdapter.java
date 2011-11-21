@@ -29,7 +29,6 @@ import org.elasticsearch.client.Requests;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
-
 import play.Logger;
 import play.db.Model;
 import search.mapping.MappingUtil;

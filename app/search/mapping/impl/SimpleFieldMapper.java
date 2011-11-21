@@ -1,11 +1,10 @@
 package search.mapping.impl;
 
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import search.util.ReflectionUtil;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
-
-import org.elasticsearch.common.xcontent.XContentBuilder;
-
-import search.util.ReflectionUtil;
 
 /**
  * Field mapper for simple, single-valued types

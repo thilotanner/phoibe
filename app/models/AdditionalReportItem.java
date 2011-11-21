@@ -3,8 +3,6 @@ package models;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

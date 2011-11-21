@@ -5,7 +5,6 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.ImmutableSettings.Builder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
-
 import play.db.jpa.Model;
 import search.adapter.ElasticSearchAdapter;
 import search.mapping.MapperFactory;

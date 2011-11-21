@@ -1,6 +1,5 @@
 package controllers;
 
-import models.MetricProduct;
 import models.MetricProductReportItem;
 import models.Report;
 import play.data.validation.Valid;

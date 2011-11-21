@@ -1,10 +1,10 @@
 package search.mapping;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 
 public abstract class MappingUtil {
 

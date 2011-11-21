@@ -2,6 +2,8 @@ package models;
 
 import play.data.validation.Required;
 import play.data.validation.Valid;
+import search.annotations.ElasticSearchEmbedded;
+import search.annotations.ElasticSearchable;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -12,6 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
+@ElasticSearchable
 @Entity
 public class MetricProduct extends Product {
 
@@ -41,6 +44,7 @@ public class MetricProduct extends Product {
     @ManyToOne
     public ValueAddedTaxRate valueAddedTaxRate;
 
+    @ElasticSearchEmbedded
     @ManyToOne
     public Contact supplier;
 

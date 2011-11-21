@@ -1,14 +1,8 @@
 package search.mapping.impl;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-
 import play.db.Model;
 import search.annotations.ElasticSearchIgnore;
 import search.annotations.ElasticSearchable;
@@ -16,6 +10,11 @@ import search.mapping.FieldMapper;
 import search.mapping.MapperFactory;
 import search.mapping.ModelMapper;
 import search.util.ReflectionUtil;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ModelMapper for play.db.Model subclasses.
