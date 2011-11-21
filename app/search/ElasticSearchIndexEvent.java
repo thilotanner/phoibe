@@ -1,6 +1,6 @@
 package search;
 
-import play.db.jpa.Model;
+import play.db.Model;
 import play.jobs.Job;
 import search.adapter.ElasticSearchAdapter;
 import search.mapping.ModelMapper;

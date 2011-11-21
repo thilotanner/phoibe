@@ -1,6 +1,6 @@
 package search.mapping;
 
-import play.db.jpa.Model;
+import play.db.Model;
 import search.annotations.ElasticSearchEmbedded;
 import search.mapping.impl.CollectionFieldMapper;
 import search.mapping.impl.EmbeddedFieldMapper;

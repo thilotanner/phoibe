@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -7,10 +8,15 @@ import com.google.gson.JsonSerializer;
 import models.Metric;
 import models.MetricProduct;
 import models.ValueAddedTaxRate;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
+import search.ElasticSearch;
+import search.Query;
+import search.SearchResults;
 import util.i18n.CurrencyProvider;
 
 import java.lang.reflect.Type;
@@ -23,17 +29,24 @@ public class MetricProducts extends ApplicationController {
             page = 1;
         }
 
-        List<Model> metricProducts = Model.Manager.factoryFor(MetricProduct.class).fetch(
-                (page - 1) * getPageSize(),
-                getPageSize(),
-                orderBy,
-                order,
-                new ArrayList<String>(),
-                search,
-                null
-        );
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if( Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
+            }
+        }
 
-        Long count = Model.Manager.factoryFor(MetricProduct.class).count(new ArrayList<String>(), search, null);
+        Query<MetricProduct> query = ElasticSearch.query(qb, MetricProduct.class);
+
+        query.from((page - 1) * getPageSize()).size(getPageSize());
+        query.hydrate(true);
+
+		SearchResults<MetricProduct> results = query.fetch();
+        List<MetricProduct> metricProducts = results.objects;
+
+        Long count = results.totalCount;
 
         renderArgs.put("pageSize", getPageSize());
         render(metricProducts, count);
