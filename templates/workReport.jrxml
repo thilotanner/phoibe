@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="testReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="56" rightMargin="56" topMargin="22" bottomMargin="22" isSummaryWithPageHeaderAndFooter="true">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1" fontName="Helvetica" fontSize="8" isUnderline="false" isStrikeThrough="false"/>
+	<parameter name="report" class="models.Report"/>
+	<field name="amount" class="java.lang.Double"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="pricePerUnit" class="models.Money"/>
+	<field name="totalPrice" class="models.Money"/>
+	<field name="metric" class="models.Metric"/>
+	<field name="valueAddedTaxRate" class="models.ValueAddedTaxRate"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="314" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="258" width="483" height="19"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.reportType.name + " - Nr. " + $P{report}.id]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="287" width="39" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Betreff:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="299" width="39" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Objekt:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="244" width="223" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Referenz-Nr. " + $P{report}.order.id]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="263" y="125" width="220" height="93"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.order.billingContact.getFormattedContact()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="287" width="273" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.order.description]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="39" y="299" width="273" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.order.shippingContact.getFormattedContact()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="330" y="244" width="153" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="263" y="244" width="65" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[9100 Herisau, ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="11" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="223" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Beschreibung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="style1" x="223" y="0" width="40" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Einheit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="style1" x="303" y="0" width="70" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Preis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="style1" x="413" y="0" width="70" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Summe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="style1" x="383" y="0" width="30" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Steuer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="style1" mode="Transparent" x="263" y="0" width="40" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Anzahl]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="10" width="483" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement mode="Transparent" x="0" y="4" width="223" height="12"/>
+				<textElement verticalAlignment="Top" markup="html">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="263" y="4" width="40" height="12"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="4" width="70" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalPrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="303" y="4" width="70" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pricePerUnit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="4" width="40" height="12"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{metric}.symbol]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="383" y="4" width="30" height="12"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valueAddedTaxRate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="12" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="483" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="364" y="4" width="119" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Seite "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="161" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="129" width="273" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Zahlbar innert 30 Tagen rein netto.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="141" width="273" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Wir danken Ihnen für den geschätzten Auftrag.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="17" width="100" height="12"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Warenwert gesamt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="29" width="100" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[zuzügl. MWSt.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="57" width="483" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="60" width="223" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gesamtbetrag]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="76" width="483" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="323" y="17" width="160" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.getTotalPrice()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="29" width="160" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.getTax()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="60" width="160" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.getTaxedTotalPrice()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="92" width="223" height="12"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.getUsedVatRatesAsString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="223" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Rekapitulation MWSt.:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="223" y="92" width="150" height="12"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.getTotalsPerVatAsString()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="373" y="92" width="110" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report}.getTaxPerVatAsString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="104" width="223" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[MWSt-Nummer: 110 653]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="483" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

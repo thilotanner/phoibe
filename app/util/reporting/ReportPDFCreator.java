@@ -11,6 +11,7 @@ import net.sf.jasperreports.engine.design.JRDesignStyle;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
+import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import play.Logger;
 
@@ -66,6 +67,7 @@ public class ReportPDFCreator {
                     JRXmlLoader.load(new ByteArrayInputStream(report.reportType.template.getBytes()));
 
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            jasperReport.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
 
             parameters = new HashMap<String, Object>();
 

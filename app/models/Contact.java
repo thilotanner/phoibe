@@ -62,12 +62,36 @@ public class Contact extends EnhancedModel {
         NonEmptyStringBuilder nesb = new NonEmptyStringBuilder();
         if(company != null) {
             nesb.append(company).addLine();
-            nesb.append(Messages.get("contact.title." + title));
+            if(title != null) {
+                nesb.append(Messages.get("contact.title." + title));
+            }
         } else {
-            nesb.append(Messages.get("contact.title." + title)).addLine();
+            if(title != null) {
+                nesb.append(Messages.get("contact.title." + title)).addLine();
+            }
         }
         nesb.append(firstName).append(lastName).addLine();
         nesb.append(getFormattedAddress());
+        return nesb.toString();
+    }
+
+    public String getFormattedFullContact() {
+        NonEmptyStringBuilder nesb = new NonEmptyStringBuilder();
+        nesb.append(getFormattedContact()).addLine();
+        if(phone !=  null && !phone.isEmpty()) {
+            nesb.append(Messages.get("contact.phone")).append(": ").append(phone).addLine();
+        }
+
+        if(fax !=  null && !fax.isEmpty()) {
+            nesb.append(Messages.get("contact.fax")).append(": ").append(fax).addLine();
+        }
+
+        if(mobile !=  null && !mobile.isEmpty()) {
+            nesb.append(Messages.get("contact.mobile")).append(": ").append(mobile).addLine();
+        }
+
+        nesb.append(email).addLine();
+        nesb.append(website).addLine();
         return nesb.toString();
     }
 
