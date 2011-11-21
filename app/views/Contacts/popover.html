@@ -1,0 +1,41 @@
+#{if contact.company}
+${contact.company}<br />
+#{/if}
+
+#{if contact.title}
+&{'contact.title.' + contact.title}<br />
+#{/if}
+
+#{if contact.lastName}
+${contact.firstName} ${contact.lastName}<br />
+#{/if}
+
+#{if contact.street}
+${contact.street}<br />
+#{/if}
+
+#{if contact.postOfficeBox}
+${contact.postOfficeBox}<br />
+#{/if}
+
+${contact.postalCode} ${contact.city}<br />
+
+#{if contact.phone}
+&{'contact.phone'}: ${contact.phone}<br />
+#{/if}
+
+#{if contact.fax}
+&{'contact.fax'}: ${contact.fax}<br />
+#{/if}
+
+#{if contact.mobile}
+&{'contact.mobile'}: ${contact.mobile}<br />
+#{/if}
+
+#{if contact.email}
+${contact.email}<br />
+#{/if}
+
+#{if contact.website}
+${contact.website}<br />
+#{/if}

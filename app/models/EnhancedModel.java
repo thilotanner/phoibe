@@ -6,8 +6,6 @@ import play.db.jpa.JPA;
 import play.db.jpa.JPABase;
 import play.db.jpa.Model;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.EntityManager;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;

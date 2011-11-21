@@ -16,13 +16,13 @@
     <dd>#{orderStatus order /}</dd>
 
     <dt>&{'order.orderingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(order.orderingContact.id)}">${order.orderingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(order.orderingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(order.orderingContact.id)}">${order.orderingContact?.label}</a></dd>
 
     <dt>&{'order.shippingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(order.shippingContact.id)}">${order.shippingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(order.shippingContact.id)}">${order.shippingContact?.label}</a></dd>
 
     <dt>&{'order.billingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(order.billingContact.id)}">${order.billingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(order.billingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(order.billingContact.id)}">${order.billingContact?.label}</a></dd>
 
     <dt>&{'order.comments'}</dt>
     <dd>${order.comments}</dd>

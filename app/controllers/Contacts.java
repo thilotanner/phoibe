@@ -125,6 +125,14 @@ public class Contacts extends ApplicationController {
 		});
     }
 
+    public static void popover(Long id) {
+        notFoundIfNull(id);
+        Contact contact = Contact.findById(id);
+        notFoundIfNull(contact);
+
+        render(contact);
+    }
+
     private static void initRenderArgs() {
         renderArgs.put("preferredCountries", CountryProvider.getPreferredCountries());
         renderArgs.put("allCountries", CountryProvider.getAllCountries());

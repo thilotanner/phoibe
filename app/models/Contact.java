@@ -3,6 +3,8 @@ package models;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.data.validation.URL;
+import play.i18n.Messages;
+import search.annotations.ElasticSearchable;
 import util.string.NonEmptyStringBuilder;
 import util.string.StringUtils;
 
@@ -11,6 +13,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 
+@ElasticSearchable
 @Entity
 public class Contact extends EnhancedModel {
 
@@ -57,7 +60,12 @@ public class Contact extends EnhancedModel {
 
     public String getFormattedContact() {
         NonEmptyStringBuilder nesb = new NonEmptyStringBuilder();
-        nesb.append(company).addLine();
+        if(company != null) {
+            nesb.append(company).addLine();
+            nesb.append(Messages.get("contact.title." + title));
+        } else {
+            nesb.append(Messages.get("contact.title." + title)).addLine();
+        }
         nesb.append(firstName).append(lastName).addLine();
         nesb.append(getFormattedAddress());
         return nesb.toString();

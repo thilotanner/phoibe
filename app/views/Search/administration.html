@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ElasticSearch Head</title>
+		<link rel="stylesheet" href="@{'/public/elasticsearch/es/es.css'}">
+		<link rel="stylesheet" href="@{'/public/elasticsearch/jsacx/src/jsacx-widgets.css'}">
+		<script src="@{'/public/elasticsearch/jsacx/src/jquery.js'}"></script>
+		<script src="@{'/public/elasticsearch/jsacx/src/jsacx.js'}"></script>
+		<script src="@{'/public/elasticsearch/nohtml/jquery.acx-nohtml.js'}"></script>
+		<script src="@{'/public/elasticsearch/lang/en_strings.js'}"></script>
+		<script src="@{'/public/elasticsearch/jsacx/src/jsacx-widgets.js'}"></script>
+		<script src="@{'/public/elasticsearch/jsacx/src/jsacx-fields.js'}"></script>
+		<script src="@{'/public/elasticsearch/jsacx/src/jsacx-data.js'}"></script>
+		<script src="@{'/public/elasticsearch/es/core.js'}"></script>
+		<script src="@{'/public/elasticsearch/es/widgets.js'}"></script>
+		<script src="@{'/public/elasticsearch/graphael/g.raphael.standalone.js'}"></script>
+		<script src="@{'/public/elasticsearch/dateRangeParser/date-range-parser.js'}"></script>
+		<script>
+			$(function() {
+				if(location.href.contains("/_plugin/")) {
+					var base_uri = location.protocol + "//" + location.host + "/";
+				}
+				var args = location.search.substring(1).split("&").reduce(function(r, p) {
+					r[decodeURIComponent(p.split("=")[0])] = decodeURIComponent(p.split("=")[1]); return r;
+				}, {});
+				new es.ElasticSearchHead("body", { id: "es", base_uri: args["base_uri"] || base_uri });
+			});
+		</script>
+		<link rel="icon" href="@{'/public/elasticsearch/es/images/favicon.png'}" type="image/png">
+	</head>
+	<body></body>
+</html>

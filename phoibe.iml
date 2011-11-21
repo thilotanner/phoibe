@@ -6,6 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
+    <content url="file://$MODULE_DIR$/modules/elasticsearch">
+      <sourceFolder url="file://$MODULE_DIR$/modules/elasticsearch/app" isTestSource="false" />
+    </content>
     <content url="file://$USER_HOME$/play-1.2.3/modules/secure">
       <sourceFolder url="file://$USER_HOME$/play-1.2.3/modules/secure/app" isTestSource="false" />
     </content>
@@ -16,6 +19,7 @@
       <library name="Project Libraries">
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />
+          <root url="file://$MODULE_DIR$/modules/elasticsearch/src" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

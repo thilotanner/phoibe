@@ -15,6 +15,23 @@ $(document).ready(function() {
             $('#modal').modal('show');
         });
     });
+
+    $("a[rel=popover]")
+        .popover({
+            offset: 10,
+            html: true,
+            placement: 'above',
+            content: function() {
+                $.ajax({
+                    url: $(this).attr('data-content'),
+                    async: false,
+                    complete: function(data){
+                        text = data.responseText;
+                    }
+                });
+                return text;
+            }
+        })
 });
 
 function createAutocomplete(hiddenElement, ajaxUrl) {

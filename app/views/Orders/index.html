@@ -17,6 +17,7 @@
         <tr>
             <th>&{'order.orderStatus'}</th>
             #{tableSorter objectName:'order', fieldName:'description' /}
+            <th>&{'order.shippingContact.id'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -25,6 +26,7 @@
         <tr>
             <td>#{orderStatus order /}</td>
             <td>${order.description}</td>
+            <td><a href="@{Contacts.show(order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(order.shippingContact.id)}">${order.shippingContact.label}</a></td>
             <td>
                 <a href="@{show(order.id)}">anzeigen</a>
                 <a href="@{form(order.id)}">bearbeiten</a>

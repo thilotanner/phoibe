@@ -12,3 +12,11 @@ require:
             - javax.persistence -> persistence-api
             - javax.servlet -> servlet-api
             - mondrian -> *
+    - org.elasticsearch -> elasticsearch 0.18.4
+
+repositories:
+    - sonatype:
+        type:       iBiblio
+        root:       "https://oss.sonatype.org/content/repositories/releases/"
+        contains:
+            - org.elasticsearch -> *

@@ -34,12 +34,12 @@
     %{
         help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"order_shippingContact_id\">" + messages.get('create', messages.get('contact')) + "</a>";
     }%
-    #{autocompleteTextField property:'order.shippingContact.id', object:order, label:order?.shippingContact?.label  /}
+    #{autocompleteTextField property:'order.shippingContact.id', object:order, label:order?.shippingContact?.label, help:help.raw()  /}
 
     %{
         help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"order_billingContact_id\">" + messages.get('create', messages.get('contact')) + "</a>";
     }%
-    #{autocompleteTextField property:'order.billingContact.id', object:order, label:order?.billingContact?.label  /}
+    #{autocompleteTextField property:'order.billingContact.id', object:order, label:order?.billingContact?.label, help:help.raw()  /}
 
     #{textArea property:'order.comments', object:order /}
 </fieldset>
