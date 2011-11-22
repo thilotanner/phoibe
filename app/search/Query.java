@@ -13,7 +13,8 @@ import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 
 import play.Logger;
-import play.db.Model;
+import play.db.jpa.Model;
+import search.mapping.impl.AbstractFieldMapper;
 import search.transformer.JPATransformer;
 import search.transformer.Transformer;
 
@@ -109,7 +110,8 @@ public class Query<T extends Model> {
 	public Query<T> addSort(String field, SortOrder order) {
 		Validate.notEmpty(field, "field cannot be null");
 		Validate.notNull(order, "order cannot be null");
-		sorts.add(SortBuilders.fieldSort(field).order(order));
+
+		sorts.add(SortBuilders.fieldSort(AbstractFieldMapper.SORTABLE_INDEX_PREFIX + field).order(order));
 
 		return this;
 	}

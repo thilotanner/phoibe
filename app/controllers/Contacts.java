@@ -1,19 +1,24 @@
 package controllers;
 
+import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import models.Contact;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
-import play.db.Model;
 import play.i18n.Messages;
 import play.mvc.Http;
+import search.ElasticSearch;
+import search.Query;
+import search.SearchResults;
 import util.i18n.CountryProvider;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Contacts extends ApplicationController {
@@ -22,18 +27,36 @@ public class Contacts extends ApplicationController {
             page = 1;
         }
 
-        List<Model> contacts = Model.Manager.factoryFor(Contact.class).fetch(
-                (page - 1) * getPageSize(),
-                getPageSize(),
-                orderBy,
-                order,
-                new ArrayList<String>(),
-                search,
-                null
-        );
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if(Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
+            }
+        }
 
-        Long count = Model.Manager.factoryFor(Contact.class).count(new ArrayList<String>(), search, null);
+        Query<Contact> query = ElasticSearch.query(qb, Contact.class);
 
+        query.from((page - 1) * getPageSize()).size(getPageSize());
+
+        if(!Strings.isNullOrEmpty(orderBy)) {
+            SortOrder sortOrder = SortOrder.ASC;
+            if(!Strings.isNullOrEmpty(order)) {
+                if(order.toLowerCase().equals("desc")) {
+                    sortOrder = SortOrder.DESC;
+                }
+            }
+
+            query.addSort(orderBy, sortOrder);
+        }
+
+        query.hydrate(true);
+
+		SearchResults<Contact> results = query.fetch();
+        List<Contact> contacts = results.objects;
+
+        Long count = results.totalCount;
         renderArgs.put("pageSize", getPageSize());
         render(contacts, count);
     }
@@ -102,15 +125,23 @@ public class Contacts extends ApplicationController {
     }
 
     public static void search(String search) {
-        List<Model> contacts = Model.Manager.factoryFor(Contact.class).fetch(
-                0,
-                getPageSize(),
-                null,
-                null,
-                new ArrayList<String>(),
-                search,
-                null
-        );
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if(Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
+            }
+        }
+
+        Query<Contact> query = ElasticSearch.query(qb, Contact.class);
+
+        query.from(0).size(getPageSize());
+
+        query.hydrate(true);
+
+		SearchResults<Contact> results = query.fetch();
+        List<Contact> contacts = results.objects;
 
         renderJSON(contacts, new JsonSerializer<Contact>() {
 

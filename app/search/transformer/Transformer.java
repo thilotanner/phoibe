@@ -11,7 +11,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 
 import play.Logger;
-import play.db.Model;
+import play.db.jpa.Model;
 
 public class Transformer<T extends Model> {
     /**

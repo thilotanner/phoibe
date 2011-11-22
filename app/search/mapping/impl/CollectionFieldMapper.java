@@ -2,6 +2,7 @@ package search.mapping.impl;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import search.annotations.ElasticSearchEmbedded;
+import search.annotations.ElasticSearchSortable;
 import search.mapping.FieldMapper;
 import search.mapping.MapperFactory;
 import search.mapping.MappingException;
@@ -66,7 +67,7 @@ public class CollectionFieldMapper<M> extends AbstractFieldMapper<M> {
 		} else {
 			// Flat mode (array of primitives)
 			String type = detectFieldType(getCollectionType());
-			addField(field.getName(), type, meta, builder);
+			addField(field.getName(), type, meta, field.isAnnotationPresent(ElasticSearchSortable.class), builder);
 		}
 	}
 

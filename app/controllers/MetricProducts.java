@@ -10,9 +10,9 @@ import models.MetricProduct;
 import models.ValueAddedTaxRate;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
-import play.db.Model;
 import play.i18n.Messages;
 import search.ElasticSearch;
 import search.Query;
@@ -20,7 +20,6 @@ import search.SearchResults;
 import util.i18n.CurrencyProvider;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MetricProducts extends ApplicationController {
@@ -30,7 +29,7 @@ public class MetricProducts extends ApplicationController {
         }
 
         BoolQueryBuilder qb = QueryBuilders.boolQuery();
-        if( Strings.isNullOrEmpty(search)) {
+        if(Strings.isNullOrEmpty(search)) {
             qb.must(QueryBuilders.matchAllQuery());
         } else {
             for(String searchPart : search.split("\\s+")) {
@@ -41,6 +40,18 @@ public class MetricProducts extends ApplicationController {
         Query<MetricProduct> query = ElasticSearch.query(qb, MetricProduct.class);
 
         query.from((page - 1) * getPageSize()).size(getPageSize());
+
+        if(!Strings.isNullOrEmpty(orderBy)) {
+            SortOrder sortOrder = SortOrder.ASC;
+            if(!Strings.isNullOrEmpty(order)) {
+                if(order.toLowerCase().equals("desc")) {
+                    sortOrder = SortOrder.DESC;
+                }
+            }
+
+            query.addSort(orderBy, sortOrder);
+        }
+
         query.hydrate(true);
 
 		SearchResults<MetricProduct> results = query.fetch();
@@ -82,15 +93,23 @@ public class MetricProducts extends ApplicationController {
     }
 
     public static void search(String search) {
-        List<Model> metricProducts = Model.Manager.factoryFor(MetricProduct.class).fetch(
-                0,
-                getPageSize(),
-                null,
-                null,
-                new ArrayList<String>(),
-                search,
-                null
-        );
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if(Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
+            }
+        }
+
+        Query<MetricProduct> query = ElasticSearch.query(qb, MetricProduct.class);
+
+        query.from(0).size(getPageSize());
+
+        query.hydrate(true);
+
+		SearchResults<MetricProduct> results = query.fetch();
+        List<MetricProduct> metricProducts = results.objects;
 
         renderJSON(metricProducts, new JsonSerializer<MetricProduct>() {
 

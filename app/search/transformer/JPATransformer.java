@@ -10,7 +10,7 @@ import org.elasticsearch.search.SearchHit;
 
 import play.Logger;
 import play.data.binding.Binder;
-import play.db.Model;
+import play.db.jpa.Model;
 import play.db.jpa.JPQL;
 import play.exceptions.UnexpectedException;
 import search.SearchResults;

@@ -9,7 +9,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.facet.AbstractFacetBuilder;
-import play.db.Model;
+import play.db.jpa.Model;
 import search.adapter.ElasticSearchAdapter;
 import search.mapping.MapperFactory;
 import search.mapping.MappingUtil;

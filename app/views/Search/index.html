@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+#{set title:messages.get('indexing') /}
+
+<ul class="breadcrumb">
+  <li class="active">&{'administration'} <span class="divider">/</span></li>
+  <li class="active">&{'indexing'}</li>
+</ul>
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{indexContacts()}"
+       class="btn primary">&{'index', messages.get('contacts')}</a>
+    <a href="@{indexMetricProducts()}"
+       class="btn primary">&{'index', messages.get('metricProducts')}</a>
+</div>
+
+
+
+

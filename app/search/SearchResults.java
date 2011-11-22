@@ -1,7 +1,7 @@
 package search;
 
 import org.elasticsearch.search.facet.Facets;
-import play.db.Model;
+import play.db.jpa.Model;
 
 import java.util.List;
 

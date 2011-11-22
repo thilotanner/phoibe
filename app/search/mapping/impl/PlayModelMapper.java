@@ -3,7 +3,7 @@ package search.mapping.impl;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import play.db.Model;
+import play.db.jpa.Model;
 import search.annotations.ElasticSearchIgnore;
 import search.annotations.ElasticSearchable;
 import search.mapping.FieldMapper;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ModelMapper for play.db.Model subclasses.
+ * ModelMapper for play.db.jpa.Model subclasses.
  * 
  * @param <M>
  *            the model type

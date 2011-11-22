@@ -1,6 +1,7 @@
 package search.mapping.impl;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import search.annotations.ElasticSearchSortable;
 import search.util.ReflectionUtil;
 
 import java.io.IOException;
@@ -22,11 +23,10 @@ public class SimpleFieldMapper<M> extends AbstractFieldMapper<M> {
 	public void addToMapping(XContentBuilder builder, String prefix) throws IOException {
 		String name = field.getName();
 		String type = getFieldType();
-
 		if (prefix != null) {
-			addField(prefix + name, type, meta, builder);
+			addField(prefix + name, type, meta, sortable, builder);
 		} else {
-			addField(name, type, meta, builder);
+			addField(name, type, meta, sortable, builder);
 		}
 	}
 
@@ -42,6 +42,10 @@ public class SimpleFieldMapper<M> extends AbstractFieldMapper<M> {
 				builder.field(name, value);
 			}
 		}
+
+        if(sortable) {
+            builder.field(SORTABLE_INDEX_PREFIX + name, value);
+        }
 	}
 
 	protected String getFieldType() {

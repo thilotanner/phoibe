@@ -30,7 +30,7 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import play.Logger;
-import play.db.Model;
+import play.db.jpa.Model;
 import search.mapping.MappingUtil;
 import search.mapping.ModelMapper;
 import search.util.ExceptionUtil;

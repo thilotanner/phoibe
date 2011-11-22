@@ -1,6 +1,6 @@
 package search.mapping;
 
-import play.db.Model;
+import play.db.jpa.Model;
 import search.annotations.ElasticSearchEmbedded;
 import search.mapping.impl.CollectionFieldMapper;
 import search.mapping.impl.EmbeddedFieldMapper;
@@ -32,11 +32,11 @@ public class MapperFactory {
 			throw new MappingException("Class must be annotated with @ElasticSearchable");
 		}
 
-		if (play.db.Model.class.isAssignableFrom(clazz)) {
-			return (ModelMapper<M>) new PlayModelMapper<play.db.Model>((Class<play.db.Model>) clazz);
+		if (play.db.jpa.Model.class.isAssignableFrom(clazz)) {
+			return (ModelMapper<M>) new PlayModelMapper<play.db.jpa.Model>((Class<play.db.jpa.Model>) clazz);
 		} else {
 			throw new MappingException(
-					"No mapper available for non-play.db.Model models at this time");
+					"No mapper available for non-play.db.jpa.Model models at this time");
 		}
 	}
 
