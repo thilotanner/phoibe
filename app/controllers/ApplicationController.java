@@ -33,21 +33,21 @@ public class ApplicationController extends Controller {
        }
 
        @Before(priority = USER_PRIORITY)
-       public static void user() throws Throwable
+       public static void currentUser() throws Throwable
        {
            String username = ApplicationSecurity.connected();
 
            if (username != null) {
                User user = User.find("username = ?", username).first();
                if (user != null) {
-                   renderArgs.put("user", user);
+                   renderArgs.put("currentUser", user);
                }
            }
        }
 
        public static User getCurrentUser()
        {
-           Object user = renderArgs.get("user");
+           Object user = renderArgs.get("currentUser");
 
            if (user != null)
                return (User) user;

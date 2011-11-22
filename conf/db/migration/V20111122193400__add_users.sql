@@ -1,0 +1,4 @@
+INSERT INTO `User` VALUES(1, '2011-11-22 20:52:51', NULL, 'info@tanner-storen.ch', NULL, 'Administrator', 'e4f1e88adb03123dc47a1386694724346fabc378', 'ba23445e1deb9ffec232e5af5d5fd89350d2d63e', 'admin');
+INSERT INTO `User` VALUES(2, '2011-11-22 20:52:51', NULL, 'walter.tanner@tanner-storen.ch', 'Walter', 'Tanner', 'e4f1e88adb03123dc47a1386694724346fabc378', 'ba23445e1deb9ffec232e5af5d5fd89350d2d63e', 'wt');
+INSERT INTO `User` VALUES(3, '2011-11-22 20:52:51', NULL, 'peter.bühler@tanner-storen.ch', 'Peter', 'Bühler', 'e4f1e88adb03123dc47a1386694724346fabc378', 'ba23445e1deb9ffec232e5af5d5fd89350d2d63e', 'pb');
+INSERT INTO `User` VALUES(4, '2011-11-22 20:52:51', NULL, 'margrit.schweri@tanner-storen.ch', 'Margrit', 'Schweri', 'e4f1e88adb03123dc47a1386694724346fabc378', 'ba23445e1deb9ffec232e5af5d5fd89350d2d63e', 'ms');
