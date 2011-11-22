@@ -1,22 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.3.9.2
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Erstellungszeit: 17. November 2011 um 11:26
--- Server Version: 5.5.9
--- PHP-Version: 5.3.6
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
---
--- Datenbank: `phoibe`
---
-
---
--- Daten für Tabelle `Contact`
---
-
 INSERT INTO `Contact` VALUES(1, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'Schönengrund AR', NULL, 'Rest.,Hotel, Gasthaus Chäseren', 'CH', NULL, '071 361 17 59', NULL, NULL, NULL, '071 361 17 51', NULL, '9105', NULL, NULL, NULL);
 INSERT INTO `Contact` VALUES(2, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'Altendorf SZ', NULL, 'Compass', 'CH', NULL, '055 451 20 51', NULL, NULL, NULL, '055 451 20 50', 'Seepark', '8852', 'Zürcherstrasse 22', NULL, NULL);
 INSERT INTO `Contact` VALUES(3, '2011-11-17 10:56:32', '2011-11-17 11:17:16', 'Herisau', '', 'Dorfbibliothek Herisau', 'CH', '', '', 'Gabi', 'Barbey', '', '071 351 56 16', '', '9100', 'Poststrasse 9', 'MS', '');
@@ -1503,7 +1484,7 @@ INSERT INTO `Contact` VALUES(1483, '2011-11-17 10:56:32', '2011-11-17 10:56:39',
 INSERT INTO `Contact` VALUES(1484, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'Herisau', NULL, 'AWICO Autos & Consulting', 'CH', 'awico@bluewin.ch', '071 351 41 88', NULL, NULL, '079 433 72 07', '071 351 41 88', NULL, '9102', 'Sonnenfeldstr. 5', NULL, NULL);
 INSERT INTO `Contact` VALUES(1485, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'Aarau', NULL, 'AZ Fachverlage AG', 'CH', NULL, '062 836 65 66', NULL, NULL, NULL, '062 836 65 65', NULL, '5001', 'Neumattstrasse 1', NULL, NULL);
 INSERT INTO `Contact` VALUES(1486, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'Herisau', NULL, 'Basler Versicherungen', 'CH', NULL, '071 353 73 71', NULL, NULL, NULL, '071 353 73 73', NULL, '9100', 'Bahnhofstrasse 4', NULL, NULL);
-INSERT INTO `Contact` VALUES(1487, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'St.Gallen', NULL, 'Basler Versicherungen', 'CH', NULL, NULL, NULL, NULL, NULL, '071 226 98 11', NULL, '9001', 'Kornhausstr. 26', '.', NULL);
+INSERT INTO `Contact` VALUES(1487, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'St.Gallen', NULL, 'Basler Versicherungen', 'CH', NULL, NULL, NULL, NULL, NULL, '071 226 98 11', NULL, '9001', 'Kornhausstr. 26', NULL, NULL);
 INSERT INTO `Contact` VALUES(1488, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'Oberbüren', NULL, 'Bauermacher AG', 'CH', 'f.scheuss@bauermacher.ch', '071 955 00 37', NULL, NULL, '079 352 50 03', '071 955 00 33', NULL, '9245', 'Bürerfeld 16a', NULL, NULL);
 INSERT INTO `Contact` VALUES(1489, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'Herisau', 'Saumstr. 42', 'Baugesellschaft Saum', 'CH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '9100', 'Lindenwis 6', NULL, NULL);
 INSERT INTO `Contact` VALUES(1490, '2011-11-17 10:56:32', '2011-11-17 10:56:39', 'Winterthur', NULL, 'Baukonsortium Grüntal-Seen', 'CH', NULL, NULL, NULL, NULL, NULL, '052 232 66 24', NULL, '8405', 'Hch. Bosshard-Str. 27', NULL, NULL);

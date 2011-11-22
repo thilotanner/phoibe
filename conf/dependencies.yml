@@ -13,6 +13,7 @@ require:
             - javax.servlet -> servlet-api
             - mondrian -> *
     - org.elasticsearch -> elasticsearch 0.18.4
+    - com.googlecode.flyway -> flyway-core 1.5
 
 repositories:
     - sonatype:
