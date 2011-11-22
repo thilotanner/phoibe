@@ -9,7 +9,7 @@ import search.annotations.ElasticSearchable;
 import search.mapping.FieldMapper;
 import search.mapping.MapperFactory;
 import search.mapping.ModelMapper;
-import search.util.ReflectionUtil;
+import util.reflection.ReflectionUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

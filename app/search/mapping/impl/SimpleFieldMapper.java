@@ -1,8 +1,7 @@
 package search.mapping.impl;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import search.annotations.ElasticSearchSortable;
-import search.util.ReflectionUtil;
+import util.reflection.ReflectionUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

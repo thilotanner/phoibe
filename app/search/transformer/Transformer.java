@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import search.SearchResults;
-import search.util.ReflectionUtil;
+import util.reflection.ReflectionUtil;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;

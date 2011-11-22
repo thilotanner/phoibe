@@ -33,7 +33,7 @@ import play.Logger;
 import play.db.jpa.Model;
 import search.mapping.MappingUtil;
 import search.mapping.ModelMapper;
-import search.util.ExceptionUtil;
+import util.exception.ExceptionUtil;
 
 /**
  * The Class ElasticSearchAdapter.

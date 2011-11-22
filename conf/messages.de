@@ -230,3 +230,4 @@ paging.previous=zurück
 validation.invalid=Unzulässiger Wert
 validation.pleaseCorrectTheseErrors=Bitte korrigieren Sie die folgenden Fehler
 validation.required=Pflichtfeld
+validation.either=Entweder %s oder %s muss gesetzt sein

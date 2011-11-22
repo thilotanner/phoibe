@@ -4,7 +4,7 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import search.annotations.ElasticSearchEmbedded;
 import search.mapping.FieldMapper;
 import search.mapping.MapperFactory;
-import search.util.ReflectionUtil;
+import util.reflection.ReflectionUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

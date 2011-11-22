@@ -16,7 +16,7 @@
  * @author Felipe Oliveira (http://mashup.fm)
  * 
  */
-package search.util;
+package util.exception;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

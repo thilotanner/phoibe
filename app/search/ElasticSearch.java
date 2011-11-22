@@ -56,6 +56,19 @@ public class ElasticSearch {
 		event.now();
 	}
 
+    public static <M extends Model> void delete(M model) {
+        Class<Model> clazz = (Class<Model>) model.getClass();
+
+		// Check if object is searchable
+		if (!MappingUtil.isSearchable(clazz)) {
+			throw new IllegalArgumentException("model is not searchable");
+		}
+
+        ModelMapper<Model> mapper = getMapper(clazz);
+		ElasticSearchIndexEvent event = new ElasticSearchIndexEvent(model, mapper, ElasticSearchIndexEventType.DELETE);
+		event.now();
+    }
+
     private static <M extends Model> ModelMapper<M> getMapper(Class<M> clazz) {
 		if (mappers.containsKey(clazz)) {
 			return (ModelMapper<M>) mappers.get(clazz);

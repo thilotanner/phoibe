@@ -16,9 +16,10 @@
  * @author Felipe Oliveira (http://mashup.fm)
  * 
  */
-package search.util;
+package util.reflection;
 
 import play.Logger;
+import util.exception.ExceptionUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
