@@ -136,7 +136,7 @@ public class Contacts extends ApplicationController {
 
         Query<Contact> query = ElasticSearch.query(qb, Contact.class);
 
-        query.from(0).size(getPageSize());
+        query.from(0).size(getPageSize() * 2);
 
         query.hydrate(true);
 

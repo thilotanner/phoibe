@@ -34,6 +34,8 @@
             <td>${metricProduct.valueAddedTaxRate}</td>
             <td>
                 <a href="@{form(metricProduct.id)}">&{'edit'}</a>
+                <a href="@{delete(metricProduct.id)}"
+                   modal="modal">&{'delete'}</a>
             </td>
         </tr>
         #{/list}
@@ -41,3 +43,5 @@
 </table>
 
 #{pagination count:count, pageSize:pageSize /}
+
+<div id="modal" class="modal fade hide"></div>

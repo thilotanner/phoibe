@@ -7,6 +7,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import models.Metric;
 import models.MetricProduct;
+import models.MetricProductReportItem;
 import models.ValueAddedTaxRate;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -64,6 +65,7 @@ public class MetricProducts extends ApplicationController {
     }
 
     public static void show(Long id) {
+        notFoundIfNull(id);
         MetricProduct metricProduct = MetricProduct.findById(id);
         notFoundIfNull(metricProduct);
         render(metricProduct);
@@ -89,6 +91,27 @@ public class MetricProducts extends ApplicationController {
 
         metricProduct.save();
         flash.success(Messages.get("successfullySaved", Messages.get("metricProduct")));
+        index(1, null, null, null);
+    }
+
+    public static void delete(Long id) {
+        notFoundIfNull(id);
+        MetricProduct metricProduct = MetricProduct.findById(id);
+        notFoundIfNull(metricProduct);
+        render(metricProduct);
+    }
+
+    public static void destroy(Long id) {
+        notFoundIfNull(id);
+        MetricProduct metricProduct = MetricProduct.findById(id);
+        notFoundIfNull(metricProduct);
+
+        if(metricProduct.isReferenced(MetricProductReportItem.class)) {
+            flash.error(Messages.get("isReferenced", Messages.get("metricProdukt")));
+        } else {
+            metricProduct.delete();
+            flash.success(Messages.get("successfullyDeleted", Messages.get("metricProduct")));
+        }
         index(1, null, null, null);
     }
 
