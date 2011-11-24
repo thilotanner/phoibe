@@ -127,7 +127,7 @@ public class MetricProducts extends ApplicationController {
 
         Query<MetricProduct> query = ElasticSearch.query(qb, MetricProduct.class);
 
-        query.from(0).size(getPageSize());
+        query.from(0).size(getPageSize() * 2);
 
         query.hydrate(true);
 
