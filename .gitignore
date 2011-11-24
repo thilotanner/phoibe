@@ -2,7 +2,7 @@
 *.iws
 
 data/**/*
-logs/**/*
-modules/**/* 
-test-result/**/*
+logs/*
+modules/*
+test-result/*
 tmp/**/*
