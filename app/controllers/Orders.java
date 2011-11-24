@@ -62,7 +62,7 @@ public class Orders extends ApplicationController {
             render("@form", order);
         }
 
-        order.save();
+        order.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("order")));
         index(1, null, null, null);
     }
@@ -97,7 +97,7 @@ public class Orders extends ApplicationController {
         notFoundIfNull(order);
 
         order.orderStatus = orderStatus;
-        order.save();
+        order.loggedSave(getCurrentUser());
         if(orderStatus.equals(OrderStatus.FINISHED)) {
             flash.success(Messages.get("successfullyFinished", order.description));
         } else if (orderStatus.equals(OrderStatus.ABORTED)) {

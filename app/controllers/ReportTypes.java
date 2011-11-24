@@ -54,7 +54,7 @@ public class ReportTypes extends ApplicationController {
             render("@form", reportType);
         }
 
-        reportType.save();
+        reportType.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("reportType")));
         index(1, null, null, null);
     }

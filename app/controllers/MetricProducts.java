@@ -89,7 +89,7 @@ public class MetricProducts extends ApplicationController {
             render("@form", metricProduct);
         }
 
-        metricProduct.save();
+        metricProduct.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("metricProduct")));
         index(1, null, null, null);
     }
@@ -109,7 +109,7 @@ public class MetricProducts extends ApplicationController {
         if(metricProduct.isReferenced(MetricProductReportItem.class)) {
             flash.error(Messages.get("isReferenced", Messages.get("metricProdukt")));
         } else {
-            metricProduct.delete();
+            metricProduct.loggedDelete(getCurrentUser());
             flash.success(Messages.get("successfullyDeleted", Messages.get("metricProduct")));
         }
         index(1, null, null, null);

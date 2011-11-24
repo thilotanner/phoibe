@@ -63,7 +63,7 @@ public class PrecalculatedProducts extends ApplicationController {
             render("@form", precalculatedProduct);
         }
 
-        precalculatedProduct.save();
+        precalculatedProduct.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("precalculatedProduct")));
         index(1, null, null, null);
     }

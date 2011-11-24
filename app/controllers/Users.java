@@ -48,7 +48,7 @@ public class Users extends ApplicationController {
             render("@form", user);
         }
 
-        user.save();
+        user.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("user")));
         index(1, null, null, null);
     }

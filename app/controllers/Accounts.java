@@ -59,7 +59,7 @@ public class Accounts extends ApplicationController {
             render("@form", account);
         }
 
-        account.save();
+        account.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("account")));
         index(1, null, null, null);
     }

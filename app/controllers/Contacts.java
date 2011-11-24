@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import models.Contact;
+import models.MetricProductReportItem;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -119,8 +120,14 @@ public class Contacts extends ApplicationController {
         notFoundIfNull(id);
         Contact contact = Contact.findById(id);
         notFoundIfNull(contact);
-        contact.loggedDelete(getCurrentUser());
-        flash.success(Messages.get("successfullyDeleted", Messages.get("contact")));
+
+        if(contact.isReferenced(MetricProductReportItem.class)) {
+            flash.error(Messages.get("isReferenced", Messages.get("metricProdukt")));
+        } else {
+            contact.loggedDelete(getCurrentUser());
+            flash.success(Messages.get("successfullyDeleted", Messages.get("contact")));
+        }
+
         index(1, null, null, null);
     }
 

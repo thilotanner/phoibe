@@ -41,11 +41,11 @@ public class Reports extends ApplicationController {
         Report report = new Report();
         report.order = order;
         report.reportType = reportType;
-        report.save();
+        report.loggedSave(getCurrentUser());
 
         order.currentReport = report;
         order.orderStatus = OrderStatus.IN_PROGRESS;
-        order.save();
+        order.loggedSave(getCurrentUser());
 
         flash.success(Messages.get("successfullyCreated", report.reportType.name));
 
@@ -141,7 +141,7 @@ public class Reports extends ApplicationController {
         ReportItem reportItem = ReportItem.findById(reportItemId);
         notFoundIfNull(reportItem);
 
-        reportItem.delete();
+        reportItem.loggedDelete(getCurrentUser());
         flash.success(Messages.get("successfullyDeleted", Messages.get("reportItem")));
         show(reportItem.report.id);
     }

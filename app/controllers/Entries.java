@@ -50,7 +50,7 @@ public class Entries extends ApplicationController {
             render("@form", entry);
         }
 
-        entry.save();
+        entry.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("entry")));
         index(1, null, null, null);
     }

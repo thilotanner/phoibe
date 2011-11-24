@@ -19,6 +19,7 @@ functions=Funktionen
 index=%s indexieren
 indexing=Indexierung
 indexingSuccessfullyStarted=%s-Indexierung wurde erfolgreich gestartet
+isReferenced=%s kann nicht gelöscht werden, da es referenziert ist.
 logout=%s abmelden
 pay=bezahlen
 products=Produkte

@@ -59,7 +59,7 @@ public class Creditors extends ApplicationController {
             render("@form", creditor);
         }
 
-        creditor.save();
+        creditor.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("creditor")));
         index(1, null, null, null);
     }

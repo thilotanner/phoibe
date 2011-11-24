@@ -34,7 +34,7 @@ public class ReportTransitions extends ApplicationController {
             render("@form", reportTransition);
         }
 
-        reportTransition.save();
+        reportTransition.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("reportTransition")));
         ReportTypes.show(reportTransition.reportType.id);
     }

@@ -30,7 +30,7 @@ public class MetricProductReportItems extends ApplicationController {
             render("@form", metricProductReportItem);
         }
 
-        metricProductReportItem.save();
+        metricProductReportItem.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("metricProductReportItem")));
         Reports.show(metricProductReportItem.report.id);
     }

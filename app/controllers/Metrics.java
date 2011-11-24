@@ -47,7 +47,7 @@ public class Metrics extends ApplicationController {
             render("@form", metric);
         }
 
-        metric.save();
+        metric.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("metric")));
         index(1, null, null, null);
     }

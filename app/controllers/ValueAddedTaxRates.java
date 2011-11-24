@@ -47,7 +47,7 @@ public class ValueAddedTaxRates extends ApplicationController {
             render("@form", valueAddedTaxRate);
         }
 
-        valueAddedTaxRate.save();
+        valueAddedTaxRate.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("valueAddedTaxRate")));
         index(1, null, null, null);
     }

@@ -35,7 +35,7 @@ public class PrecalculatedProductReportItems extends ApplicationController {
             render("@form", precalculatedProductReportItem);
         }
 
-        precalculatedProductReportItem.save();
+        precalculatedProductReportItem.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("precalculatedProductReportItem")));
         Reports.show(precalculatedProductReportItem.report.id);
     }
