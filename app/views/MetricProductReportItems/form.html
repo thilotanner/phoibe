@@ -4,7 +4,7 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        createAutocomplete($('#metricProductReportItem_metricProduct_id'), "@{MetricProducts.search}");
+        createAutocomplete($('#metricProductReportItem_metricProduct_id'), "@{MetricProducts.search}", #{jsAction @MetricProducts.popover(':id') /}, "${messages.get('metricProduct')}");
     });
 </script>
 #{/set}
@@ -23,7 +23,16 @@
 <fieldset>
     <legend>&{'metricProductReportItem'}</legend>
 
-    #{autocompleteTextField property:'metricProductReportItem.metricProduct.id', object:metricProductReportItem, label:metricProductReportItem?.metricProduct?.label /}
+    %{
+        help = "";
+        if(metricProductReportItem?.metricProduct?.id != null) {
+            args = new java.util.HashMap<String, Object>();
+            args.put('id', metricProductReportItem.metricProduct.id);
+            help = '<span class="label" rel="popover" title="' + messages.get('metricProduct') + '" data-content="' + play.mvc.Router.reverse('MetricProducts.popover', args) + '">Info</span>';
+        }
+    }%
+
+    #{autocompleteTextField property:'metricProductReportItem.metricProduct.id', object:metricProductReportItem, label:metricProductReportItem?.metricProduct?.label, help:help.raw() /}
 
     #{textField property:'metricProductReportItem.amount', object:metricProductReportItem /}
 </fieldset>

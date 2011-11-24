@@ -10,7 +10,7 @@
 
 </div>
 <div class="modal-footer">
-    <a href="#" onclick="submitModal('modal', '@{Contacts.modalSave}')" class="btn primary">&{'createAction'}</a>
+    <a href="#" onclick="submitModal('modal', '@{Contacts.modalSave}', #{jsAction @Contacts.popover(':id') /}, '${messages.get('contact')}')" class="btn primary">&{'createAction'}</a>
     <a href="#" onclick="$('#modal').modal('hide')" class="btn secondary">&{'cancel'}</a>
 </div>
 #{/form}

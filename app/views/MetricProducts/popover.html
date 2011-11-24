@@ -1,0 +1,25 @@
+#{if metricProduct.description}
+${metricProduct.description.raw()}<br />
+#{/if}
+
+#{if metricProduct.supplier}
+${metricProduct.supplier.label}<br />
+#{/if}
+
+#{if metricProduct.orderNumber}
+&{'metricProduct.orderNumber'}: ${metricProduct.orderNumber}<br />
+#{/if}
+
+&{'metricProduct.metric.id'}: ${metricProduct.metric.symbol}<br />
+
+&{'metricProduct.priceUnit'}: ${metricProduct.priceUnit}<br />
+
+&{'metricProduct.purchasePricePerMetric.rawValue'}: ${metricProduct.purchasePricePerMetric.label}<br />
+
+&{'metricProduct.retailPricePerMetric.rawValue'}: ${metricProduct.retailPricePerMetric.label}<br />
+
+&{'metricProduct.valueAddedTaxRate.id'}: ${metricProduct.valueAddedTaxRate}<br />
+
+#{if metricProduct.comments}
+${metricProduct.comments}<br />
+#{/if}

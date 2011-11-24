@@ -64,7 +64,7 @@ public class Orders extends ApplicationController {
 
         order.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("order")));
-        index(1, null, null, null);
+        show(order.id);
     }
 
     public static void confirmFinish(Long id) {

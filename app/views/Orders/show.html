@@ -8,6 +8,10 @@
 
 <h1>#{get 'title' /}</h1>
 
+<div class="well">
+    <a href="@{form(order.id)}" class="btn primary">&{'edit'}</a>
+</div>
+
 <dl>
     <dt>&{'order.description'}</dt>
     <dd>${order.description}</dd>

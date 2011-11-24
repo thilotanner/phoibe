@@ -16,11 +16,11 @@ $(document).ready(function() {
         });
     });
 
-    $("a[rel=popover]")
+    $("[rel=popover]")
         .popover({
             offset: 10,
             html: true,
-            placement: 'above',
+            placement: 'below',
             content: function() {
                 $.ajax({
                     url: $(this).attr('data-content'),
@@ -34,7 +34,7 @@ $(document).ready(function() {
         })
 });
 
-function createAutocomplete(hiddenElement, ajaxUrl) {
+function createAutocomplete(hiddenElement, ajaxUrl, infoUrl, infoTitle) {
     var chooserElement = $("#" + hiddenElement.attr('id') + "_chooser");
     chooserElement.autocomplete({
         source: function(request, response)
@@ -68,13 +68,32 @@ function createAutocomplete(hiddenElement, ajaxUrl) {
             if (ui.item) {
                 hiddenElement.val(ui.item.value);
                 chooserElement.val(ui.item.label);
+                if(infoUrl) {
+                    chooserElement.siblings('.help-inline').first().html('<span class="label">Info</span>');
+                    chooserElement.siblings('.help-inline').first().children('.label').first().popover({
+                        title: function() { return infoTitle },
+                        offset: 10,
+                        html: true,
+                        placement: 'below',
+                        content: function() {
+                            $.ajax({
+                                url: infoUrl({id: ui.item.value}),
+                                async: false,
+                                complete: function(data){
+                                    text = data.responseText;
+                                }
+                            });
+                            return text;
+                        }
+                    });
+                }
                 return false;
             }
         }
     });
 }
 
-function submitModal(modalElement, ajaxUrl) {
+function submitModal(modalElement, ajaxUrl, infoUrl, infoTitle) {
     element = $('#' + modalElement);
     form  = $('#' + modalElement + ' form');
     data = form.serialize();
@@ -88,6 +107,23 @@ function submitModal(modalElement, ajaxUrl) {
             var object = jQuery.parseJSON(data.responseText);
             $('#' + element.attr('target')).val(object.id);
             $('#' + element.attr('target') + '_chooser').val(object.label);
+            $('#' + element.attr('target') + '_chooser').siblings('.help-inline').first().html('<span class="label">Info</span>');
+            $('#' + element.attr('target') + '_chooser').siblings('.help-inline').first().children('.label').first().popover({
+                title: function() { return infoTitle },
+                offset: 10,
+                html: true,
+                placement: 'below',
+                content: function() {
+                    $.ajax({
+                        url: infoUrl({id: object.id}),
+                        async: false,
+                        complete: function(data){
+                            text = data.responseText;
+                        }
+                    });
+                    return text;
+                }
+            });
             element.modal('hide');
         } else {
             element.html(data.responseText);

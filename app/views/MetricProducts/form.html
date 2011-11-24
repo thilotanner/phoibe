@@ -18,7 +18,7 @@
             enterMode: CKEDITOR.ENTER_BR
         });
 
-        createAutocomplete($('#metricProduct_supplier_id'), "@{Contacts.search}");
+        createAutocomplete($('#metricProduct_supplier_id'), "@{Contacts.search}", #{jsAction @Contacts.popover(':id') /}, "${messages.get('contact')}");
     });
 </script>
 #{/set}
@@ -36,7 +36,13 @@
     #{textArea property:'metricProduct.description', object:metricProduct /}
 
     %{
-        help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"metricProduct_supplier_id\">" + messages.get('create', messages.get('contact')) + "</a>";
+        if(metricProduct?.supplier?.id != null) {
+            args = new java.util.HashMap<String, Object>();
+            args.put('id', metricProduct.supplier.id);
+            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-content="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
+        } else {
+            help = '<a href="' + play.mvc.Router.reverse('Contacts.modalForm') + '" modal="modal" target="metricProduct_supplier_id">' + messages.get('create', messages.get('contact')) + '</a>';
+        }
     }%
     #{autocompleteTextField property:'metricProduct.supplier.id', object:metricProduct, label:metricProduct?.supplier?.label, help:help.raw() /}
 

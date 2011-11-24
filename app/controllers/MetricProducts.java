@@ -21,6 +21,7 @@ import search.SearchResults;
 import util.i18n.CurrencyProvider;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class MetricProducts extends ApplicationController {
@@ -74,7 +75,9 @@ public class MetricProducts extends ApplicationController {
     public static void form(Long id) {
         initRenderArgs();
         if (id == null) {
-            render();
+            MetricProduct metricProduct = new MetricProduct();
+            metricProduct.priceUnit = BigDecimal.ONE;
+            render(metricProduct);
         }
 
         MetricProduct metricProduct = MetricProduct.findById(id);
@@ -106,11 +109,11 @@ public class MetricProducts extends ApplicationController {
         MetricProduct metricProduct = MetricProduct.findById(id);
         notFoundIfNull(metricProduct);
 
-        if(metricProduct.isReferenced(MetricProductReportItem.class)) {
-            flash.error(Messages.get("isReferenced", Messages.get("metricProdukt")));
-        } else {
+        try {
             metricProduct.loggedDelete(getCurrentUser());
             flash.success(Messages.get("successfullyDeleted", Messages.get("metricProduct")));
+        } catch (Exception e) {
+            flash.error(Messages.get("isReferenced", Messages.get("metricProduct")));
         }
         index(1, null, null, null);
     }
@@ -145,6 +148,13 @@ public class MetricProducts extends ApplicationController {
 				return object;
 			}
 		});
+    }
+
+    public static void popover(Long id) {
+        notFoundIfNull(id);
+        MetricProduct metricProduct = MetricProduct.findById(id);
+        notFoundIfNull(metricProduct);
+        render(metricProduct);
     }
 
     private static void initRenderArgs() {

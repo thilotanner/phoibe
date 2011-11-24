@@ -3,11 +3,11 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        createAutocomplete($('#order_orderingContact_id'), "@{Contacts.search}");
+        createAutocomplete($('#order_orderingContact_id'), "@{Contacts.search}", #{jsAction @Contacts.popover(':id') /}, "${messages.get('contact')}");
 
-        createAutocomplete($('#order_shippingContact_id'), "@{Contacts.search}");
+        createAutocomplete($('#order_shippingContact_id'), "@{Contacts.search}", #{jsAction @Contacts.popover(':id') /}, "${messages.get('contact')}");
 
-        createAutocomplete($('#order_billingContact_id'), "@{Contacts.search}");
+        createAutocomplete($('#order_billingContact_id'), "@{Contacts.search}", #{jsAction @Contacts.popover(':id') /}, "${messages.get('contact')}");
     });
 </script>
 #{/set}
@@ -27,17 +27,35 @@
     #{textField property:'order.description', object:order /}
 
     %{
-        help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"order_orderingContact_id\">" + messages.get('create', messages.get('contact')) + "</a>";
+        if(order?.orderingContact?.id != null) {
+            args = new java.util.HashMap<String, Object>();
+            args.put('id', order.orderingContact.id);
+            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-content="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
+        } else {
+            help = '<a href="' + play.mvc.Router.reverse('Contacts.modalForm') + '" modal="modal" target="order_orderingContact_id">' + messages.get('create', messages.get('contact')) + '</a>';
+        }
     }%
     #{autocompleteTextField property:'order.orderingContact.id', object:order, label:order?.orderingContact?.label, help:help.raw() /}
 
     %{
-        help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"order_shippingContact_id\">" + messages.get('create', messages.get('contact')) + "</a>";
+        if(order?.shippingContact?.id != null) {
+            args = new java.util.HashMap<String, Object>();
+            args.put('id', order.shippingContact.id);
+            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-content="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
+        } else {
+            help = '<a href="' + play.mvc.Router.reverse('Contacts.modalForm') + '" modal="modal" target="order_shippingContact_id">' + messages.get('create', messages.get('contact')) + '</a>';
+        }
     }%
     #{autocompleteTextField property:'order.shippingContact.id', object:order, label:order?.shippingContact?.label, help:help.raw()  /}
 
     %{
-        help = "<a href=\"" + play.mvc.Router.reverse('Contacts.modalForm') + "\" modal=\"modal\" target=\"order_billingContact_id\">" + messages.get('create', messages.get('contact')) + "</a>";
+        if(order?.billingContact?.id != null) {
+            args = new java.util.HashMap<String, Object>();
+            args.put('id', order.billingContact.id);
+            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-content="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
+        } else {
+            help = '<a href="' + play.mvc.Router.reverse('Contacts.modalForm') + '" modal="modal" target="order_billingContact_id">' + messages.get('create', messages.get('contact')) + '</a>';
+        }
     }%
     #{autocompleteTextField property:'order.billingContact.id', object:order, label:order?.billingContact?.label, help:help.raw()  /}
 
