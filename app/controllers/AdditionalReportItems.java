@@ -37,8 +37,10 @@ public class AdditionalReportItems extends ApplicationController {
             render("@form", additionalReportItem);
         }
 
-        Report report = Report.findById(additionalReportItem.report.id);
-        additionalReportItem.position = report.reportItems.size();
+        if(additionalReportItem.position == null) {
+            Report report = Report.findById(additionalReportItem.report.id);
+            additionalReportItem.position = report.reportItems.size();
+        }
 
         additionalReportItem.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("additionalReportItem")));

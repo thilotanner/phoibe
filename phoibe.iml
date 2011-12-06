@@ -6,11 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <content url="file://$MODULE_DIR$/modules/elasticsearch">
-      <sourceFolder url="file://$MODULE_DIR$/modules/elasticsearch/app" isTestSource="false" />
-    </content>
-    <content url="file://$USER_HOME$/play-1.2.3/modules/secure">
-      <sourceFolder url="file://$USER_HOME$/play-1.2.3/modules/secure/app" isTestSource="false" />
+    <content url="file://$USER_HOME$/play-1.2.4/modules/secure">
+      <sourceFolder url="file://$USER_HOME$/play-1.2.4/modules/secure/app" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -19,7 +16,6 @@
       <library name="Project Libraries">
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />
-          <root url="file://$MODULE_DIR$/modules/elasticsearch/src" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -29,21 +25,21 @@
     <orderEntry type="module-library">
       <library name="PlayFramework Dependencies">
         <CLASSES>
-          <root url="file://$USER_HOME$/play-1.2.3/framework/lib" />
+          <root url="file://$USER_HOME$/play-1.2.4/framework/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/play-1.2.3/framework/lib" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/play-1.2.4/framework/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/play-1.2.3/framework/play-1.2.3.jar!/" />
+          <root url="jar://$USER_HOME$/play-1.2.4/framework/play-1.2.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$USER_HOME$/play-1.2.3/framework/src" />
+          <root url="file://$USER_HOME$/play-1.2.4/framework/src" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -25,6 +25,10 @@
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
 
+#{field property:'additionalReportItem.position', object:additionalReportItem}
+<input type="hidden" value="${field.value}" name="${field.name}"/>
+#{/field}
+
 <fieldset>
     <legend>&{'additionalReportItem'}</legend>
 
