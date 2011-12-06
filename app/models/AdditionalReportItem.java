@@ -12,27 +12,12 @@ import java.math.BigDecimal;
 public class AdditionalReportItem extends ReportItem {
 
     @Required
-    public BigDecimal amount;
-
-    @Required
     @ManyToOne
     public Metric metric;
 
     @Required
-    public String description;
-
-    @Valid
-    @Embedded
-    public Money pricePerUnit;
-
-    @Required
     @ManyToOne
     public ValueAddedTaxRate valueAddedTaxRate;
-
-    @Override
-    public BigDecimal getAmount() {
-        return amount;
-    }
 
     @Override
     public BigDecimal getPriceUnit() {
@@ -45,16 +30,6 @@ public class AdditionalReportItem extends ReportItem {
     }
 
     @Override
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public Money getPricePerUnit() {
-        return pricePerUnit;
-    }
-
-    @Override
     public ValueAddedTaxRate getValueAddedTaxRate() {
         return valueAddedTaxRate;
     }
@@ -62,11 +37,17 @@ public class AdditionalReportItem extends ReportItem {
     @Override
     public ReportItem duplicate() {
         AdditionalReportItem additionalReportItem = new AdditionalReportItem();
+
+        // from ReportItem
         additionalReportItem.amount = amount;
         additionalReportItem.description = description;
-        additionalReportItem.pricePerUnit = pricePerUnit;
+        additionalReportItem.retailPricePerMetric = retailPricePerMetric;
+        additionalReportItem.position = position;
+
+        // from AdditionalReportItem
         additionalReportItem.metric = metric;
         additionalReportItem.valueAddedTaxRate = valueAddedTaxRate;
+
         return additionalReportItem;
     }
 }

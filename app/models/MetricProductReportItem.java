@@ -13,14 +13,6 @@ public class MetricProductReportItem extends ReportItem {
     @ManyToOne
     public MetricProduct metricProduct;
 
-    @Required
-    public BigDecimal amount;
-
-    @Override
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
     @Override
     public BigDecimal getPriceUnit() {
         return metricProduct.priceUnit;
@@ -32,20 +24,18 @@ public class MetricProductReportItem extends ReportItem {
     }
 
     @Override
-    public String getDescription() {
-        return metricProduct.description;
-    }
-
-    @Override
-    public Money getPricePerUnit() {
-        return metricProduct.retailPricePerMetric;
-    }
-
-    @Override
     public ReportItem duplicate() {
         MetricProductReportItem metricProductReportItem = new MetricProductReportItem();
-        metricProductReportItem.metricProduct = metricProduct;
+
+        // from ReportItem
         metricProductReportItem.amount = amount;
+        metricProductReportItem.description = description;
+        metricProductReportItem.retailPricePerMetric = retailPricePerMetric;
+        metricProductReportItem.position = position;
+
+        // from MetricProductReportItem
+        metricProductReportItem.metricProduct = metricProduct;
+
         return metricProductReportItem;
     }
 

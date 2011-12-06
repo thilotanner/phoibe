@@ -4,8 +4,88 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        createAutocomplete($('#metricProductReportItem_metricProduct_id'), "@{MetricProducts.search}", #{jsAction @MetricProducts.popover(':id') /}, "${messages.get('metricProduct')}");
+        CKEDITOR.replace('metricProductReportItem_description', {
+            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
+            coreStyles_bold	: { element : 'b' },
+            coreStyles_italic : { element : 'i' },
+            enterMode: CKEDITOR.ENTER_BR
+        });
+
+
+        createAutocompleteForMetricProducts($('#metricProductReportItem_metricProduct_id'), "@{MetricProducts.search}", #{jsAction @MetricProducts.popover(':id') /}, "${messages.get('metricProduct')}");
     });
+
+    function createAutocompleteForMetricProducts(hiddenElement, ajaxUrl, infoUrl, infoTitle) {
+        var chooserElement = $("#" + hiddenElement.attr('id') + "_chooser");
+        chooserElement.autocomplete({
+            source: function(request, response)
+            {
+                $.ajax({
+                    url: ajaxUrl,
+                    dataType: "json",
+                    data: {
+                        search: request.term
+                    },
+                    success: function(data)
+                    {
+                        response($.map(data, function(item)
+                        {
+                            return {
+                                label: item.label,
+                                value: item.id
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 1,
+            focus: function(event, ui)
+            {
+                chooserElement.val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui)
+            {
+                if (ui.item) {
+                    hiddenElement.val(ui.item.value);
+                    chooserElement.val(ui.item.label);
+
+                    if(infoUrl) {
+                        chooserElement.siblings('.help-inline').first().html('<span class="label">Info</span>');
+                        chooserElement.siblings('.help-inline').first().children('.label').first().popover({
+                            title: function() { return infoTitle },
+                            offset: 10,
+                            html: true,
+                            placement: 'below',
+                            content: function() {
+                                $.ajax({
+                                    url: infoUrl({id: ui.item.value}),
+                                    async: false,
+                                    complete: function(data){
+                                        text = data.responseText;
+                                    }
+                                });
+                                return text;
+                            }
+                        });
+                    }
+
+                    var descriptionAction = #{jsAction @MetricProducts.description(':id') /}
+                    $.get(descriptionAction({id: ui.item.value}), function(data) {
+                        var oEditor = CKEDITOR.instances.metricProductReportItem_description;
+                        oEditor.setData(data);
+                    });
+
+                    var retailPriceAction = #{jsAction @MetricProducts.retailPricePerMetric(':id') /}
+                    $.get(retailPriceAction({id: ui.item.value}), function(data) {
+                        $('#metricProductReportItem_retailPricePerMetric_rawValue').val(data);
+                    });
+
+                    return false;
+                }
+            }
+        });
+    }
 </script>
 #{/set}
 
@@ -35,6 +115,15 @@
     #{autocompleteTextField property:'metricProductReportItem.metricProduct.id', object:metricProductReportItem, label:metricProductReportItem?.metricProduct?.label, help:help.raw() /}
 
     #{textField property:'metricProductReportItem.amount', object:metricProductReportItem /}
+
+    #{textArea property:'metricProductReportItem.description', object:metricProductReportItem /}
+
+    #{textField property:'metricProductReportItem.retailPricePerMetric.rawValue', object:metricProductReportItem, help:defaultCurrency.getCurrencyCode() /}
+
+    #{field property:'metricProductReportItem.retailPricePerMetric.currencyCode', object:precalculatedProductReportItem}
+        <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+    #{/field}
+
 </fieldset>
 
 <div class="actions">

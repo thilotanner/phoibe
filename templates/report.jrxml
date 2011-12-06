@@ -7,7 +7,7 @@
 	<parameter name="report" class="models.Report"/>
 	<field name="amount" class="java.lang.Double"/>
 	<field name="description" class="java.lang.String"/>
-	<field name="pricePerUnit" class="models.Money"/>
+	<field name="retailPricePerMetric" class="models.Money"/>
 	<field name="totalPrice" class="models.Money"/>
 	<field name="metric" class="models.Metric"/>
 	<field name="valueAddedTaxRate" class="models.ValueAddedTaxRate"/>
@@ -164,7 +164,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pricePerUnit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{retailPricePerMetric}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="223" y="4" width="40" height="12"/>

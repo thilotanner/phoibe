@@ -7,6 +7,7 @@ import util.string.NonEmptyStringBuilder;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class Report extends EnhancedModel {
     public Order order;
 
     @OneToMany(mappedBy = "report")
+    @OrderColumn(name = "position")
     public List<ReportItem> reportItems;
 
     public boolean isCurrentReport() {

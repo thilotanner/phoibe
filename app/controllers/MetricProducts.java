@@ -157,6 +157,20 @@ public class MetricProducts extends ApplicationController {
         render(metricProduct);
     }
 
+    public static void description(Long id) {
+        notFoundIfNull(id);
+        MetricProduct metricProduct = MetricProduct.findById(id);
+        notFoundIfNull(metricProduct);
+        renderHtml(metricProduct.description);
+    }
+
+    public static void retailPricePerMetric(Long id) {
+        notFoundIfNull(id);
+        MetricProduct metricProduct = MetricProduct.findById(id);
+        notFoundIfNull(metricProduct);
+        renderHtml(metricProduct.retailPricePerMetric.toString());
+    }
+
     private static void initRenderArgs() {
         renderArgs.put("metrics", Metric.findAll());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());

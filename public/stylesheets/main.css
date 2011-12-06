@@ -13,3 +13,7 @@ body {
 .modal.fade.in {
     top: 30%;
 }
+
+.move {
+    cursor: move;
+}

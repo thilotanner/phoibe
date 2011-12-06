@@ -4,11 +4,12 @@ import models.AdditionalReportItem;
 import models.MetricProductReportItem;
 import models.Order;
 import models.OrderStatus;
-import models.PrecalculatedProductReportItem;
 import models.Report;
 import models.ReportItem;
 import models.ReportTransition;
 import models.ReportType;
+import play.Logger;
+import play.data.binding.As;
 import play.i18n.Messages;
 import util.reporting.ReportPDFCreator;
 import util.transition.TransitionStrategy;
@@ -121,8 +122,6 @@ public class Reports extends ApplicationController {
             AdditionalReportItems.form(reportItemId);
         } else if(reportItem instanceof MetricProductReportItem) {
             MetricProductReportItems.form(reportItemId);
-        } else if(reportItem instanceof PrecalculatedProductReportItem) {
-            PrecalculatedProductReportItems.form(reportItemId);
         } else {
             throw new UnsupportedOperationException("Unknown report item class: " + reportItem.getClass().getName());
         }
@@ -144,5 +143,26 @@ public class Reports extends ApplicationController {
         reportItem.loggedDelete(getCurrentUser());
         flash.success(Messages.get("successfullyDeleted", Messages.get("reportItem")));
         show(reportItem.report.id);
+    }
+
+    public static void reorderItems(@As(",") Long[] reportItemIds) {
+        if(reportItemIds.length == 0) {
+            error();
+        }
+        
+        // sanity check
+        ReportItem reportItem = ReportItem.findById(reportItemIds[0]);
+        if(reportItem.report.reportItems.size() != reportItemIds.length) {
+            Logger.error("Wrong number of report items for reordering");
+            error();
+        }
+        
+        for(int i = 0; i < reportItemIds.length; i++) {
+            reportItem = ReportItem.findById(reportItemIds[i]);
+            reportItem.position = i;
+            reportItem.save();
+        }
+
+        ok();
     }
 }

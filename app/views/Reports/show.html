@@ -1,5 +1,28 @@
 #{extends 'main.html' /}
 #{set title:messages.get(report.reportType.name) /}
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        var fixHelper = function(e, ui) {
+            ui.children().each(function() {
+                $(this).width($(this).width());
+            });
+            return ui;
+        };
+
+        $("#report_item_table tbody").sortable({
+            update: function(event, ui) {
+                var reorderAction = #{jsAction @reorderItems(':ids') /}
+
+                $.post(reorderAction({ids: $("#report_item_table tbody").sortable('toArray')}));
+            },
+            helper: fixHelper
+        }).disableSelection();
+    });
+</script>
+#{/set}
+
 
 <ul class="breadcrumb">
   <li><a href="@{Orders.index}">&{'orders'}</a> <span class="divider">/</span></li>
@@ -57,18 +80,18 @@
 <h2>&{'reportItems'}</h2>
 <div class="well">
     <a href="@{MetricProductReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('metricProductReportItem')}</a>
-    <a href="@{PrecalculatedProductReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('precalculatedProductReportItem')}</a>
     <a href="@{AdditionalReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('additionalReportItem')}</a>
 </div>
 #{/if}
 
-<table class="zebra-striped">
+<table id="report_item_table" class="zebra-striped">
     <thead>
         <tr>
+            <th>&{'reportItem.position'}</th>
             <th>&{'reportItem.amount'}</th>
             <th>&{'reportItem.metric.symbol'}</th>
             <th>&{'reportItem.description'}</th>
-            <th>&{'reportItem.pricePerUnit'}</th>
+            <th>&{'reportItem.retailPricePerMetric'}</th>
             <th>&{'reportItem.totalPrice'}</th>
             <th>&{'reportItem.taxedTotalPrice'}</th>
             <th>&{'actions'}</th>
@@ -76,11 +99,12 @@
     </thead>
     <tbody>
         #{list items:report.reportItems, as:'reportItem'}
-        <tr>
+        <tr id="${reportItem.id}">
+            <td><span class="move">&uarr; &darr;</span></td>
             <td>${reportItem.amount}</td>
             <td>${reportItem.metric.symbol}</td>
             <td>${reportItem.description?.raw()}</td>
-            <td>${reportItem.pricePerUnit}</td>
+            <td>${reportItem.retailPricePerMetric}</td>
             <td>${reportItem.totalPrice}</td>
             <td>${reportItem.taxedTotalPrice}</td>
             <td>
