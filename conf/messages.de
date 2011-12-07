@@ -169,7 +169,6 @@ report.taxedTotalPrice=Total inkl. MWSt.
 
 reportItem=Position
 reportItems=Positionen
-reportItem.position=Pos.
 reportItem.amount=Menge
 reportItem.metric.symbol=Einheit
 reportItem.description=Beschreibung

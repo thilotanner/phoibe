@@ -87,7 +87,6 @@
 <table id="report_item_table" class="zebra-striped">
     <thead>
         <tr>
-            <th>&{'reportItem.position'}</th>
             <th>&{'reportItem.amount'}</th>
             <th>&{'reportItem.metric.symbol'}</th>
             <th>&{'reportItem.description'}</th>
@@ -99,8 +98,7 @@
     </thead>
     <tbody>
         #{list items:report.reportItems, as:'reportItem'}
-        <tr id="${reportItem.id}">
-            <td><span class="move">&uarr; &darr;</span></td>
+        <tr id="${reportItem.id}" class="move">
             <td>${reportItem.amount}</td>
             <td>${reportItem.metric.symbol}</td>
             <td>${reportItem.description?.raw()}</td>
