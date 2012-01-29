@@ -1,7 +1,6 @@
 package controllers;
 
 import models.ActivityLogEntry;
-import models.Metric;
 import play.db.Model;
 
 import java.util.ArrayList;

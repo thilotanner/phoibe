@@ -14,12 +14,11 @@ import java.util.Currency;
 @Embeddable
 public class Money {
 
-    public Long value;
+    public Long value = 0l;
 
     @Required
     public String currencyCode;
 
-    @Required
     @CheckWith(NumericalCheck.class)
     @Transient
     public String rawValue;
@@ -29,7 +28,6 @@ public class Money {
 
     public Money(Currency currency) {
         currencyCode = currency.getCurrencyCode();
-        value = 0l;
     }
 
     public String getRawValue() {
@@ -53,6 +51,26 @@ public class Money {
         }
     }
 
+    public Money asRounded() {
+        long newValue = value;
+        long lastDigit = newValue % 10;
+        if(lastDigit <= 2) {
+            // 0, 1, 2
+            newValue -= lastDigit;    
+        } else if(lastDigit == 3 || lastDigit == 4) {
+            newValue = newValue + (5 - lastDigit);
+        } else if(lastDigit == 6 || lastDigit == 7) {
+            newValue = newValue - (lastDigit - 5);
+        } else if(lastDigit >= 8) {
+            newValue += 10 - lastDigit;
+        }
+        
+        Money money = new Money();
+        money.value = newValue;
+        money.currencyCode = currencyCode;
+        return money;
+    }
+    
     public String getLabel() {
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
@@ -66,7 +84,7 @@ public class Money {
     public String getLabelWithCurrency() {
         return String.format("%s %s", currencyCode, getLabel());
     }
-
+    
     @Override
     public String toString() {
         return getLabel();
@@ -100,6 +118,10 @@ public class Money {
         return result;
     }
 
+    public Money percentage(BigDecimal percentage) {
+        return multiply(percentage.divide(new BigDecimal(100)));
+    }
+    
     private void calculateValue() {
         try {
             double priceValue = Double.parseDouble(rawValue);
@@ -131,4 +153,6 @@ public class Money {
             throw new IllegalArgumentException(String.format("Incompatible Currency: %s", otherMoney.currencyCode));
         }
     }
+
+
 }

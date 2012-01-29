@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <a href="#" class="close">&times;</a>
+    <h3>&{'report'}</h3>
+</div>
+#{form @conditionsSave()}
+
+<div class="modal-body">
+    #{field property:'report.id', object:report}
+        <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+    #{textField property:'report.conditions', object:report /}
+
+</div>
+<div class="modal-footer">
+    <input type="submit" class="btn primary" value="&{'submit'}">
+    <a href="#" onclick="$('#modal').modal('hide')" class="btn secondary">&{'cancel'}</a>
+</div>
+#{/form}

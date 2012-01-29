@@ -60,7 +60,7 @@
        modal="modal">&{'create', reportTransition.targetReportType.name}</a>
     #{/list}
     #{/if}
-    #{if (report.order.orderStatus.toString() == 'NEW' || report.order.orderStatus.toString() == 'IN_PROGRESS')}
+    #{if report.order.orderStatus.toString() == 'NEW' || report.order.orderStatus.toString() == 'IN_PROGRESS'}
         <a href="@{Orders.confirmFinish(report.order.id)}"
            class="btn success"
            modal="modal">&{'finish'}</a>
@@ -92,7 +92,6 @@
             <th>&{'reportItem.description'}</th>
             <th>&{'reportItem.retailPricePerMetric'}</th>
             <th>&{'reportItem.totalPrice'}</th>
-            <th>&{'reportItem.taxedTotalPrice'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -104,7 +103,6 @@
             <td>${reportItem.description?.raw()}</td>
             <td>${reportItem.retailPricePerMetric}</td>
             <td>${reportItem.totalPrice}</td>
-            <td>${reportItem.taxedTotalPrice}</td>
             <td>
                 #{if report.currentReport && report.order.orderStatus.toString() == 'IN_PROGRESS'}
                 <a href="@{reportItemForm(reportItem.id)}">&{'edit'}</a>
@@ -116,20 +114,72 @@
     </tbody>
 </table>
 
+<h3>&{'report.conditions'}</h3>
+
+<table class="zebra-striped">
+    <tbody>
+        <tr>
+            <td><strong>&{'report.rebatePercentage'}</strong></td>
+            <td id="rebatePercentage">${report.rebatePercentage.percentage()}</td>
+            <td>
+                <a href="@{rebatePercentageForm(report.id)}" modal="modal">&{'edit'}</a>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>&{'report.conditions'}</strong></td>
+            <td id="conditions">${report.conditions}</td>
+            <td>
+                <a href="@{conditionsForm(report.id)}" modal="modal">&{'edit'}</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>&{'report.total'}</h3>
+
 <table class="zebra-striped">
     <tbody>
         <tr>
             <td><strong>&{'report.totalPrice'}</strong></td>
             <td>${report.totalPrice.label}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>&{'report.rebatePercentage'} ${report.rebatePercentage.percentage()}</strong></td>
+            <td>${report.rebate.label}</td>
+            <td></td>
         </tr>
         <tr>
             <td><strong>&{'report.tax'}</strong></td>
             <td>${report.tax.label}</td>
+            <td></td>
         </tr>
         <tr>
             <td><strong>&{'report.taxedTotalPrice'}</strong></td>
-            <td>${report.taxedTotalPrice.label}</td>
+            <td>${report.taxedTotalPrice.asRounded().label}</td>
+            <td></td>
         </tr>
+    </tbody>
+</table>
+
+<h3>&{'valueAddedTaxRate.recapitulation'}</h3>
+
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>&{'valueAddedTaxRate.rate'}</th>
+            <th>&{'report.totalPrice'}</th>
+            <th>&{'report.tax'}</th>
+        </tr>
+    </thead>
+    <tbody>
+    #{list items:report.getUsedValueAddedTaxRates(), as:'valueAddedTaxRate'}
+        <tr>
+            <td>${valueAddedTaxRate.toString()}</td>
+            <td>${report.getTotalPerValueAddedTaxRate(valueAddedTaxRate)}</td>
+            <td>${report.getTaxPerValueAddedTaxRate(valueAddedTaxRate)}</td>
+        </tr>
+    #{/list}
     </tbody>
 </table>
 

@@ -59,7 +59,7 @@ public class ApplicationController extends Controller {
     public static int getPageSize()
     {
         try {
-            return Integer.parseInt((String) Play.configuration.get("paging.pageSize"));
+            return Integer.parseInt(Play.configuration.getProperty("paging.pageSize"));
         } catch (Exception e) {
             return DEFAULT_PAGE_SIZE;
         }

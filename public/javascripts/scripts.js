@@ -131,3 +131,32 @@ function submitModal(modalElement, ajaxUrl, infoUrl, infoTitle) {
     }
     });
 }
+
+function submitPartialModal(modalElement, ajaxUrl) {
+    element = $('#' + modalElement);
+    form  = $('#' + modalElement + ' form');
+    data = form.serialize();
+
+    $.ajax({
+    type: "POST",
+    url: ajaxUrl,
+    data: data,
+    complete: function(data) {
+        if(data.status == 200) {
+            var object = jQuery.parseJSON(data.responseText);
+
+            for(var key in object) {
+                var targetElement = $('#' + key);
+                if(targetElement.nodeName == 'input') {
+                    targetElement.val(object[key]);
+                } else {
+                    targetElement.html(object[key]);
+                }
+            }
+            element.modal('hide');
+        } else {
+            element.html(data.responseText);
+        }
+    }
+    });
+}

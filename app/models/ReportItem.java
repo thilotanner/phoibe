@@ -7,6 +7,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
@@ -21,6 +22,7 @@ public abstract class ReportItem extends EnhancedModel {
     public BigDecimal amount;
 
     @Required
+    @Lob
     public String description;
 
     @Valid
@@ -41,12 +43,22 @@ public abstract class ReportItem extends EnhancedModel {
         return retailPricePerMetric.multiply(amount.divide(getPriceUnit()));
     }
 
-    public Money getTaxedTotalPrice() {
-        return getTotalPrice().add(getTax());
+    public Money getTotalPrice(BigDecimal rebatePercentage) {
+        if(rebatePercentage != null && !rebatePercentage.equals(BigDecimal.ZERO)) {
+            return getTotalPrice().subtract(getRebate(rebatePercentage));
+        }
+        return getTotalPrice();
     }
 
-    public Money getTax() {
-        return getTotalPrice().multiply(getValueAddedTaxRate().getRateFactor());
+    public Money getRebate(BigDecimal rebatePercentage) {
+        return getTotalPrice().percentage(rebatePercentage);
+    }
+    
+    public Money getTaxedTotalPrice(BigDecimal rebatePercentage) {
+        return getTotalPrice(rebatePercentage).add(getTax(rebatePercentage));
     }
 
+    public Money getTax(BigDecimal rebatePercentage) {
+        return getTotalPrice(rebatePercentage).multiply(getValueAddedTaxRate().getRateFactor());
+    }
 }

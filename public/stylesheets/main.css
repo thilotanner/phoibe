@@ -6,12 +6,13 @@ body {
     width: 750px;
 }
 
-.modal form {
-    margin-bottom: 0; /* fix margin for modal dialogs */
+.modal-body {
+    max-height: 420px;
+    overflow: scroll;
 }
 
-.modal.fade.in {
-    top: 30%;
+.modal form {
+    margin-bottom: 0; /* fix margin for modal dialogs */
 }
 
 .move {

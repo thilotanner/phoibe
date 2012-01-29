@@ -9,13 +9,19 @@ import models.ReportItem;
 import models.ReportTransition;
 import models.ReportType;
 import play.Logger;
+import play.Play;
 import play.data.binding.As;
+import play.data.validation.Valid;
+import play.data.validation.Validation;
 import play.i18n.Messages;
+import play.mvc.Http;
+import util.extensions.PercentageExtensions;
 import util.reporting.ReportPDFCreator;
 import util.transition.TransitionStrategy;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
 
 public class Reports extends ApplicationController {
     public static void confirmCreate(Long orderId, Long reportTypeId) {
@@ -42,6 +48,13 @@ public class Reports extends ApplicationController {
         Report report = new Report();
         report.order = order;
         report.reportType = reportType;
+
+        // no rebate
+        report.rebatePercentage = BigDecimal.ZERO;
+
+        // use default conditions
+        report.conditions = Play.configuration.getProperty("report.defaultConditions");
+
         report.loggedSave(getCurrentUser());
 
         order.currentReport = report;
@@ -164,5 +177,39 @@ public class Reports extends ApplicationController {
         }
 
         ok();
+    }
+    
+    public static void rebatePercentageForm(Long id) {
+        notFoundIfNull(id);
+        Report report = Report.findById(id);
+        notFoundIfNull(report);
+        render(report);
+    }
+    
+    public static void rebatePercentageSave(@Valid Report report) {
+        if(Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            render("@rebatePercentageForm", report);
+        }
+
+        report.loggedSave(getCurrentUser());
+        show(report.id);
+    }
+
+    public static void conditionsForm(Long id) {
+        notFoundIfNull(id);
+        Report report = Report.findById(id);
+        notFoundIfNull(report);
+        render(report);
+    }
+
+    public static void conditionsSave(@Valid Report report) {
+        if(Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            render("@conditionsForm", report);
+        }
+
+        report.loggedSave(getCurrentUser());
+        show(report.id);
     }
 }

@@ -5,7 +5,6 @@ import play.data.validation.Email;
 import play.data.validation.Required;
 import play.data.validation.URL;
 import play.i18n.Messages;
-import search.annotations.ElasticSearchField;
 import search.annotations.ElasticSearchSortable;
 import search.annotations.ElasticSearchable;
 import util.check.ContactNameCheck;

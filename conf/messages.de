@@ -2,6 +2,7 @@ abort=abbrechen
 abortQuestion=Sind Sie sicher, dass Sie «%s» abbrechen möchten?
 accounting=Buchhaltung
 actions=Aktionen
+addValueAddedTax=zuzügl. MWSt.
 administration=Administration
 cancel=abbrechen
 create=%s erstellen
@@ -163,9 +164,12 @@ report=Bericht
 reports=Berichte
 report.allReports=Alle Berichte
 report.onlyCurrentReportsAreChangeable=Nur aktuelle Berichte können verändert werden
-report.totalPrice=Total
+report.total=Total
+report.totalPrice=Warenwert gesamt
 report.tax=MWSt.
 report.taxedTotalPrice=Total inkl. MWSt.
+report.rebatePercentage=Rabatt
+report.conditions=Konditionen
 
 reportItem=Position
 reportItems=Positionen
@@ -207,6 +211,7 @@ valueAddedTaxRate=Mehrwertsteuersatz
 valueAddedTaxRates=Mehrwertsteuersätze
 valueAddedTaxRate.description=Beschreibung
 valueAddedTaxRate.rate=Steuersatz
+valueAddedTaxRate.recapitulation=Rekapitulation MWSt.
 
 # Paging
 # ~~~~~

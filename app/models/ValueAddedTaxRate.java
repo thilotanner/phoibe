@@ -1,11 +1,10 @@
 package models;
 
 import play.data.validation.Required;
+import util.extensions.PercentageExtensions;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 
 @Entity
 public class ValueAddedTaxRate extends EnhancedModel {
@@ -22,10 +21,6 @@ public class ValueAddedTaxRate extends EnhancedModel {
 
     @Override
     public String toString() {
-        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
-        symbols.setDecimalSeparator('.');
-
-        DecimalFormat decimalFormat = new DecimalFormat("###0.0", symbols);
-        return String.format("%s %%", decimalFormat.format(rate));
+        return PercentageExtensions.percentage(rate);
     }
 }

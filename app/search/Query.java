@@ -1,8 +1,5 @@
 package search;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.Validate;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.action.search.SearchRequestBuilder;
@@ -11,12 +8,14 @@ import org.elasticsearch.search.facet.AbstractFacetBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
-
 import play.Logger;
 import play.db.jpa.Model;
 import search.mapping.impl.AbstractFieldMapper;
 import search.transformer.JPATransformer;
 import search.transformer.Transformer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An elastic search query

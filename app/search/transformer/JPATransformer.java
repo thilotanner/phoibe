@@ -1,19 +1,18 @@
 package search.transformer;
 
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.search.SearchHit;
+import play.Logger;
+import play.data.binding.Binder;
+import play.db.jpa.JPQL;
+import play.db.jpa.Model;
+import play.exceptions.UnexpectedException;
+import search.SearchResults;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.search.SearchHit;
-
-import play.Logger;
-import play.data.binding.Binder;
-import play.db.jpa.Model;
-import play.db.jpa.JPQL;
-import play.exceptions.UnexpectedException;
-import search.SearchResults;
 
 public class JPATransformer {
     /**

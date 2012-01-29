@@ -8,6 +8,9 @@ public class CopyTransitionStrategy implements TransitionStrategy {
     public Report transition(ReportTransition reportTransition, Report report) {
         Report resultReport = new Report();
         resultReport.order = report.order;
+        resultReport.rebatePercentage = report.rebatePercentage;
+        resultReport.conditions = report.conditions;
+
         resultReport.reportType = reportTransition.targetReportType;
         resultReport.save();
 

@@ -1,9 +1,7 @@
 package models;
 
 import play.data.validation.Required;
-import play.data.validation.Valid;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;

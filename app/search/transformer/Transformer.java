@@ -1,17 +1,15 @@
 package search.transformer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.search.SearchHit;
+import play.Logger;
+import play.db.jpa.Model;
 import search.SearchResults;
 import util.reflection.ReflectionUtil;
 
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.search.SearchHit;
-
-import play.Logger;
-import play.db.jpa.Model;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Transformer<T extends Model> {
     /**

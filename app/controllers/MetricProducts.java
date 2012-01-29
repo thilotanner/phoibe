@@ -7,7 +7,6 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import models.Metric;
 import models.MetricProduct;
-import models.MetricProductReportItem;
 import models.ValueAddedTaxRate;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
