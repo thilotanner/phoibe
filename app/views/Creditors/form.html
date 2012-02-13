@@ -12,7 +12,7 @@
 </script>
 #{/set}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 #{field property:'creditor.id', object:creditor}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
@@ -33,8 +33,8 @@
     #{textField property:'creditor.due', object:creditor, value:creditor?.due?.format() /}
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{index}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}

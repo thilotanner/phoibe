@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 #{field property:'account.id', object:account}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
@@ -13,9 +13,9 @@
     #{textField property:'account.description', object:account /}
 
     #{field property:'account.accountType', object:account}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             <select name="${field.name}" id="${field.id}">
                 <option value="ASSET"#{if field.value.toString()=='ASSET'} selected="selected"#{/if}>&{'account.accountType.ASSET'}</option>
                 <option value="LIABILITY"#{if field.value.toString()=='LIABILITY'} selected="selected"#{/if}>&{'account.accountType.LIABILITY'}</option>
@@ -27,8 +27,8 @@
     #{/field}
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{index}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}

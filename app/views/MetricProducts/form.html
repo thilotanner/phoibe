@@ -23,7 +23,7 @@
 </script>
 #{/set}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 #{field property:'metricProduct.id', object:metricProduct}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
@@ -39,7 +39,7 @@
         if(metricProduct?.supplier?.id != null) {
             args = new java.util.HashMap<String, Object>();
             args.put('id', metricProduct.supplier.id);
-            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-content="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
+            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-source="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
         } else {
             help = '<a href="' + play.mvc.Router.reverse('Contacts.modalForm') + '" modal="modal" target="metricProduct_supplier_id">' + messages.get('create', messages.get('contact')) + '</a>';
         }
@@ -49,9 +49,9 @@
     #{textField property:'metricProduct.orderNumber', object:metricProduct /}
 
     #{field property:'metricProduct.metric.id', object:metricProduct}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:metricProduct?.metric?.id, id:field.id /}
         </div>
     </div>
@@ -72,9 +72,9 @@
     #{/field}
 
     #{field property:'metricProduct.valueAddedTaxRate.id', object:metricProduct}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:metricProduct?.valueAddedTaxRate?.id, id:field.id /}
         </div>
     </div>
@@ -84,8 +84,8 @@
 
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{index}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}

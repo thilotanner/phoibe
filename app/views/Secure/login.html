@@ -3,20 +3,16 @@
 <div class="container">
     <section id="content">
         <div id="login">
-            #{form @authenticate()}
+            #{form @authenticate(), class:'form-horizontal'}
 
                 #{if flash.error}
-                <div class="alert-message error">
-                    <p>
-                        <strong>&{flash.error}</strong>
-                    </p>
+                <div class="alert alert-error">
+                    <strong>&{flash.error}</strong>
                 </div>
                 #{/if}
                 #{if flash.success}
-                <div class="alert-message success">
-                    <p>
-                        <strong>&{flash.success}</strong>
-                    </p>
+                <div class="alert alert-success">
+                    <strong>&{flash.success}</strong>
                 </div>
                 #{/if}
 
@@ -24,37 +20,32 @@
                     <legend>&{'secure.title'}</legend>
 
 
-                    <div class="clearfix">
+                    <div class="control-group">
                         <label for="username">&{'secure.username'}</label>
-                        <div class="input">
+                        <div class="controls">
                             <input type="text" id="username" name="username" value="${flash.username}">
                         </div>
                     </div>
 
-                    <div class="clearfix">
+                    <div class="control-group">
                         <label for="password">&{'secure.password'}</label>
-                        <div class="input">
+                        <div class="controls">
                             <input type="password" id="password" name="password" value="">
                         </div>
                     </div>
 
-                    <div class="clearfix">
-                        <label for="remember">&{'secure.remember'}</label>
-                        <div class="input">
-                            <ul class="inputs-list">
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
-                                    </label>
-                                </li>
-                            </ul>
+                    <div class="control-group">
+                        <div class="controls">
+                            <label class="checkbox" for="remember">&{'secure.remember'}
+                                <input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
+                            </label>
                         </div>
                     </div>
 
                 </fieldset>
 
-                <div class="actions">
-                    <input type="submit" class="btn primary" value="&{'secure.signin'}">
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" value="&{'secure.signin'}">
                     <button type="reset" class="btn">&{'cancel'}</button>
                 </div>
 

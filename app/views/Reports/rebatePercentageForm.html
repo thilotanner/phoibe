@@ -1,8 +1,8 @@
 <div class="modal-header">
-    <a href="#" class="close">&times;</a>
+    <a data-dismiss="modal" class="close">&times;</a>
     <h3>&{'report'}</h3>
 </div>
-#{form @rebatePercentageSave()}
+#{form @rebatePercentageSave(), class:'form-horizontal'}
 
 <div class="modal-body">
     #{field property:'report.id', object:report}
@@ -13,7 +13,7 @@
 
 </div>
 <div class="modal-footer">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="#" onclick="$('#modal').modal('hide')" class="btn secondary">&{'cancel'}</a>
 </div>
 #{/form}

@@ -9,7 +9,7 @@
 <h1>#{get 'title' /}</h1>
 
 <div class="well">
-    <a href="@{form(order.id)}" class="btn primary">&{'edit'}</a>
+    <a href="@{form(order.id)}" class="btn btn-primary">&{'edit'}</a>
 </div>
 
 <dl>
@@ -20,13 +20,13 @@
     <dd>#{orderStatus order /}</dd>
 
     <dt>&{'order.orderingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(order.orderingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(order.orderingContact.id)}">${order.orderingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(order.orderingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.orderingContact.id)}">${order.orderingContact?.label}</a></dd>
 
     <dt>&{'order.shippingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(order.shippingContact.id)}">${order.shippingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.shippingContact.id)}">${order.shippingContact?.label}</a></dd>
 
     <dt>&{'order.billingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(order.billingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(order.billingContact.id)}">${order.billingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.billingContact.id)}">${order.billingContact?.label}</a></dd>
 
     <dt>&{'order.comments'}</dt>
     <dd>${order.comments}</dd>
@@ -37,31 +37,31 @@
     #{if order.orderStatus.toString() == 'NEW'}
         #{list items:rootReportTypes, as:'rootReportType'}
         <a href="@{Reports.confirmCreate(order.id, rootReportType.id)}"
-           class="btn primary"
+           class="btn btn-primary"
            modal="modal">&{'create', rootReportType.name}</a>
         #{/list}
     #{/if}
     #{elseif order.orderStatus.toString() == 'IN_PROGRESS'}
         #{list items:order.currentReport.reportType.reportTransitions, as:'reportTransition'}
         <a href="@{Reports.confirmTransition(order.currentReport.id, reportTransition.id)}"
-           class="btn primary"
+           class="btn btn-primary"
            modal="modal">&{'create', reportTransition.targetReportType.name}</a>
         #{/list}
     #{/elseif}
 
-    #{if (order.orderStatus.toString() == 'NEW' || order.orderStatus.toString() == 'IN_PROGRESS')}
+    #{if order.orderStatus.toString() == 'NEW' || order.orderStatus.toString() == 'IN_PROGRESS'}
         <a href="@{Orders.confirmFinish(order.id)}"
-           class="btn success"
-           modal="modal">&{'finish'}</a>
+           class="btn btn-success"
+           modal="modal"><span class="icon-ok icon-white"></span> &{'finish'}</a>
         <a href="@{Orders.confirmAbort(order.id)}"
-           class="btn danger"
-           modal="modal">&{'abort'}</a>
+           class="btn btn-danger"
+           modal="modal"><span class="icon-remove icon-white"></span> &{'abort'}</a>
     #{/if}
 </div>
 
 #{if order.currentReport}
 <h2>&{'order.currentReport'}</h2>
-<table class="zebra-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>&{'reportType.name'}</th>
@@ -82,7 +82,7 @@
 #{/if}
 
 <h2>&{'report.allReports'}</h2>
-<table class="zebra-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>&{'reportType.name'}</th>

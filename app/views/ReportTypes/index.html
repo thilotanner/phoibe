@@ -9,11 +9,11 @@
 <h1>#{get 'title' /}</h1>
 
 <div class="well">
-    <a href="@{ReportTypes.form}" class="btn primary">&{'create', messages.get('reportType')}</a>
+    <a href="@{ReportTypes.form}" class="btn btn-primary">&{'create', messages.get('reportType')}</a>
 </div>
 
 #{tableSearch /}
-<table class="zebra-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             #{tableSorter objectName:'reportType', fieldName:'name' /}
@@ -28,13 +28,13 @@
         %{
         additionalClass = '';
         if(reportType.reportColor.toString() == 'GREEN') {
-            additionalClass = 'success';
+            additionalClass = 'label-success';
         } else if(reportType.reportColor.toString() == 'YELLOW') {
-            additionalClass = 'warning';
+            additionalClass = 'label-warning';
         } else if(reportType.reportColor.toString() == 'RED') {
-            additionalClass = 'important';
+            additionalClass = 'label-important';
         } else if(reportType.reportColor.toString() == 'BLUE') {
-            additionalClass = 'notice';
+            additionalClass = 'label-info';
         }
 
         }%

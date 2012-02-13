@@ -1,29 +1,36 @@
 #{extends 'page.html' /}
 
-<div class="topbar">
-    <div class="fill">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
         <div class="container">
-            <h3><a href="@{Dashboard.index}">${play.configuration.get('application.name')}</a></h3>
+            <a href="@{Dashboard.index}" class="brand">${play.configuration.get('application.name')}</a>
             <ul class="nav">
                 <li><a href="@{Dashboard.index}">&{'dashboard'}</a></li>
                 <li><a href="@{Contacts.index}">&{'contacts'}</a></li>
                 <li><a href="@{Orders.index}">&{'orders'}</a></li>
-                <li class="dropdown" data-dropdown="dropdown">
-                    <a href="#" class="dropdown-toggle">&{'products'}</a>
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown">&{'products'} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="@{MetricProducts.index}">&{'metricProducts'}</a></li>
                     </ul>
                 </li>
-                <li class="dropdown" data-dropdown="dropdown">
-                    <a href="#" class="dropdown-toggle">&{'accounting'}</a>
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown">&{'accounting'} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li><a href="@{Debitors.index}">&{'debitors'}</a></li>
                         <li><a href="@{Creditors.index}">&{'creditors'}</a></li>
                         <li><a href="@{Entries.index}">&{'entries'}</a></li>
                         <li><a href="@{Accounts.index}">&{'accounts'}</a></li>
                     </ul>
                 </li>
-                <li class="dropdown" data-dropdown="dropdown">
-                    <a href="#" class="dropdown-toggle">&{'administration'}</a>
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown">&{'administration'} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="@{ReportTypes.index}">&{'reportTypes'}</a></li>
                         <li><a href="@{Metrics.index}">&{'metrics'}</a></li>
@@ -34,16 +41,15 @@
                         <li><a href="@{Search.index}">&{'indexing'}</a></li>
                         <li><a href="@{Search.administration}">&{'searchAdministration'}</a></li>
                         <li class="divider"></li>
-                        <li class="divider"></li>
                         <li><a href="@{ActivityLogEntries.index}">&{'activityLogEntries'}</a></li>
                         <li class="divider"></li>
                         <li><a href="@{Users.index}">&{'users'}</a></li>
                     </ul>
                 </li>
             </ul>
-            <ul class="nav secondary-nav">
-                <li><a href="@{Secure.logout}">&{'logout', currentUser?.username}</a></li>
-            </ul>
+            <p class="navbar-text pull-right">
+                <a href="@{Secure.logout}">&{'logout', currentUser?.username}</a>
+            </p>
         </div>
     </div>
 </div>
@@ -51,47 +57,39 @@
 <div class="container">
     <section id="content">
         #{if flash.success}
-        <div class="alert-message success">
-            <p>
-                <strong>${flash.success}</strong>
-            </p>
+        <div class="alert alert-success">
+            <strong>${flash.success}</strong>
         </div>
         #{/if}
 
         #{if flash.get('info')}
-        <div class="alert-message info">
-            <p>
-                <strong>${flash.get('info')}</strong>
-            </p>
+        <div class="alert alert-info">
+            <strong>${flash.get('info')}</strong>
         </div>
         #{/if}
 
         #{if flash.get('warning')}
-        <div class="alert-message warning">
-            <p>
-                <strong>${flash.get('warning')}</strong>
-            </p>
+        <div class="alert">
+            <strong>${flash.get('warning')}</strong>
         </div>
         #{/if}
 
         #{if flash.error}
-        <div class="alert-message error">
-            <p>
-                <strong>${flash.error}</strong>
-            </p>
+        <div class="alert alert-error">
+            <strong>${flash.error}</strong>
         </div>
         #{/if}
 
         #{ifErrors}
-        <div class="alert-message error">
-            <p>
-                <strong>&{'validation.pleaseCorrectTheseErrors'}</strong>
-            </p>
+        <div class="alert alert-error">
+            <strong>&{'validation.pleaseCorrectTheseErrors'}</strong>
         </div>
         #{/ifErrors}
 
         #{doLayout /}
     </section>
+
+    <hr />
 
     <footer>
         <p>#{version /}</p>

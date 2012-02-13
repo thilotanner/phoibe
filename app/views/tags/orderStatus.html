@@ -8,13 +8,13 @@ if(_arg.orderStatus.toString() == 'IN_PROGRESS') {
 additionalClass = '';
 if(_arg.orderStatus.toString() == 'IN_PROGRESS') {
     if(_arg.currentReport.reportType.reportColor.toString() == 'GREEN') {
-        additionalClass = 'success';
+        additionalClass = 'label-success';
     } else if(_arg.currentReport.reportType.reportColor.toString() == 'YELLOW') {
-        additionalClass = 'warning';
+        additionalClass = 'label-warning';
     } else if(_arg.currentReport.reportType.reportColor.toString() == 'RED') {
-        additionalClass = 'important';
+        additionalClass = 'label-important';
     } else if(_arg.currentReport.reportType.reportColor.toString() == 'BLUE') {
-        additionalClass = 'notice';
+        additionalClass = 'label-info';
     }
 }
 

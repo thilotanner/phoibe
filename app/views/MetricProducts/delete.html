@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <a href="#" class="close">&times;</a>
+    <a data-dismiss="modal" class="close">&times;</a>
     <h3>&{'metricProduct'}</h3>
 </div>
 <div class="modal-body">
     <p>&{'deleteQuestion', metricProduct.name}</p>
 </div>
 <div class="modal-footer">
-    <a href="@{destroy(metricProduct.id)}" class="btn danger">&{'delete'}</a>
+    <a href="@{destroy(metricProduct.id)}" class="btn btn-danger">&{'delete'}</a>
     <a href="@{index}" class="btn secondary">&{'cancel'}</a>
 </div>

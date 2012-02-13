@@ -1,0 +1,64 @@
+#{extends 'main.html' /}
+#{set title:messages.get('debitor') /}
+
+<ul class="breadcrumb">
+    <li>&{'accounting'} <span class="divider">/</span></li>
+    <li><a href="@{index}">&{'debitors'}</a> <span class="divider">/</span></li>
+    <li class="active">&{'debitor'}</li>
+</ul>
+
+<h1>#{get 'title' /}</h1>
+
+<div class="well">
+    <a href="@{form(debitor.id)}" class="btn btn-primary">&{'edit'}</a>
+</div>
+
+<dl>
+    <dt>&{'order'}</dt>
+    <dd><a href="@{Reports.show(debitor.report.id)}">${debitor.report.order.description}</a></dd>
+
+    <dt>&{'order.billingContact.id'}</dt>
+    <dd><a href="@{Contacts.show(debitor.report.order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(debitor.report.order.billingContact.id)}">${debitor.report.order.billingContact.label}</a></dd>
+
+    <dt>&{'debitor.debitorStatus'}</dt>
+    <dd>#{debitorStatus debitor /}</dd>
+
+    <dt>&{'debitor.due'}</dt>
+    <dd>${debitor.due.format()}</dd>
+
+    <dt>&{'report.taxedTotalPrice'}</dt>
+    <dd>${debitor.report.getTaxedTotalPrice()}</dd>
+    
+    <dt>&{'debitor.amountDue'}</dt>
+    <dd>${debitor.amountDue}</dd>
+</dl>
+
+<h2>&{'debitorPaymentReceipts'}</h2>
+<div class="well">
+    <a href="@{DebitorPaymentReceipts.create(debitor.id)}"
+       class="btn btn-primary">&{'create', messages.get('debitorPaymentReceipt')}</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'debitorPaymentReceipt.amount.rawValue'}</th>
+        <th>&{'debitorPaymentReceipt.paid'}</th>
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:debitor.debitorPaymentReceipts, as:'debitorPaymentReceipt'}
+    <tr>
+        <td>${debitorPaymentReceipt.amount}</td>
+        <td>${debitorPaymentReceipt.paid.format()}</td>
+        <td>
+            <a href="@{DebitorPaymentReceipts.form(debitorPaymentReceipt.id)}">&{'edit'}</a>
+        </td>
+    </tr>
+    #{/list}
+
+    </tbody>
+</table>
+
+<div id="modal" class="modal fade hide"></div>

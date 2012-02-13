@@ -15,7 +15,7 @@
 </script>
 #{/set}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 
 #{field property:'additionalReportItem.id', object:additionalReportItem}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
@@ -35,9 +35,9 @@
     #{textField property:'additionalReportItem.amount', object:additionalReportItem /}
 
     #{field property:'additionalReportItem.metric.id', object:additionalReportItem}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:metricProduct?.metric?.id, id:field.id /}
         </div>
     </div>
@@ -52,17 +52,17 @@
     #{/field}
 
     #{field property:'additionalReportItem.valueAddedTaxRate.id', object:additionalReportItem}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:additionalReportItem?.valueAddedTaxRate?.id, id:field.id /}
         </div>
     </div>
     #{/field}
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{Reports.show(additionalReportItem.report.id)}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}

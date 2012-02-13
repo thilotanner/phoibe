@@ -112,6 +112,19 @@ currency.fractionDigits=Dezimalstellen
 currency.allCurrencies=Alle Währungen
 currency.preferredCurrencies=Bevorzugte Währungen
 
+debitor=Debitor
+debitors=Debitoren
+debitor.due=Fälligkeit
+debitor.amountDue=Restbetrag
+debitor.debitorStatus=Debitorstatus
+debitor.debitorStatus.DUE=fällig
+debitor.debitorStatus.PAID=bezahlt
+
+debitorPaymentReceipt=Zahlungseingang
+debitorPaymentReceipts=Zahlungseingänge
+debitorPaymentReceipt.amount.rawValue=Betrag
+debitorPaymentReceipt.paid=Bezahlt am
+
 entry=Buchung
 entries=Buchungen
 entry.date=Datum

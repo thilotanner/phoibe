@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 #{field property:'reportTransition.id', object:reportTransition}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
@@ -13,9 +13,9 @@
     <legend>&{'reportTransition'}</legend>
 
     #{field property:'reportTransition.targetReportType.id', object:reportTransition}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             #{select field.name, items:reportTypes, valueProperty:'id', labelProperty:'name', value:reportTransition?.targetReportType?.id, id:field.id /}
         </div>
     </div>
@@ -24,8 +24,8 @@
     #{textField property:'reportTransition.transitionStrategyClassName', object:reportTransition /}
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{ReportTypes.show(reportTransition.reportType.id)}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}

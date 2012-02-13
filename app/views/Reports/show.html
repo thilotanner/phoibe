@@ -40,13 +40,13 @@
     <dd>#{orderStatus report.order /}</dd>
 
     <dt>&{'order.orderingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(report.order.orderingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(report.order.orderingContact.id)}">${report.order.orderingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(report.order.orderingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(report.order.orderingContact.id)}">${report.order.orderingContact?.label}</a></dd>
 
     <dt>&{'order.shippingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(report.order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(report.order.shippingContact.id)}">${report.order.shippingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(report.order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(report.order.shippingContact.id)}">${report.order.shippingContact?.label}</a></dd>
 
     <dt>&{'order.billingContact.id'}</dt>
-    <dd><a href="@{Contacts.show(report.order.billingContact.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(report.order.billingContact.id)}">${report.order.billingContact?.label}</a></dd>
+    <dd><a href="@{Contacts.show(report.order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(report.order.billingContact.id)}">${report.order.billingContact?.label}</a></dd>
 </dl>
 
 
@@ -56,16 +56,16 @@
     #{if report.order.orderStatus.toString() == 'IN_PROGRESS'}
     #{list items:report.reportType.reportTransitions, as:'reportTransition'}
     <a href="@{confirmTransition(report.id, reportTransition.id)}"
-       class="btn primary"
+       class="btn btn-primary"
        modal="modal">&{'create', reportTransition.targetReportType.name}</a>
     #{/list}
     #{/if}
     #{if report.order.orderStatus.toString() == 'NEW' || report.order.orderStatus.toString() == 'IN_PROGRESS'}
         <a href="@{Orders.confirmFinish(report.order.id)}"
-           class="btn success"
+           class="btn btn-success"
            modal="modal">&{'finish'}</a>
         <a href="@{Orders.confirmAbort(report.order.id)}"
-           class="btn danger"
+           class="btn btn-danger"
            modal="modal">&{'abort'}</a>
     #{/if}
 </div>
@@ -73,18 +73,18 @@
 
 <h2>&{'functions'}</h2>
 <div class="well">
-    <a href="@{download(report.id)}" class="btn primary">&{'downloadPdf'}</a>
+    <a href="@{download(report.id)}" class="btn btn-primary">&{'downloadPdf'}</a>
 </div>
 
 #{if report.currentReport && report.order.orderStatus.toString() == 'IN_PROGRESS'}
 <h2>&{'reportItems'}</h2>
 <div class="well">
-    <a href="@{MetricProductReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('metricProductReportItem')}</a>
-    <a href="@{AdditionalReportItems.create(report.id)}" class="btn primary">&{'create', messages.get('additionalReportItem')}</a>
+    <a href="@{MetricProductReportItems.create(report.id)}" class="btn btn-primary">&{'create', messages.get('metricProductReportItem')}</a>
+    <a href="@{AdditionalReportItems.create(report.id)}" class="btn btn-primary">&{'create', messages.get('additionalReportItem')}</a>
 </div>
 #{/if}
 
-<table id="report_item_table" class="zebra-striped">
+<table id="report_item_table" class="table table-striped">
     <thead>
         <tr>
             <th>&{'reportItem.amount'}</th>
@@ -116,7 +116,7 @@
 
 <h3>&{'report.conditions'}</h3>
 
-<table class="zebra-striped">
+<table class="table table-striped">
     <tbody>
         <tr>
             <td><strong>&{'report.rebatePercentage'}</strong></td>
@@ -137,7 +137,7 @@
 
 <h3>&{'report.total'}</h3>
 
-<table class="zebra-striped">
+<table class="table table-striped">
     <tbody>
         <tr>
             <td><strong>&{'report.totalPrice'}</strong></td>
@@ -164,7 +164,7 @@
 
 <h3>&{'valueAddedTaxRate.recapitulation'}</h3>
 
-<table class="zebra-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>&{'valueAddedTaxRate.rate'}</th>

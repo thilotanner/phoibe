@@ -1,10 +1,12 @@
 $(document).ready(function() {
+    /*
     if($('#modal').length > 0) {
         $('#modal').modal({
             backdrop: 'static',
             keyboard: true
         });
     }
+    */
 
     $('[modal]').click(function(e) {
         e.preventDefault();
@@ -18,17 +20,16 @@ $(document).ready(function() {
 
     $("[rel=popover]")
         .popover({
-            offset: 10,
-            html: true,
-            placement: 'below',
+            placement: 'bottom',
             content: function() {
                 $.ajax({
-                    url: $(this).attr('data-content'),
+                    url: $(this).attr('data-source'),
                     async: false,
                     complete: function(data){
                         text = data.responseText;
                     }
                 });
+
                 return text;
             }
         })

@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 #{field property:'reportType.id', object:reportType}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
@@ -11,9 +11,9 @@
     #{textField property:'reportType.name', object:reportType /}
 
     #{field property:'reportType.rootReportType', object:reportType}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             <select name="${field.name}" id="${field.id}">
                 <option value="false"#{if field.value==false} selected="selected"#{/if}>&{'false'}</option>
                 <option value="true"#{if field.value==true} selected="selected"#{/if}>&{'true'}</option>
@@ -23,9 +23,9 @@
     #{/field}
 
     #{field property:'reportType.reportColor', object:reportType}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             <select name="${field.name}" id="${field.id}">
                 <option value="GREY"#{if field.value?.toString()=='GREY'} selected="selected"#{/if}>&{'reportType.reportColor.GREY'}</option>
                 <option value="GREEN"#{if field.value?.toString()=='GREEN'} selected="selected"#{/if}>&{'reportType.reportColor.GREEN'}</option>
@@ -40,8 +40,8 @@
     #{textArea property:'reportType.template', object:reportType /}
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{index}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}

@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 #{field property:'user.id', object:user}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
@@ -21,8 +21,8 @@
     #{textField property:'user.email', object:user /}
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{index}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}

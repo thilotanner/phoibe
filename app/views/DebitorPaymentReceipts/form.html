@@ -1,0 +1,37 @@
+#{extends 'main.html' /}
+
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('#debitorPaymentReceipt_paid').datepicker( $.datepicker.regional[ "de" ] );
+    });
+</script>
+#{/set}
+
+#{form @save(), class:'form-horizontal'}
+    #{field property:'debitorPaymentReceipt.id', object:debitorPaymentReceipt}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+    #{field property:'debitorPaymentReceipt.debitor.id', object:debitorPaymentReceipt}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+<fieldset>
+    <legend>&{'debitorPaymentReceipt'}</legend>
+
+    #{textField property:'debitorPaymentReceipt.amount.rawValue', object:debitorPaymentReceipt, help:defaultCurrency.getCurrencyCode() /}
+
+    #{field property:'debitorPaymentReceipt.amount.currencyCode', object:debitorPaymentReceipt}
+    <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+    #{/field}
+
+    #{textField property:'debitorPaymentReceipt.paid', object:debitorPaymentReceipt, value:debitorPaymentReceipt?.paid?.format() /}
+</fieldset>
+
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
+    <a href="@{Debitors.show(debitorPaymentReceipt.debitor.id)}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}

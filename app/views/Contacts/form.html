@@ -1,12 +1,13 @@
 #{extends 'main.html' /}
 #{set title:messages.get('contact') /}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 
 #{include 'Contacts/formFields.html' /}
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{index}" class="btn">&{'cancel'}</a>
 </div>
+
 #{/form}

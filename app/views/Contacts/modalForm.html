@@ -1,8 +1,8 @@
 <div class="modal-header">
-    <a href="#" class="close">&times;</a>
+    <a data-dismiss="modal" class="close">&times;</a>
     <h3>&{'contact'}</h3>
 </div>
-#{form @modalSave(), id:'modalForm'}
+#{form @modalSave(), id:'modalForm', class:'form-horizontal'}
 
 <div class="modal-body">
 
@@ -10,7 +10,7 @@
 
 </div>
 <div class="modal-footer">
-    <a href="#" onclick="submitModal('modal', '@{Contacts.modalSave}', #{jsAction @Contacts.popover(':id') /}, '${messages.get('contact')}')" class="btn primary">&{'createAction'}</a>
+    <a href="#" onclick="submitModal('modal', '@{Contacts.modalSave}', #{jsAction @Contacts.popover(':id') /}, '${messages.get('contact')}')" class="btn btn-primary">&{'createAction'}</a>
     <a href="#" onclick="$('#modal').modal('hide')" class="btn secondary">&{'cancel'}</a>
 </div>
 #{/form}

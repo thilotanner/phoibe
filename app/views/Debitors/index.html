@@ -1,0 +1,40 @@
+#{extends 'main.html' /}
+#{set title:messages.get('debitors') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'accounting'} <span class="divider">/</span></li>
+    <li class="active">&{'debitors'}</li>
+</ul>
+
+<h1>#{get 'title' /}</h1>
+
+#{tableSearch /}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'debitor.debitorStatus'}</th>
+        <th>&{'order'}</th>
+        <th>&{'order.billingContact.id'}</th>
+        <th>&{'debitor.due'}</th>
+        <th>&{'debitor.amountDue'}</th>
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:debitors, as:'debitor'}
+    <tr>
+        <td>#{debitorStatus debitor /}</td>
+        <td><a href="@{Reports.show(debitor.report.id)}">${debitor.report.order.description}</a></td>
+        <td><a href="@{Contacts.show(debitor.report.order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(debitor.report.order.billingContact.id)}">${debitor.report.order.billingContact.label}</a></td>
+        <td>${debitor.due.format()}</td>
+        <td>${debitor.getAmountDue().asRounded()}</td>
+        <td>
+            <a href="@{show(debitor.id)}">&{'show'}</a>
+            <a href="@{form(debitor.id)}">&{'edit'}</a>
+        </td>
+    </tr>
+    #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

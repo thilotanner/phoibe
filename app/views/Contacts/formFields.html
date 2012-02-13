@@ -8,9 +8,9 @@
     #{textField property:'contact.company', object:contact /}
 
     #{field property:'contact.title', object:contact}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             <select name="${field.name}" id="${field.id}">
                 <option value=""#{if field.value==null} selected="selected"#{/if}></option>
                 <option value="MS"#{if field.value?.toString()=='MS'} selected="selected"#{/if}>&{'contact.title.MS'}</option>
@@ -33,9 +33,9 @@
     #{textField property:'contact.city', object:contact /}
 
     #{field property:'contact.countryCode', object:contact}
-    <div class="clearfix">
+    <div class="control-group">
         <label for="${field.id}">&{field.name}</label>
-        <div class="input">
+        <div class="controls">
             #{select field.name, value:field.value, id:field.id}
                 #{list items:preferredCountries, as:'country'}
                 #{option country.getCountry()}${country.getDisplayCountry()}#{/option}

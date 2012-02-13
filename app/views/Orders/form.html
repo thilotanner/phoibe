@@ -12,7 +12,7 @@
 </script>
 #{/set}
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 #{field property:'order.id', object:order}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
 #{/field}
@@ -30,7 +30,7 @@
         if(order?.orderingContact?.id != null) {
             args = new java.util.HashMap<String, Object>();
             args.put('id', order.orderingContact.id);
-            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-content="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
+            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-source="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
         } else {
             help = '<a href="' + play.mvc.Router.reverse('Contacts.modalForm') + '" modal="modal" target="order_orderingContact_id">' + messages.get('create', messages.get('contact')) + '</a>';
         }
@@ -41,7 +41,7 @@
         if(order?.shippingContact?.id != null) {
             args = new java.util.HashMap<String, Object>();
             args.put('id', order.shippingContact.id);
-            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-content="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
+            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-source="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
         } else {
             help = '<a href="' + play.mvc.Router.reverse('Contacts.modalForm') + '" modal="modal" target="order_shippingContact_id">' + messages.get('create', messages.get('contact')) + '</a>';
         }
@@ -52,7 +52,7 @@
         if(order?.billingContact?.id != null) {
             args = new java.util.HashMap<String, Object>();
             args.put('id', order.billingContact.id);
-            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-content="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
+            help = '<span class="label" rel="popover" title="' + messages.get('contact') + '" data-source="' + play.mvc.Router.reverse('Contacts.popover', args) + '">Info</span> ';
         } else {
             help = '<a href="' + play.mvc.Router.reverse('Contacts.modalForm') + '" modal="modal" target="order_billingContact_id">' + messages.get('create', messages.get('contact')) + '</a>';
         }
@@ -62,8 +62,8 @@
     #{textArea property:'order.comments', object:order /}
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{index}" class="btn">&{'cancel'}</a>
 </div>
 

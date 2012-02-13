@@ -90,7 +90,7 @@
 #{/set}
 
 
-#{form @save()}
+#{form @save(), class:'form-horizontal'}
 
 #{field property:'metricProductReportItem.id', object:metricProductReportItem}
 <input type="hidden" value="${field.value}" name="${field.name}"/>
@@ -112,7 +112,7 @@
         if(metricProductReportItem?.metricProduct?.id != null) {
             args = new java.util.HashMap<String, Object>();
             args.put('id', metricProductReportItem.metricProduct.id);
-            help = '<span class="label" rel="popover" title="' + messages.get('metricProduct') + '" data-content="' + play.mvc.Router.reverse('MetricProducts.popover', args) + '">Info</span>';
+            help = '<span class="label" rel="popover" title="' + messages.get('metricProduct') + '" data-source="' + play.mvc.Router.reverse('MetricProducts.popover', args) + '">Info</span>';
         }
     }%
 
@@ -130,8 +130,8 @@
 
 </fieldset>
 
-<div class="actions">
-    <input type="submit" class="btn primary" value="&{'submit'}">
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
     <a href="@{Reports.show(metricProductReportItem.report.id)}" class="btn">&{'cancel'}</a>
 </div>
 #{/form}

@@ -19,7 +19,7 @@ public class ReportTransitions extends ApplicationController {
         render("@form", reportTransition);
     }
 
-     public static void form(Long id) {
+    public static void form(Long id) {
         notFoundIfNull(id);
         ReportTransition reportTransition = ReportTransition.findById(id);
         notFoundIfNull(reportTransition);

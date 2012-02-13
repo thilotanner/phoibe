@@ -9,11 +9,11 @@
 <h1>#{get 'title' /}</h1>
 
 <div class="well">
-    <a href="@{Metrics.form}" class="btn primary">&{'create', messages.get('metric')}</a>
+    <a href="@{Metrics.form}" class="btn btn-primary">&{'create', messages.get('metric')}</a>
 </div>
 
 #{tableSearch /}
-<table class="zebra-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             #{tableSorter objectName:'metric', fieldName:'name' /}

@@ -12,7 +12,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Currency;
 
 @Embeddable
-public class Money {
+public class Money implements Cloneable {
 
     public Long value = 0l;
 
@@ -26,6 +26,11 @@ public class Money {
     public Money() {
     }
 
+    public Money(Money money) {
+        value = money.value;
+        currencyCode = money.currencyCode;
+    }
+    
     public Money(Currency currency) {
         currencyCode = currency.getCurrencyCode();
     }
@@ -153,6 +158,4 @@ public class Money {
             throw new IllegalArgumentException(String.format("Incompatible Currency: %s", otherMoney.currencyCode));
         }
     }
-
-
 }

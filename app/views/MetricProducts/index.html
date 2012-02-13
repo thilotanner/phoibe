@@ -9,11 +9,11 @@
 <h1>#{get 'title' /}</h1>
 
 <div class="well">
-    <a href="@{MetricProducts.form}" class="btn primary">&{'create', messages.get('metricProduct')}</a>
+    <a href="@{MetricProducts.form}" class="btn btn-primary">&{'create', messages.get('metricProduct')}</a>
 </div>
 
 #{tableSearch /}
-<table class="zebra-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             #{tableSorter objectName:'metricProduct', fieldName:'name' /}
@@ -28,7 +28,7 @@
         #{list items:metricProducts, as:'metricProduct'}
         <tr>
             <td>${metricProduct.name}</td>
-            <td><a href="@{Contacts.show(metricProduct.supplier.id)}" rel="popover" title="&{'contact'}" data-content="@{Contacts.popover(metricProduct.supplier.id)}">${metricProduct.supplier?.company}</a></td>
+            <td><a href="@{Contacts.show(metricProduct.supplier.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(metricProduct.supplier.id)}">${metricProduct.supplier?.company}</a></td>
             <td>${metricProduct.metric.symbol}</td>
             <td>${metricProduct.retailPricePerMetric.label}</td>
             <td>${metricProduct.valueAddedTaxRate}</td>
