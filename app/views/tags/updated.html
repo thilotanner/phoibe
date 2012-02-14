@@ -1,0 +1,6 @@
+#{if _arg.updated}
+${_arg.updated.format('dd.MM.yyyy HH:mm')}
+#{/if}
+#{else}
+${_arg.created.format('dd.MM.yyyy HH:mm')}
+#{/else}

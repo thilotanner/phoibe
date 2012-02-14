@@ -6,12 +6,7 @@
   <li class="active">${contact.label}</li>
 </ul>
 
-<div class="well">
-    <a href="@{form(contact.id)}" class="btn btn-primary">&{'edit'}</a>
-</div>
-
-
-<h1>#{get 'title' /}</h1>
+#{editHeader contact.id /}
 
 <dl>
     <dt>&{'contact.company'}</dt>

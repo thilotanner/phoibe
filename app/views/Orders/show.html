@@ -6,13 +6,12 @@
   <li class="active">${order.description}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{form(order.id)}" class="btn btn-primary">&{'edit'}</a>
-</div>
+#{editHeader order.id /}
 
 <dl>
+    <dt>&{'order.reference'}</dt>
+    <dd>${order.id}</dd>
+
     <dt>&{'order.description'}</dt>
     <dd>${order.description}</dd>
 
@@ -27,6 +26,9 @@
 
     <dt>&{'order.billingContact.id'}</dt>
     <dd><a href="@{Contacts.show(order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.billingContact.id)}">${order.billingContact?.label}</a></dd>
+
+    <dt>&{'updated'}</dt>
+    <dd>#{updated order /}</dd>
 
     <dt>&{'order.comments'}</dt>
     <dd>${order.comments}</dd>
@@ -64,16 +66,21 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>&{'report.number'}</th>
             <th>&{'reportType.name'}</th>
+            <th>&{'updated'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
     <tbody>
         <tr>
+            <td>${order.currentReport.id}</td>
             <td>${order.currentReport.reportType.name}</td>
+            <td>#{updated order.currentReport /}</td>
             <td>
-                <a href="@{Reports.show(order.currentReport.id)}">&{'show'}</a>
-            </td>
+                <a href="@{Reports.show(order.currentReport.id)}">&{'show'}</a> |
+                <a href="@{Reports.download(order.currentReport.id)}">&{'downloadPdf'}</a>
+      </td>
         </tr>
 
     </tbody>
@@ -85,16 +92,21 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>&{'report.number'}</th>
             <th>&{'reportType.name'}</th>
+            <th>&{'updated'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
     <tbody>
         #{list items:order.reports, as:'report'}
         <tr>
+            <td>${report.id}</td>
             <td>${report.reportType.name}</td>
+            <td>#{updated report /}</td>
             <td>
-                <a href="@{Reports.show(report.id)}">&{'show'}</a>
+                <a href="@{Reports.show(report.id)}">&{'show'}</a> |
+                <a href="@{Reports.download(report.id)}">&{'downloadPdf'}</a>
             </td>
         </tr>
         #{/list}

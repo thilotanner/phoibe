@@ -6,11 +6,7 @@
   <li class="active">&{'accounts'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{Accounts.form}" class="btn btn-primary">&{'create', messages.get('account')}</a>
-</div>
+#{addHeader 'account' /}
 
 #{tableSearch /}
 <table class="table table-striped">
@@ -29,7 +25,7 @@
             <td>${account.description}</td>
             <td>&{'account.accountType.' + account.accountType}</td>
             <td>
-                <a href="@{show(account.id)}">&{'show'}</a>
+                <a href="@{show(account.id)}">&{'show'}</a> |
                 <a href="@{form(account.id)}">&{'edit'}</a>
             </td>
         </tr>

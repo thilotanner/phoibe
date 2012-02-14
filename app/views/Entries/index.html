@@ -6,11 +6,7 @@
   <li class="active">&{'entries'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{form}" class="btn btn-primary">&{'create', messages.get('entry')}</a>
-</div>
+#{addHeader 'entry' /}
 
 #{tableSearch /}
 <table class="table table-striped">
@@ -28,7 +24,7 @@
     <tbody>
         #{list items:entries, as:'entry'}
         <tr>
-            <td>${entry.date}</td>
+            <td>${entry.date?.format()}</td>
             <td>${entry.description}</td>
             <td>${entry.voucher}</td>
             <td>${entry.debit?.label}</td>

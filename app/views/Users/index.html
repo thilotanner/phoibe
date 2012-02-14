@@ -6,11 +6,7 @@
   <li class="active">&{'users'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{Users.form}" class="btn btn-primary">&{'create', messages.get('user')}</a>
-</div>
+#{addHeader 'user' /}
 
 #{tableSearch /}
 <table class="table table-striped">

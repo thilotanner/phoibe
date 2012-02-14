@@ -6,11 +6,7 @@
   <li class="active">&{'valueAddedTaxRates'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{form}" class="btn btn-primary">&{'create', messages.get('valueAddedTaxRate')}</a>
-</div>
+#{addHeader 'valueAddedTaxRate' /}
 
 #{tableSearch /}
 <table class="table table-striped">

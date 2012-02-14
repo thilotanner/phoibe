@@ -1,9 +1,10 @@
-#{form @index()}
+#{form @index(), class:'well form-search'}
 #{field property:'search'}
 <input type="text"
        id="${field.id}"
        name="${field.name}"
-       value="${params.get('search')}" />
+       value="${params.get('search')}"
+       class="search-query"/>
 #{/field}
 
 <input type="submit" id="send" value="&{'search'}" class="btn"/>

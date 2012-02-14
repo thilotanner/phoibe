@@ -47,6 +47,9 @@
 
     <dt>&{'order.billingContact.id'}</dt>
     <dd><a href="@{Contacts.show(report.order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(report.order.billingContact.id)}">${report.order.billingContact?.label}</a></dd>
+
+    <dt>&{'updated'}</dt>
+    <dd>#{updated report /}</dd>
 </dl>
 
 
@@ -63,24 +66,24 @@
     #{if report.order.orderStatus.toString() == 'NEW' || report.order.orderStatus.toString() == 'IN_PROGRESS'}
         <a href="@{Orders.confirmFinish(report.order.id)}"
            class="btn btn-success"
-           modal="modal">&{'finish'}</a>
+           modal="modal"><span class="icon-ok icon-white"></span> &{'finish'}</a>
         <a href="@{Orders.confirmAbort(report.order.id)}"
            class="btn btn-danger"
-           modal="modal">&{'abort'}</a>
+           modal="modal"><span class="icon-remove icon-white"></span> &{'abort'}</a>
     #{/if}
 </div>
 #{/if}
 
 <h2>&{'functions'}</h2>
 <div class="well">
-    <a href="@{download(report.id)}" class="btn btn-primary">&{'downloadPdf'}</a>
+    <a href="@{download(report.id)}" class="btn btn-primary"><span class="icon-print icon-white"></span> &{'downloadPdf'}</a>
 </div>
 
 #{if report.currentReport && report.order.orderStatus.toString() == 'IN_PROGRESS'}
 <h2>&{'reportItems'}</h2>
 <div class="well">
-    <a href="@{MetricProductReportItems.create(report.id)}" class="btn btn-primary">&{'create', messages.get('metricProductReportItem')}</a>
-    <a href="@{AdditionalReportItems.create(report.id)}" class="btn btn-primary">&{'create', messages.get('additionalReportItem')}</a>
+    <a href="@{MetricProductReportItems.create(report.id)}" class="btn btn-primary"><span class="icon-plus icon-white"></span> &{'create', messages.get('metricProductReportItem')}</a>
+    <a href="@{AdditionalReportItems.create(report.id)}" class="btn btn-primary"><span class="icon-plus icon-white"></span> &{'create', messages.get('additionalReportItem')}</a>
 </div>
 #{/if}
 

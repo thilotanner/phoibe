@@ -6,11 +6,7 @@
   <li class="active">&{'metricProducts'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{MetricProducts.form}" class="btn btn-primary">&{'create', messages.get('metricProduct')}</a>
-</div>
+#{addHeader 'metricProduct' /}
 
 #{tableSearch /}
 <table class="table table-striped">
@@ -20,7 +16,6 @@
             <th>&{'metricProduct.supplier.id'}</th>
             <th>&{'metricProduct.metric.id'}</th>
             <th>&{'metricProduct.retailPricePerMetric.rawValue'}</th>
-            <th>&{'metricProduct.valueAddedTaxRate.id'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -31,9 +26,8 @@
             <td><a href="@{Contacts.show(metricProduct.supplier.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(metricProduct.supplier.id)}">${metricProduct.supplier?.company}</a></td>
             <td>${metricProduct.metric.symbol}</td>
             <td>${metricProduct.retailPricePerMetric.label}</td>
-            <td>${metricProduct.valueAddedTaxRate}</td>
             <td>
-                <a href="@{form(metricProduct.id)}">&{'edit'}</a>
+                <a href="@{form(metricProduct.id)}">&{'edit'}</a> |
                 <a href="@{delete(metricProduct.id)}"
                    modal="modal">&{'delete'}</a>
             </td>

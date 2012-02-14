@@ -5,11 +5,7 @@
   <li class="active">&{'orders'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{Orders.form}" class="btn btn-primary">&{'create', messages.get('order')}</a>
-</div>
+#{addHeader 'order'/}
 
 #{tableSearch /}
 <table class="table table-striped">
@@ -28,7 +24,7 @@
             <td>${order.description}</td>
             <td><a href="@{Contacts.show(order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.shippingContact.id)}">${order.shippingContact.label}</a></td>
             <td>
-                <a href="@{show(order.id)}">&{'show'}</a>
+                <a href="@{show(order.id)}">&{'show'}</a> |
                 <a href="@{form(order.id)}">&{'edit'}</a>
             </td>
         </tr>

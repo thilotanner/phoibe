@@ -5,11 +5,7 @@
   <li class="active">&{'contacts'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{form}" class="btn btn-primary">&{'create', messages.get('contact')}</a>
-</div>
+#{addHeader 'contact' /}
 
 #{tableSearch /}
 <table class="table table-striped">
@@ -32,8 +28,8 @@
             <td>${contact.street}</td>
             <td>${contact.city}</td>
             <td>
-                <a href="@{show(contact.id)}">&{'show'}</a>
-                <a href="@{form(contact.id)}">&{'edit'}</a>
+                <a href="@{show(contact.id)}">&{'show'}</a> |
+                <a href="@{form(contact.id)}">&{'edit'}</a> |
                 <a modal="modal" href="@{delete(contact.id)}">&{'delete'}</a>
             </td>
         </tr>

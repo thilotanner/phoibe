@@ -6,11 +6,7 @@
   <li class="active">&{'metrics'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{Metrics.form}" class="btn btn-primary">&{'create', messages.get('metric')}</a>
-</div>
+#{addHeader 'metric' /}
 
 #{tableSearch /}
 <table class="table table-striped">

@@ -34,6 +34,7 @@ successfullyDeleted=%s wurde erfolgreich gelöscht
 successfullyFinished=%s wurde erfolgreich beendet
 successfullySaved=%s wurde erfolgreich gespeichert
 true=Ja
+updated=Änderungsdatum
 workflow=Auftragsdurchlauf
 
 # Models
@@ -172,6 +173,7 @@ order.orderStatus.IN_PROGRESS=in Bearbeitung
 order.orderStatus.FINISHED=beendet
 order.orderStatus.ABORTED=abgebrochen
 order.currentReport=Aktueller Bericht
+order.reference=Referenz-Nummer
 
 report=Bericht
 reports=Berichte
@@ -183,6 +185,7 @@ report.tax=MWSt.
 report.taxedTotalPrice=Total inkl. MWSt.
 report.rebatePercentage=Rabatt
 report.conditions=Konditionen
+report.number=Nr.
 
 reportItem=Position
 reportItems=Positionen

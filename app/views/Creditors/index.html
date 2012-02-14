@@ -6,11 +6,7 @@
   <li class="active">&{'creditors'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{form}" class="btn btn-primary">&{'create', messages.get('creditor')}</a>
-</div>
+#{addHeader 'creditor' /}
 
 #{tableSearch /}
 <table class="table table-striped">
@@ -38,7 +34,7 @@
             <td>${creditor.paid?.format()}</td>
             <td>
                 #{if creditor.creditorStatus.toString() != 'PAID'}
-                <a href="@{form(creditor.id)}">&{'edit'}</a>
+                <a href="@{form(creditor.id)}">&{'edit'}</a> |
                 <a href="@{payForm(creditor.id)}">&{'pay'}</a>
                 #{/if}
             </td>
