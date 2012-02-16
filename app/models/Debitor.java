@@ -13,6 +13,10 @@ import java.util.List;
 @Entity
 public class Debitor extends EnhancedModel {
 
+    public static List<Debitor> getOverdueDebitors() {
+        return Debitor.find("debitorStatus = 'DUE' AND due < ?", new Date()).fetch();
+    }
+    
     @ManyToOne
     public Report report;
 
@@ -34,6 +38,6 @@ public class Debitor extends EnhancedModel {
     }
 
     public boolean isOverdue() {
-        return debitorStatus == DebitorStatus.DUE && due.after(new Date());
+        return debitorStatus == DebitorStatus.DUE && due.before(new Date());
     }
 }

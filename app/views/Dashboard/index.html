@@ -5,6 +5,60 @@
   <li class="active">&{'dashboard'}</li>
 </ul>
 
-<div class="hero-unit">
-<h1>Dashboard</h1>
+<div class="row">
+    <div class="span6">
+        <h2>&{'debitors.overdue'}</h2>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>&{'order'}</th>
+                <th>&{'order.billingContact.id'}</th>
+                <th>&{'debitor.due'}</th>
+                <th>&{'actions'}</th>
+            </tr>
+            </thead>
+            <tbody>
+            #{list items:overdueDebitors, as:'debitor'}
+            <tr>
+                <td><a href="@{Reports.show(debitor.report.id)}">${debitor.report.order.description}</a></td>
+                <td><a href="@{Contacts.show(debitor.report.order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(debitor.report.order.billingContact.id)}">${debitor.report.order.billingContact.label}</a></td>
+                <td>${debitor.due.format()}</td>
+                <td>
+                    <a href="@{Debitors.show(debitor.id)}">&{'show'}</a>
+                </td>
+            </tr>
+            #{/list}
+            </tbody>
+        </table>
+    </div>
+    <div class="span6">
+        <h2>&{'creditors.overdue'}</h2>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>&{'creditor.supplier.id'}</th>
+                <th>&{'creditor.amount.rawValue'}</th>
+                <th>&{'creditor.due'}</th>
+                <th>&{'actions'}</th>
+            </tr>
+            </thead>
+            <tbody>
+            #{list items:overdueCreditors, as:'creditor'}
+            <tr>
+                <td>${creditor.supplier.label}</td>
+                <td>${creditor.amount.label}</td>
+                <td>${creditor.due.format()}</td>
+                <td>
+                    #{if creditor.creditorStatus.toString() != 'PAID'}
+                        <a href="@{Creditors.form(creditor.id)}">&{'edit'}</a> |
+                        <a href="@{Creditors.payForm(creditor.id)}">&{'pay'}</a>
+                    #{/if}
+                </td>
+            </tr>
+            #{/list}
+            </tbody>
+        </table>
+    </div>
 </div>

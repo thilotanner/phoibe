@@ -2,11 +2,22 @@
 
 additionalClass = '';
 if(_arg.debitorStatus.toString() == 'DUE') {
-    additionalClass = 'label-important';
+    if(_arg.isOverdue()) {
+        additionalClass = 'blink label-important';
+    } else {
+        additionalClass = 'label-warning';
+    }
 } else if(_arg.debitorStatus.toString() == 'PAID') {
     additionalClass = 'label-success';
 }
 
 }%
 
-<span class="label ${additionalClass}">&{'debitor.debitorStatus.' + _arg.debitorStatus}</span>
+<span class="label ${additionalClass}">
+    #{if _arg.isOverdue()}
+    &{'debitor.debitorStatus.OVERDUE'}
+    #{/if}
+    #{else}
+    &{'debitor.debitorStatus.' + _arg.debitorStatus}
+    #{/else}
+</span>

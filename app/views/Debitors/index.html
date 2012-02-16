@@ -6,7 +6,21 @@
     <li class="active">&{'debitors'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
+<div class="page-header">
+    <h1>#{get 'title' /}</h1>
+</div>
+
+<ul class="nav nav-pills">
+    <li#{if filter == 'DUE'} class="active"#{/if}>
+        <a href="@{index('DUE', 1, null, null, null)}">&{'debitor.debitorStatus.DUE'}</a>
+    </li>
+    <li#{if filter == 'PAID'} class="active"#{/if}>
+        <a href="@{index('PAID', 1, null, null, null)}">&{'debitor.debitorStatus.PAID'}</a>
+    </li>
+    <li#{if filter == null} class="active"#{/if}>
+        <a href="@{index(null, 1, null, null, null)}">&{'all'}</a>
+    </li>
+</ul>
 
 #{tableSearch /}
 <table class="table table-striped">

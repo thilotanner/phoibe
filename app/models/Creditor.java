@@ -12,9 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Creditor extends EnhancedModel {
+
+    public static List<Creditor> getOverdueCreditors() {
+        return Creditor.find("paid = null AND due < ?", new Date()).fetch();
+    }
 
     @Required
     @ManyToOne
@@ -44,5 +49,9 @@ public class Creditor extends EnhancedModel {
             return CreditorStatus.DUE;
         }
         return CreditorStatus.PAID;
+    }
+
+    public boolean isOverdue() {
+        return getCreditorStatus() == CreditorStatus.DUE && due.before(new Date());
     }
 }

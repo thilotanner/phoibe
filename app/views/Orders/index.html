@@ -7,6 +7,26 @@
 
 #{addHeader 'order'/}
 
+<ul class="nav nav-pills">
+    #{list items:reportTypes, as:'reportType' }
+    <li#{if reportType == filter} class="active"#{/if}>
+        <a href="@{index(reportType, 1, null, null, null)}">${reportType}</a>
+    </li>
+    #{/list}
+    <li#{if filter == 'NEW'} class="active"#{/if}>
+        <a href="@{index('NEW', 1, null, null, null)}">&{'order.orderStatus.NEW'}</a>
+    </li>
+    <li#{if filter == 'FINISHED'} class="active"#{/if}>
+        <a href="@{index('FINISHED', 1, null, null, null)}">&{'order.orderStatus.FINISHED'}</a>
+    </li>
+    <li#{if filter == 'ABORTED'} class="active"#{/if}>
+        <a href="@{index('ABORTED', 1, null, null, null)}">&{'order.orderStatus.ABORTED'}</a>
+    </li>
+    <li#{if filter == null} class="active"#{/if}>
+        <a href="@{index(null, 1, null, null, null)}">&{'all'}</a>
+    </li>
+</ul>
+
 #{tableSearch /}
 <table class="table table-striped">
     <thead>

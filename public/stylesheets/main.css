@@ -19,6 +19,18 @@ body {
     cursor: move;
 }
 
+@-webkit-keyframes blinker {
+  20% { opacity: 1.0; }
+  50% { opacity: 0.0; }
+  80% { opacity: 1.0; }
+}
+.blink {
+    -webkit-animation-name: blinker;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 4s;
+}
+
 [class^="icon-"] {
     background-image: url(../images/glyphicons-halflings.png); /* Overwrite sprites path */
 }

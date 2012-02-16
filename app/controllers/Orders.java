@@ -12,11 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Orders extends ApplicationController {
-    public static void index(int page, String orderBy, String order, String search) {
+    public static void index(String filter, int page, String orderBy, String order, String search) {
         if (page < 1) {
             page = 1;
         }
 
+        String where = null;
+        for(ReportType reportType : ReportType.<ReportType>findAll()) {
+            if(reportType.name.equals(filter)) {
+                where = String.format("currentReport.reportType.id = %s AND orderStatus = '%s'", reportType.id, OrderStatus.IN_PROGRESS.toString());
+            }
+        }
+        if(OrderStatus.NEW.toString().equals(filter)) {
+            where = String.format("orderStatus = '%s'", filter);
+        }
+        if(OrderStatus.FINISHED.toString().equals(filter)) {
+            where = String.format("orderStatus = '%s'", filter);
+        }
+        if(OrderStatus.ABORTED.toString().equals(filter)) {
+            where = String.format("orderStatus = '%s'", filter);
+        }
+        
         List<Model> orders = Model.Manager.factoryFor(Order.class).fetch(
                 (page - 1) * getPageSize(),
                 getPageSize(),
@@ -24,13 +40,18 @@ public class Orders extends ApplicationController {
                 order,
                 new ArrayList<String>(),
                 search,
-                null
+                where
         );
 
-        Long count = Model.Manager.factoryFor(Order.class).count(new ArrayList<String>(), search, null);
+        Long count = Model.Manager.factoryFor(Order.class).count(new ArrayList<String>(), search, where);
+
+        List<String> reportTypes = new ArrayList<String>();
+        for(ReportType reportType : ReportType.<ReportType>findAll()) {
+            reportTypes.add(reportType.name);
+        }
 
         renderArgs.put("pageSize", getPageSize());
-        render(orders, count);
+        render(orders, count, reportTypes, filter);
     }
 
     public static void show(Long id) {

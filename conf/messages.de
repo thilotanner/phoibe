@@ -4,6 +4,7 @@ accounting=Buchhaltung
 actions=Aktionen
 addValueAddedTax=zuzügl. MWSt.
 administration=Administration
+all=alle
 cancel=abbrechen
 create=%s erstellen
 createAction=erstellen
@@ -95,6 +96,7 @@ country.preferredCountries=Bevorzugte Länder
 
 creditor=Kreditor
 creditors=Kreditoren
+creditors.overdue=Überfällige Kreditoren
 creditor.supplier.id=Lieferant
 creditor.reference=Referenz
 creditor.amount.rawValue=Betrag
@@ -104,6 +106,7 @@ creditor.paid=Bezahlt am
 creditor.creditorStatus=Kreditorstatus
 creditor.creditorStatus.DUE=fällig
 creditor.creditorStatus.PAID=bezahlt
+creditor.creditorStatus.OVERDUE=überfällig
 
 currency=Währung
 currencies=Währungen
@@ -115,11 +118,13 @@ currency.preferredCurrencies=Bevorzugte Währungen
 
 debitor=Debitor
 debitors=Debitoren
+debitors.overdue=Überfällige Debitoren
 debitor.due=Fälligkeit
 debitor.amountDue=Restbetrag
 debitor.debitorStatus=Debitorstatus
 debitor.debitorStatus.DUE=fällig
 debitor.debitorStatus.PAID=bezahlt
+debitor.debitorStatus.OVERDUE=überfällig
 
 debitorPaymentReceipt=Zahlungseingang
 debitorPaymentReceipts=Zahlungseingänge

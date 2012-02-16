@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Debitor;
+import models.DebitorStatus;
 import play.data.validation.Valid;
 import play.db.Model;
 import play.i18n.Messages;
@@ -9,9 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Debitors extends ApplicationController {
-    public static void index(int page, String orderBy, String order, String search) {
+    public static void index(String filter, int page, String orderBy, String order, String search) {
         if (page < 1) {
             page = 1;
+        }
+
+        String where = null;
+        for(DebitorStatus debitorStatus : DebitorStatus.values()) {
+            if(debitorStatus.toString().equals(filter)) {
+                where = String.format("debitorStatus = '%s'", filter);
+            }
         }
 
         List<Model> debitors = Model.Manager.factoryFor(Debitor.class).fetch(
@@ -21,13 +29,13 @@ public class Debitors extends ApplicationController {
                 order,
                 new ArrayList<String>(),
                 search,
-                null
+                where
         );
 
-        Long count = Model.Manager.factoryFor(Debitor.class).count(new ArrayList<String>(), search, null);
+        Long count = Model.Manager.factoryFor(Debitor.class).count(new ArrayList<String>(), search, where);
 
         renderArgs.put("pageSize", getPageSize());
-        render(debitors, count);
+        render(debitors, count, filter);
     }
     
     public static void show(Long id) {
@@ -51,6 +59,6 @@ public class Debitors extends ApplicationController {
 
         debitor.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("debitor")));
-        index(1, null, null, null);
+        index(DebitorStatus.DUE.toString(), 1, null, null, null);
     }
 }
