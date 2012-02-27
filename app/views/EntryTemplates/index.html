@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:messages.get('entryTemplates') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'accounting'} <span class="divider">/</span></li>
+    <li class="active">&{'entryTemplates'}</li>
+</ul>
+
+#{addHeader 'entryTemplate' /}
+
+#{tableSearch /}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        #{tableSorter objectName:'entryTemplate', fieldName:'description' /}
+        <th>&{'entryTemplate.debit.id'}</th>
+        <th>&{'entryTemplate.credit.id'}</th>
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:entryTemplates, as:'entryTemplate'}
+    <tr>
+        <td>${entryTemplate.description}</td>
+        <td>${entryTemplate.debit?.label}</td>
+        <td>${entryTemplate.credit?.label}</td>
+        <td>
+            <a href="@{form(entryTemplate.id)}">&{'edit'}</a>
+        </td>
+    </tr>
+    #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

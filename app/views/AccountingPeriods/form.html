@@ -1,0 +1,55 @@
+#{extends 'main.html' /}
+
+#{form @save()}
+    #{field property:'accountingPeriod.id', object:accountingPeriod}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+<fieldset>
+    <legend>&{'accountingPeriod'}</legend>
+
+    #{textField property:'accountingPeriod.description', object:accountingPeriod /}
+
+    #{field property:'accountingPeriod.active', object:accountingPeriod}
+        <div class="control-group">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                <select name="${field.name}" id="${field.id}">
+                    <option value="false"#{if field.value==false} selected="selected"#{/if}>&{'false'}</option>
+                    <option value="true"#{if field.value==true} selected="selected"#{/if}>&{'true'}</option>
+                </select>
+            </div>
+        </div>
+    #{/field}
+</fieldset>
+
+<fieldset>
+    <legend>&{'openingBalances'}</legend>
+
+    #{list items:accountingPeriod.openingBalances, as:'openingBalance'}
+    #{field property:'accountingPeriod.openingBalances[' + (openingBalance_index - 1) + '].openingBalance.rawValue', object:openingBalance}
+    <div class="control-group ${field.errorClass}">
+        <label class="control-label" for="${field.id}">&{openingBalance.account.label}</label>
+        <div class="controls">
+            <input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}" class="span6">
+            <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${openingBalance.openingBalance.currencyCode}#{/else}</span>
+        </div>
+    </div>
+    #{/field}
+
+    <input type="hidden"
+           name="accountingPeriod.openingBalances[${openingBalance_index - 1}].openingBalance.currencyCode"
+           value="${openingBalance.openingBalance.currencyCode}">
+
+    <input type="hidden"
+           name="accountingPeriod.openingBalances[${openingBalance_index - 1}].account.id"
+           value="${openingBalance.account.id}">
+
+    #{/list}
+</fieldset>
+
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
+    <a href="@{index}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}

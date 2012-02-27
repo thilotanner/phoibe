@@ -1,6 +1,6 @@
 #{field property:_property, object:_object}
 <div class="control-group ${field.errorClass}">
-    <label for="${field.id}">&{field.name}</label>
+    <label class="control-label" for="${field.id}">&{field.name}</label>
     <div class="controls">
         <input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}" class="span6">
         <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>

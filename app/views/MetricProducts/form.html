@@ -50,7 +50,7 @@
 
     #{field property:'metricProduct.metric.id', object:metricProduct}
     <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
+        <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
             #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:metricProduct?.metric?.id, id:field.id /}
         </div>
@@ -73,7 +73,7 @@
 
     #{field property:'metricProduct.valueAddedTaxRate.id', object:metricProduct}
     <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
+        <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
             #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:metricProduct?.valueAddedTaxRate?.id, id:field.id /}
         </div>

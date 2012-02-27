@@ -1,14 +1,5 @@
 #{extends 'main.html' /}
 
-#{set 'moreScripts'}
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $('#debitorPaymentReceipt_paid').datepicker( $.datepicker.regional[ "de" ] );
-    });
-</script>
-#{/set}
-
 #{form @save(), class:'form-horizontal'}
     #{field property:'debitorPaymentReceipt.id', object:debitorPaymentReceipt}
     <input type="hidden" value="${field.value}" name="${field.name}"/>
@@ -27,7 +18,17 @@
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
     #{/field}
 
-    #{textField property:'debitorPaymentReceipt.paid', object:debitorPaymentReceipt, value:debitorPaymentReceipt?.paid?.format() /}
+    #{dateField property:'debitorPaymentReceipt.paid', object:debitorPaymentReceipt /}
+
+    #{field property:'debitorPaymentReceipt.paymentAccount.id', object:debitorPaymentReceipt}
+        <div class="control-group ${field.errorClass}">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                #{select field.name, items:paymentAccounts, valueProperty:'id', labelProperty:'description', value:field.value /}
+                <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+            </div>
+        </div>
+    #{/field}
 </fieldset>
 
 <div class="form-actions">

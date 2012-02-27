@@ -14,7 +14,7 @@
 
     #{field property:'reportTransition.targetReportType.id', object:reportTransition}
     <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
+        <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
             #{select field.name, items:reportTypes, valueProperty:'id', labelProperty:'name', value:reportTransition?.targetReportType?.id, id:field.id /}
         </div>

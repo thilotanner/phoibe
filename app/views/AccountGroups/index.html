@@ -1,0 +1,33 @@
+#{extends 'main.html' /}
+#{set title:messages.get('accountGroups') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'accounting'} <span class="divider">/</span></li>
+    <li class="active">&{'accountGroups'}</li>
+</ul>
+
+#{addHeader 'accountGroup' /}
+
+#{tableSearch /}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        #{tableSorter objectName:'accountGroup', fieldName:'description' /}
+        #{tableSorter objectName:'accountGroup', fieldName:'accountType' /}
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:accountGroups, as:'accountGroup'}
+    <tr>
+        <td>${accountGroup.description}</td>
+        <td>&{'accountGroup.accountType.' + accountGroup.accountType}</td>
+        <td>
+            <a href="@{form(accountGroup.id)}">&{'edit'}</a>
+        </td>
+    </tr>
+    #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

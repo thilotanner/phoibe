@@ -2,6 +2,8 @@ package controllers;
 
 import models.Debitor;
 import models.DebitorStatus;
+import models.Entry;
+import models.OrderStatus;
 import play.data.validation.Valid;
 import play.db.Model;
 import play.i18n.Messages;
@@ -59,6 +61,35 @@ public class Debitors extends ApplicationController {
 
         debitor.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("debitor")));
+        index(DebitorStatus.DUE.toString(), 1, null, null, null);
+    }
+
+    public static void discountAmountDue(Long debitorId) {
+        notFoundIfNull(debitorId);
+        Debitor debitor = Debitor.findById(debitorId);
+        notFoundIfNull(debitor);
+
+        Entry entry = debitor.buildDiscountEntry();
+        entry.save();
+
+        closeDebitor(debitor, entry, "debitor.successfullyDiscounted");
+    }
+    
+    public static void chargeOffAmountDue(Long debitorId) {
+        notFoundIfNull(debitorId);
+        Debitor debitor = Debitor.findById(debitorId);
+        notFoundIfNull(debitor);
+
+        Entry entry = debitor.buildChargeOffEntry();
+        entry.save();
+
+        closeDebitor(debitor, entry, "debitor.successfullyChargedOff");
+    }
+    
+    private static void closeDebitor(Debitor debitor, Entry amountDueEntry, String messageKey) {
+        debitor.close(amountDueEntry);
+
+        flash.success(Messages.get(messageKey));
         index(DebitorStatus.DUE.toString(), 1, null, null, null);
     }
 }

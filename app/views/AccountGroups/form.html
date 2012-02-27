@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+
+#{form @save(), class:'form-horizontal'}
+    #{field property:'accountGroup.id', object:accountGroup}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+<fieldset>
+    <legend>&{'accountGroup'}</legend>
+
+    #{textField property:'accountGroup.description', object:accountGroup /}
+
+    #{field property:'accountGroup.accountType', object:accountGroup}
+        <div class="control-group">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                <select name="${field.name}" id="${field.id}">
+                    <option value="ASSET"#{if field.value?.toString()=='ASSET'} selected="selected"#{/if}>&{'accountGroup.accountType.ASSET'}</option>
+                    <option value="LIABILITY"#{if field.value?.toString()=='LIABILITY'} selected="selected"#{/if}>&{'accountGroup.accountType.LIABILITY'}</option>
+                    <option value="EXPENSE"#{if field.value?.toString()=='EXPENSE'} selected="selected"#{/if}>&{'accountGroup.accountType.EXPENSE'}</option>
+                    <option value="REVENUE"#{if field.value?.toString()=='REVENUE'} selected="selected"#{/if}>&{'accountGroup.accountType.REVENUE'}</option>
+                </select>
+            </div>
+        </div>
+    #{/field}
+</fieldset>
+
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
+    <a href="@{index}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}

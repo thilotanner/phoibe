@@ -7,11 +7,7 @@
     <li class="active">&{'debitor'}</li>
 </ul>
 
-<h1>#{get 'title' /}</h1>
-
-<div class="well">
-    <a href="@{form(debitor.id)}" class="btn btn-primary">&{'edit'}</a>
-</div>
+#{editHeader debitor.id /}
 
 <dl>
     <dt>&{'order'}</dt>
@@ -34,10 +30,16 @@
 </dl>
 
 <h2>&{'debitorPaymentReceipts'}</h2>
+#{if debitor.debitorStatus == models.DebitorStatus.DUE}
 <div class="well">
     <a href="@{DebitorPaymentReceipts.create(debitor.id)}"
        class="btn btn-primary">&{'create', messages.get('debitorPaymentReceipt')}</a>
+    <a href="@{Debitors.discountAmountDue(debitor.id)}"
+       class="btn btn-warning">&{'debitor.discountAmountDue'}</a>
+    <a href="@{Debitors.chargeOffAmountDue(debitor.id)}"
+       class="btn btn-danger">&{'debitor.chargeOffAmountDue'}</a>
 </div>
+#{/if}
 
 <table class="table table-striped">
     <thead>
@@ -53,7 +55,9 @@
         <td>${debitorPaymentReceipt.amount}</td>
         <td>${debitorPaymentReceipt.paid.format()}</td>
         <td>
+            #{if debitor.debitorStatus == models.DebitorStatus.DUE}
             <a href="@{DebitorPaymentReceipts.form(debitorPaymentReceipt.id)}">&{'edit'}</a>
+            #{/if}
         </td>
     </tr>
     #{/list}

@@ -1,13 +1,16 @@
 #{field property:_property, object:_object}
 <div class="control-group ${field.errorClass}">
-    <label for="${field.id}_chooser">&{field.name}</label>
+    <label class="control-label" for="${field.id}_chooser">&{field.name}</label>
     <div class="controls">
-        <input type="text"
-               id="${field.id}_chooser"
-               name="${field.id}_chooser"
-               value="${_label}"
-               class="span6" />
-        <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+        <div class="input-append">
+            <input type="text"
+                   id="${field.id}_chooser"
+                   name="${field.id}_chooser"
+                   value="${_label}"
+                   class="span6" />
+            <span class="add-on"><span class="icon-search"></span></span>
+            <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+        </div>
     </div>
 
     <input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>

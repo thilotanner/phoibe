@@ -1,0 +1,95 @@
+#{extends 'main.html' /}
+#{set title:messages.get('profitAndLossAccount') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'accounting'} <span class="divider">/</span></li>
+    <li class="active">&{'profitAndLossAccount'}</li>
+</ul>
+
+<div class="page-header">
+    <h1>&{'profitAndLossAccount'}</h1>
+</div>
+
+<ul class="nav nav-pills">
+#{list items:accountingPeriods, as:'accountingPeriod' }
+    <li#{if accountingPeriod.id == profitAndLossAccount.getAccountingPeriod().id} class="active"#{/if}>
+        <a href="@{index(accountingPeriod.id)}">${accountingPeriod.description}</a>
+    </li>
+#{/list}
+</ul>
+
+<h2>&{'profitAndLossAccount.expenses'}</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'account.number'}</th>
+        <th>&{'account.description'}</th>
+        <th>&{'profitAndLossAccount.balance'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:profitAndLossAccount.expenseAccountGroups, as:'accountGroup'}
+    <tr>
+        <td></td>
+        <td><strong>${accountGroup.description}</strong></td>
+        <td></td>
+    </tr>
+        #{list items:accountGroup.accounts, as:'account'}
+        <tr>
+            <td>${account.number}</td>
+            <td>${account.description}</td>
+            <td>${account.getBalance(profitAndLossAccount.getAccountingPeriod())}</td>
+        </tr>
+        #{/list}
+    <tr>
+        <td></td>
+        <td></td>
+        <td><strong>${accountGroup.getBalance(profitAndLossAccount.getAccountingPeriod())}</strong></td>
+    </tr>
+    #{/list}
+    <tr>
+        <td></td>
+        <td></td>
+        <td><strong>${profitAndLossAccount.getExpenseBalance()}</strong></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>&{'profitAndLossAccount.revenue'}</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'account.number'}</th>
+        <th>&{'account.description'}</th>
+        <th>&{'profitAndLossAccount.balance'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:profitAndLossAccount.getRevenueAccountGroups(), as:'accountGroup'}
+    <tr>
+        <td></td>
+        <td><strong>${accountGroup.description}</strong></td>
+        <td></td>
+    </tr>
+        #{list items:accountGroup.accounts, as:'account'}
+        <tr>
+            <td>${account.number}</td>
+            <td>${account.description}</td>
+            <td>${account.getBalance(profitAndLossAccount.getAccountingPeriod())}</td>
+        </tr>
+        #{/list}
+    <tr>
+        <td></td>
+        <td></td>
+        <td><strong>${accountGroup.getBalance(profitAndLossAccount.getAccountingPeriod())}</strong></td>
+    </tr>
+    #{/list}
+    <tr>
+        <td></td>
+        <td></td>
+        <td><strong>${profitAndLossAccount.getRevenueBalance()}</strong></td>
+    </tr>
+    </tbody>
+</table>

@@ -32,7 +32,11 @@ $(document).ready(function() {
 
                 return text;
             }
-        })
+        });
+
+    $('[rel=datepicker]').datepicker($.datepicker.regional[ "de" ]);
+
+
 });
 
 function createAutocomplete(hiddenElement, ajaxUrl, infoUrl, infoTitle) {
@@ -73,9 +77,7 @@ function createAutocomplete(hiddenElement, ajaxUrl, infoUrl, infoTitle) {
                     chooserElement.siblings('.help-inline').first().html('<span class="label">Info</span>');
                     chooserElement.siblings('.help-inline').first().children('.label').first().popover({
                         title: function() { return infoTitle },
-                        offset: 10,
-                        html: true,
-                        placement: 'below',
+                        placement: 'bottom',
                         content: function() {
                             $.ajax({
                                 url: infoUrl({id: ui.item.value}),

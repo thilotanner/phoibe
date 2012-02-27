@@ -39,7 +39,7 @@
         <tr>
             <td>${reportType.name}</td>
             <td>&{reportType.rootReportType}</td>
-            <td><span class="label ${additionalClass}">${reportType.name}</span></td>
+            <td><span class="label" style="background-color: ${reportType.reportColor};">${reportType.name}</span></td>
             <td>
                 <a href="@{show(reportType.id)}">&{'show'}</a> |
                 <a href="@{form(reportType.id)}">&{'edit'}</a>

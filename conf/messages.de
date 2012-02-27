@@ -45,10 +45,22 @@ accounts=Konten
 account.number=Kontonummer
 account.description=Bezeichnung
 account.accountType=Kontentyp
-account.accountType.ASSET=Aktiv
-account.accountType.LIABILITY=Passiv
-account.accountType.EXPENSE=Aufwand
-account.accountType.REVENUE=Ertrag
+account.accountGroup.id=Kontengruppe
+account.balance=Saldo
+
+accountGroup=Kontengruppe
+accountGroups=Kontengruppen
+accountGroup.description=Bezeichnung
+accountGroup.accountType=Kontentyp
+accountGroup.accountType.ASSET=Aktiv
+accountGroup.accountType.LIABILITY=Passiv
+accountGroup.accountType.EXPENSE=Aufwand
+accountGroup.accountType.REVENUE=Ertrag
+
+accountingPeriod=Buchungsperiode
+accountingPeriods=Buchungsperioden
+accountingPeriod.description=Bezeichnung
+accountingPeriod.active=aktiv
 
 activityLogEntry=Änderungseintrag
 activityLogEntries=Änderungsprotokoll
@@ -65,6 +77,11 @@ additionalReportItem.metric.id=Einheit
 additionalReportItem.description=Beschreibung
 additionalReportItem.retailPricePerMetric.rawValue=Verkaufspreis
 additionalReportItem.valueAddedTaxRate.id=Mehrwertsteuersatz
+
+balanceSheet=Bilanz
+balanceSheet.assets=Aktiven
+balanceSheet.liabilities=Passiven
+balanceSheet.balance=Saldo
 
 contact=Kontakt
 contacts=Kontakte
@@ -125,20 +142,34 @@ debitor.debitorStatus=Debitorstatus
 debitor.debitorStatus.DUE=fällig
 debitor.debitorStatus.PAID=bezahlt
 debitor.debitorStatus.OVERDUE=überfällig
+debitor.discount=Skonto
+debitor.discountAmountDue=Restbetrag skontieren
+debitor.successfullyDiscounted=Restbetrag wurde erfolgreich skontiert
+debitor.chargeOff=Abschreibung
+debitor.chargeOffAmountDue=Restbetrag abschreiben
+debitor.successfullyChargedOff=Restbetrag wurde erfolgreich abgeschrieben
 
 debitorPaymentReceipt=Zahlungseingang
 debitorPaymentReceipts=Zahlungseingänge
 debitorPaymentReceipt.amount.rawValue=Betrag
 debitorPaymentReceipt.paid=Bezahlt am
+debitorPaymentReceipt.paymentAccount.id=Zahlungskonto
 
 entry=Buchung
 entries=Buchungen
+entry.accountingPeriod.id=Buchungsperiode
 entry.date=Datum
 entry.description=Beschreibung
 entry.voucher=Beleg
 entry.debit.id=Soll
 entry.credit.id=Haben
 entry.amount.rawValue=Betrag
+
+entryTemplate=Buchungsvorlage
+entryTemplates=Buchungsvorlagen
+entryTemplate.description=Beschreibung
+entryTemplate.debit.id=Soll
+entryTemplate.credit.id=Haben
 
 metric=Metrik
 metrics=Metriken
@@ -179,6 +210,11 @@ order.orderStatus.FINISHED=beendet
 order.orderStatus.ABORTED=abgebrochen
 order.currentReport=Aktueller Bericht
 order.reference=Referenz-Nummer
+
+profitAndLossAccount=Erfolgsrechnung
+profitAndLossAccount.expenses=Aufwand
+profitAndLossAccount.revenue=Ertrag
+profitAndLossAccount.balance=Saldo
 
 report=Bericht
 reports=Berichte

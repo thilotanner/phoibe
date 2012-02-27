@@ -9,7 +9,7 @@
 
     #{field property:'contact.title', object:contact}
     <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
+        <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
             <select name="${field.name}" id="${field.id}">
                 <option value=""#{if field.value==null} selected="selected"#{/if}></option>
@@ -34,7 +34,7 @@
 
     #{field property:'contact.countryCode', object:contact}
     <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
+        <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
             #{select field.name, value:field.value, id:field.id}
                 #{list items:preferredCountries, as:'country'}

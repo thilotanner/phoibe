@@ -13,6 +13,9 @@ import java.util.Date;
 @Entity
 public class Entry extends EnhancedModel {
 
+    @ManyToOne
+    public AccountingPeriod accountingPeriod;
+
     @Required
     @Temporal(TemporalType.DATE)
     public Date date;

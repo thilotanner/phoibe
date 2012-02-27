@@ -100,7 +100,7 @@ public class Money implements Cloneable {
 
         Money result = new Money();
         result.currencyCode = currencyCode;
-        result.value = value += otherMoney.value;
+        result.value = value + otherMoney.value;
         return result;
     }
 
@@ -109,7 +109,7 @@ public class Money implements Cloneable {
 
         Money result = new Money();
         result.currencyCode = currencyCode;
-        result.value = value -= otherMoney.value;
+        result.value = value - otherMoney.value;
         return result;
     }
 

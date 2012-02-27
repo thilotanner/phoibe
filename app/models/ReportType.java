@@ -1,5 +1,7 @@
 package models;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import play.data.validation.Required;
 
 import javax.persistence.Entity;
@@ -17,8 +19,7 @@ public class ReportType extends EnhancedModel {
 
     public boolean rootReportType;
 
-    @Enumerated(EnumType.STRING)
-    public ReportColor reportColor;
+    public String reportColor;
 
     @Required
     @Lob
@@ -26,4 +27,13 @@ public class ReportType extends EnhancedModel {
 
     @OneToMany(mappedBy = "reportType")
     public List<ReportTransition> reportTransitions;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
+                .append("name", name)
+                .append("rootReportType", rootReportType)
+                .append("reportColor", reportColor)
+                .toString();
+    }
 }

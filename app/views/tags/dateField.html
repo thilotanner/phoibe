@@ -1,0 +1,18 @@
+#{field property:_property, object:_object}
+<div class="control-group ${field.errorClass}">
+    <label class="control-label" for="${field.id}_chooser">&{field.name}</label>
+    <div class="controls">
+        <div class="input-append">
+            <input type="text"
+                   id="${field.id}"
+                   name="${field.name}"
+                   value="#{if _value}${_value}#{/if}#{else}${field.value?.format()}#{/else}" class="span2"
+                   rel="datepicker">
+            <span class="add-on"><span class="icon-calendar"></span></span>
+            <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+        </div>
+    </div>
+
+    <input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>
+</div>
+#{/field}

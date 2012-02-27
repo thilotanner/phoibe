@@ -1,0 +1,34 @@
+#{extends 'main.html' /}
+#{set title:messages.get('entryTemplate') /}
+
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        createAutocomplete($('#entryTemplate_debit_id'), "@{Accounts.search}");
+
+        createAutocomplete($('#entryTemplate_credit_id'), "@{Accounts.search}");
+    });
+</script>
+#{/set}
+
+#{form @save(), class:'form-horizontal'}
+    #{field property:'entryTemplate.id', object:entryTemplate}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+<fieldset>
+    <legend>&{'entryTemplate'}</legend>
+
+    #{textField property:'entryTemplate.description', object:entryTemplate /}
+
+    #{autocompleteTextField property:'entryTemplate.debit.id', object:entryTemplate, label:entryTemplate?.debit?.label /}
+
+    #{autocompleteTextField property:'entryTemplate.credit.id', object:entryTemplate, label:entryTemplate?.credit?.label /}
+</fieldset>
+
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
+    <a href="@{index}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}

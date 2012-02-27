@@ -1,0 +1,13 @@
+INSERT INTO `AccountGroup` VALUES(1, '2012-02-17 12:01:24', NULL, 'ASSET', 'Umlaufvermögen');
+INSERT INTO `AccountGroup` VALUES(2, '2012-02-17 12:05:20', NULL, 'ASSET', 'Anlagevermögen');
+INSERT INTO `AccountGroup` VALUES(3, '2012-02-17 12:05:30', '2012-02-26 15:56:02', 'LIABILITY', 'Fremdkapital kurzfristig');
+INSERT INTO `AccountGroup` VALUES(4, '2012-02-17 12:05:46', '2012-02-26 15:56:14', 'LIABILITY', 'Fremdkapital langfristig');
+INSERT INTO `AccountGroup` VALUES(5, '2012-02-26 15:57:38', NULL, 'LIABILITY', 'Eigenkapital');
+INSERT INTO `AccountGroup` VALUES(6, '2012-02-26 16:49:41', '2012-02-26 18:14:11', 'REVENUE', 'Betriebsertrag aus Lieferungen und Leistungen');
+INSERT INTO `AccountGroup` VALUES(7, '2012-02-26 17:03:12', '2012-02-26 18:14:39', 'EXPENSE', 'Aufwand für Material, Waren und Drittleistungen');
+INSERT INTO `AccountGroup` VALUES(8, '2012-02-26 17:04:13', NULL, 'EXPENSE', 'Personalaufwand');
+INSERT INTO `AccountGroup` VALUES(9, '2012-02-26 17:20:05', '2012-02-26 18:15:07', 'EXPENSE', 'sonstiger Betriebsaufwand');
+INSERT INTO `AccountGroup` VALUES(10, '2012-02-26 17:23:33', '2012-02-26 18:16:10', 'REVENUE', 'betriebliche Nebenerfolge');
+INSERT INTO `AccountGroup` VALUES(11, '2012-02-26 17:24:07', '2012-02-26 18:16:57', 'REVENUE', 'ausserordentlicher und betriebsfremder Erfolg');
+INSERT INTO `AccountGroup` VALUES(12, '2012-02-26 17:30:37', '2012-02-26 18:43:51', 'EXPENSE', 'Finanzaufwand');
+INSERT INTO `AccountGroup` VALUES(13, '2012-02-26 17:30:59', '2012-02-26 18:44:07', 'REVENUE', 'Finanzertrag');

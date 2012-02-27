@@ -12,18 +12,13 @@
 
     #{textField property:'account.description', object:account /}
 
-    #{field property:'account.accountType', object:account}
-    <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
-        <div class="controls">
-            <select name="${field.name}" id="${field.id}">
-                <option value="ASSET"#{if field.value.toString()=='ASSET'} selected="selected"#{/if}>&{'account.accountType.ASSET'}</option>
-                <option value="LIABILITY"#{if field.value.toString()=='LIABILITY'} selected="selected"#{/if}>&{'account.accountType.LIABILITY'}</option>
-                <option value="EXPENSE"#{if field.value.toString()=='EXPENSE'} selected="selected"#{/if}>&{'account.accountType.EXPENSE'}</option>
-                <option value="REVENUE"#{if field.value.toString()=='REVENUE'} selected="selected"#{/if}>&{'account.accountType.REVENUE'}</option>
-            </select>
+    #{field property:'account.accountGroup.id', object:account}
+        <div class="control-group">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                #{select field.name, items:accountGroups, valueProperty:'id', labelProperty:'description', value:account?.accountGroup?.id, id:field.id /}
+            </div>
         </div>
-    </div>
     #{/field}
 </fieldset>
 

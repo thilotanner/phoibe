@@ -5,12 +5,65 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        $('#entry_date').datepicker( $.datepicker.regional[ "de" ] );
+        createAutocompleteForEntryTemplates($('#entryTemplate'), "@{EntryTemplates.search}");
 
         createAutocomplete($('#entry_debit_id'), "@{Accounts.search}");
 
         createAutocomplete($('#entry_credit_id'), "@{Accounts.search}");
     });
+
+
+    function createAutocompleteForEntryTemplates(chooserElement, ajaxUrl) {
+        chooserElement.autocomplete({
+            source: function(request, response)
+            {
+                $.ajax({
+                    url: ajaxUrl,
+                    dataType: "json",
+                    data: {
+                        search: request.term
+                    },
+                    success: function(data)
+                    {
+                        response($.map(data, function(item)
+                        {
+                            return {
+                                label: item.label,
+                                value: item.id
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 1,
+            focus: function(event, ui)
+            {
+                chooserElement.val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui)
+            {
+                if (ui.item) {
+                    chooserElement.val(ui.item.label);
+                    $('#entry_description').val(ui.item.label);
+
+                    var debitAction = #{jsAction @EntryTemplates.debit(':entryTemplateId') /}
+                    $.get(debitAction({entryTemplateId: ui.item.value}), function(data) {
+                        $('#entry_debit_id_chooser').val(data.label);
+                        $('#entry_debit_id').val(data.id);
+                    });
+
+                    var creditAction = #{jsAction @EntryTemplates.credit(':entryTemplateId') /}
+                    $.get(creditAction({entryTemplateId: ui.item.value}), function(data) {
+                        $('#entry_credit_id_chooser').val(data.label);
+                        $('#entry_credit_id').val(data.id);
+                    });
+
+                    return false;
+                }
+            }
+        });
+    }
 </script>
 #{/set}
 
@@ -22,7 +75,37 @@
 <fieldset>
     <legend>&{'entry'}</legend>
 
-    #{textField property:'entry.date', object:entry /}
+    #{field property:'entry.accountingPeriod.id', object:entry}
+        <div class="control-group">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                <select name="${field.name}">
+                    #{list items:accountingPeriods, as:'accountingPeriod'}
+                    <option value="${accountingPeriod.id}"#{if accountingPeriod.active} selected="selected"#{/if}>${accountingPeriod.description}</option>
+                    #{/list}
+                </select>
+            </div>
+        </div>
+    #{/field}
+
+    #{field property:'entryTemplate', object:entryTemplate}
+    <div class="control-group ${field.errorClass}">
+        <label class="control-label" for="${field.id}">&{field.name}</label>
+        <div class="controls">
+            <div class="input-append">
+                <input type="text"
+                       id="${field.id}"
+                       name="${field.id}"
+                       value="${_label}"
+                       class="span6" />
+                <span class="add-on"><span class="icon-search"></span></span>
+                <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+            </div>
+        </div>
+    </div>
+    #{/field}
+
+    #{dateField property:'entry.date', object:entry /}
 
     #{textField property:'entry.description', object:entry /}
 

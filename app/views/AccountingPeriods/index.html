@@ -1,0 +1,33 @@
+#{extends 'main.html' /}
+#{set title:messages.get('accountingPeriods') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'accounting'} <span class="divider">/</span></li>
+    <li class="active">&{'accountingPeriods'}</li>
+</ul>
+
+#{addHeader 'accountingPeriod' /}
+
+#{tableSearch /}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        #{tableSorter objectName:'accountingPeriod', fieldName:'description' /}
+        #{tableSorter objectName:'accountingPeriod', fieldName:'active' /}
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:accountingPeriods, as:'accountingPeriod'}
+    <tr>
+        <td>${accountingPeriod.description}</td>
+        <td>#{booleanIcon accountingPeriod.active /}</td>
+        <td>
+            <a href="@{form(accountingPeriod.id)}">&{'edit'}</a>
+        </td>
+    </tr>
+    #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}

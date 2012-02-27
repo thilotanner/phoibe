@@ -8,7 +8,7 @@ body {
 
 .modal-body {
     max-height: 420px;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .modal form {

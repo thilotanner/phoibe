@@ -8,6 +8,14 @@
 
 #{addHeader 'entry' /}
 
+<ul class="nav nav-pills">
+#{list items:accountingPeriods, as:'accountingPeriod' }
+    <li#{if accountingPeriod.id == currentAccountingPeriod.id} class="active"#{/if}>
+        <a href="@{index(accountingPeriod.id)}">${accountingPeriod.description}</a>
+    </li>
+#{/list}
+</ul>
+
 #{tableSearch /}
 <table class="table table-striped">
     <thead>
@@ -17,7 +25,7 @@
             #{tableSorter objectName:'entry', fieldName:'voucher' /}
             <th>&{'entry.debit.id'}</th>
             <th>&{'entry.credit.id'}</th>
-            <th>&{'entry.amount'}</th>
+            <th>&{'entry.amount.rawValue'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>

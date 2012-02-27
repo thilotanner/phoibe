@@ -12,6 +12,11 @@ public class ActivityLogEntries extends ApplicationController {
             page = 1;
         }
 
+        if(orderBy == null) {
+            orderBy = "date";
+            order = "DESC";
+        }
+
         List<Model> activityLogEntries = Model.Manager.factoryFor(ActivityLogEntry.class).fetch(
                 (page - 1) * getPageSize(),
                 getPageSize(),

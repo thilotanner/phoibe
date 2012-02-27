@@ -36,7 +36,7 @@
 
     #{field property:'additionalReportItem.metric.id', object:additionalReportItem}
     <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
+        <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
             #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:metricProduct?.metric?.id, id:field.id /}
         </div>
@@ -53,7 +53,7 @@
 
     #{field property:'additionalReportItem.valueAddedTaxRate.id', object:additionalReportItem}
     <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
+        <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
             #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:additionalReportItem?.valueAddedTaxRate?.id, id:field.id /}
         </div>

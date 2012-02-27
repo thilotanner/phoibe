@@ -1,4 +1,12 @@
 #{extends 'main.html' /}
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('#picker').farbtastic('#reportType_reportColor');
+    });
+</script>
+#{/set}
 
 #{form @save(), class:'form-horizontal'}
 #{field property:'reportType.id', object:reportType}
@@ -12,7 +20,7 @@
 
     #{field property:'reportType.rootReportType', object:reportType}
     <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
+        <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
             <select name="${field.name}" id="${field.id}">
                 <option value="false"#{if field.value==false} selected="selected"#{/if}>&{'false'}</option>
@@ -23,18 +31,14 @@
     #{/field}
 
     #{field property:'reportType.reportColor', object:reportType}
-    <div class="control-group">
-        <label for="${field.id}">&{field.name}</label>
-        <div class="controls">
-            <select name="${field.name}" id="${field.id}">
-                <option value="GREY"#{if field.value?.toString()=='GREY'} selected="selected"#{/if}>&{'reportType.reportColor.GREY'}</option>
-                <option value="GREEN"#{if field.value?.toString()=='GREEN'} selected="selected"#{/if}>&{'reportType.reportColor.GREEN'}</option>
-                <option value="YELLOW"#{if field.value?.toString()=='YELLOW'} selected="selected"#{/if}>&{'reportType.reportColor.YELLOW'}</option>
-                <option value="RED"#{if field.value?.toString()=='RED'} selected="selected"#{/if}>&{'reportType.reportColor.RED'}</option>
-                <option value="BLUE"#{if field.value?.toString()=='BLUE'} selected="selected"#{/if}>&{'reportType.reportColor.BLUE'}</option>
-            </select>
+        <div class="control-group ${field.errorClass}">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                <input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}" class="span6">
+                <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+                <div id="picker"></div>
+            </div>
         </div>
-    </div>
     #{/field}
 
     #{textArea property:'reportType.template', object:reportType /}

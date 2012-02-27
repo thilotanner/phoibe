@@ -5,8 +5,6 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        $('#creditor_due').datepicker( $.datepicker.regional[ "de" ] );
-
         createAutocomplete($('#creditor_supplier_id'), "@{Contacts.search}");
     });
 </script>
@@ -30,7 +28,7 @@
     <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
     #{/field}
 
-    #{textField property:'creditor.due', object:creditor, value:creditor?.due?.format() /}
+    #{dateField property:'creditor.due', object:creditor /}
 </fieldset>
 
 <div class="form-actions">

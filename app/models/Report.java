@@ -228,4 +228,8 @@ public class Report extends EnhancedModel {
         }
         return nesb.toString();
     }
+    
+    public String getLabel() {
+        return String.format("%s - %d", reportType.name, id);
+    }
 }

@@ -20,6 +20,8 @@ import java.util.Date;
 @MappedSuperclass
 public class EnhancedModel extends Model {
 
+    private static final int MAX_TO_STRING_LENGTH = 20000;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
@@ -46,7 +48,7 @@ public class EnhancedModel extends Model {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
     }
 
     public <T extends JPABase> T loggedSave(User user) {

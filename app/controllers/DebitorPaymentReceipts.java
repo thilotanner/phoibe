@@ -1,7 +1,9 @@
 package controllers;
 
+import models.Account;
 import models.Debitor;
 import models.DebitorPaymentReceipt;
+import models.DebitorStatus;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.i18n.Messages;
@@ -35,12 +37,22 @@ public class DebitorPaymentReceipts extends ApplicationController {
             render("@form", debitorPaymentReceipt);
         }
 
+        debitorPaymentReceipt.buildEntry();
+        debitorPaymentReceipt.paymentEntry.save();
+
         debitorPaymentReceipt.loggedSave(getCurrentUser());
+
+        if(debitorPaymentReceipt.debitor.getAmountDue().value == 0l) {
+            // close debitor
+            debitorPaymentReceipt.debitor.close(null);
+        }
+
         flash.success(Messages.get("successfullySaved", Messages.get("debitorPaymentReceipt")));
         Debitors.show(debitorPaymentReceipt.debitor.id);
     }
 
     private static void initRenderArgs() {
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());
+        renderArgs.put("paymentAccounts", Account.getPaymentAccounts());
     }
 }
