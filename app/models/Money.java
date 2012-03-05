@@ -7,6 +7,7 @@ import util.check.NumericalCheck;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Currency;
@@ -83,7 +84,7 @@ public class Money implements Cloneable {
 
         DecimalFormat decimalFormat = new DecimalFormat(",##0.00", symbols);
 
-        return decimalFormat.format(value / getConversionFactor());
+        return decimalFormat.format(new BigDecimal(value).divide(getConversionFactor()));
     }
 
     public String getLabelWithCurrency() {
@@ -123,14 +124,25 @@ public class Money implements Cloneable {
         return result;
     }
 
+
+
+    public Money divide(BigDecimal divisor) {
+        BigDecimal bigDecimalValue = new BigDecimal(value);
+        BigDecimal resultValue = bigDecimalValue.divide(divisor, 2, RoundingMode.HALF_UP);
+
+        Money result = new Money();
+        result.currencyCode = currencyCode;
+        result.value = resultValue.longValue();
+        return result;
+    }
+
     public Money percentage(BigDecimal percentage) {
         return multiply(percentage.divide(new BigDecimal(100)));
     }
     
     private void calculateValue() {
         try {
-            double priceValue = Double.parseDouble(rawValue);
-            value = (long) (priceValue * getConversionFactor());
+            value = new BigDecimal(rawValue).multiply(getConversionFactor()).longValue();
         } catch (NumberFormatException e) {
             // Do nothing => errors are covered by NumericalCheck.class
         }
@@ -142,11 +154,11 @@ public class Money implements Cloneable {
 
         DecimalFormat decimalFormat = new DecimalFormat("##0.00", symbols);
 
-        rawValue = decimalFormat.format(value / getConversionFactor());
+        rawValue = decimalFormat.format(new BigDecimal(value).divide(getConversionFactor()));
     }
 
-    private double getConversionFactor() {
-        return Math.pow(10.0, getCurrency(currencyCode).getDefaultFractionDigits());
+    private BigDecimal getConversionFactor() {
+        return BigDecimal.TEN.pow(getCurrency(currencyCode).getDefaultFractionDigits());
     }
 
     private Currency getCurrency(String currencyCode) {

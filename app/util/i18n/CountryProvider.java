@@ -5,6 +5,8 @@ import play.Play;
 import play.i18n.Lang;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,6 +18,9 @@ public class CountryProvider {
         for(String isoCode : Locale.getISOCountries()) {
             locales.add(new Locale(Lang.get(), isoCode));
         }
+
+        Collections.sort(locales, new LocaleComparator());
+
         return new ImmutableList.Builder<Locale>().addAll(locales).build();
     }
 

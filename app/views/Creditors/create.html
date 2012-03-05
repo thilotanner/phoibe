@@ -1,0 +1,59 @@
+#{extends 'main.html' /}
+#{set title:messages.get('creditor') /}
+
+#{set 'moreScripts'}
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        createAutocomplete($('#creditor_supplier_id'), "@{Contacts.search}");
+    });
+</script>
+#{/set}
+
+#{form @save(), class:'form-horizontal'}
+    #{field property:'creditor.id', object:creditor}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+    #{field property:'creditor.creditorStatus', object:creditor}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+<fieldset>
+    <legend>&{'creditor'}</legend>
+
+    #{autocompleteTextField property:'creditor.supplier.id', object:creditor, label:creditor?.supplier?.label /}
+
+    #{textField property:'creditor.reference', object:creditor /}
+
+    #{textField property:'creditor.amount.rawValue', object:creditor, help:defaultCurrency.getCurrencyCode() /}
+
+    #{field property:'creditor.amount.currencyCode', object:creditor}
+        <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+    #{/field}
+
+    #{field property:'creditor.inputTaxAccount.id', object:creditor}
+        <div class="control-group">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                #{select field.name, items:inputTaxAccounts, valueProperty:'id', labelProperty:'description', value:creditor?.inputTaxAccount?.id, id:field.id /}
+            </div>
+        </div>
+    #{/field}
+
+    #{field property:'creditor.valueAddedTaxRate.id', object:creditor}
+        <div class="control-group">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:metricProduct?.valueAddedTaxRate?.id, id:field.id /}
+            </div>
+        </div>
+    #{/field}
+
+    #{dateField property:'creditor.due', object:creditor /}
+</fieldset>
+
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
+    <a href="@{index}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}

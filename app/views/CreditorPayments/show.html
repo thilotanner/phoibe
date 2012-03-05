@@ -1,0 +1,46 @@
+#{extends 'main.html' /}
+#{set title:messages.get('creditorPayment') /}
+
+<ul class="breadcrumb">
+    <li>&{'accounting'} <span class="divider">/</span></li>
+    <li><a href="@{Creditors.index}">&{'creditors'}</a> <span class="divider">/</span></li>
+    <li><a href="@{Creditors.show(creditorPayment.creditor.id)}">&{'creditor'} ${creditorPayment.creditor.id}</a> <span class="divider">/</span></li>
+    <li class="active">&{'creditorPayment'}</li>
+</ul>
+
+<div class="page-header">
+    <h1>&{'creditorPayment'}</h1>
+</div>
+
+<dl>
+    <dt>&{'creditorPayment.amount.rawValue'}</dt>
+    <dd>${creditorPayment.amount}</dd>
+
+    <dt>&{'creditorPayment.paid'}</dt>
+    <dd>${creditorPayment.paid.format()}
+</dl>
+
+<h2>&{'creditorPayment.paymentEntry'}</h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'entry.date'}</th>
+        <th>&{'entry.description'}</th>
+        <th>&{'entry.voucher'}</th>
+        <th>&{'entry.debit.id'}</th>
+        <th>&{'entry.credit.id'}</th>
+        <th>&{'entry.amount.rawValue'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${creditorPayment.paymentEntry.date?.format()}</td>
+        <td>${creditorPayment.paymentEntry.description}</td>
+        <td>${creditorPayment.paymentEntry.voucher}</td>
+        <td>${creditorPayment.paymentEntry.debit?.label}</td>
+        <td>${creditorPayment.paymentEntry.credit?.label}</td>
+        <td>${creditorPayment.paymentEntry.amount.label}</td>
+    </tr>
+    </tbody>
+</table>
+

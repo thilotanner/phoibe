@@ -1,6 +1,11 @@
 package controllers;
 
+import models.Account;
 import models.Creditor;
+import models.CreditorStatus;
+import models.DebitorStatus;
+import models.Entry;
+import models.ValueAddedTaxRate;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
@@ -11,9 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Creditors extends ApplicationController {
-    public static void index(int page, String orderBy, String order, String search) {
+    public static void index(String filter, int page, String orderBy, String order, String search) {
         if (page < 1) {
             page = 1;
+        }
+
+        String where = null;
+        for(DebitorStatus debitorStatus : DebitorStatus.values()) {
+            if(debitorStatus.toString().equals(filter)) {
+                where = String.format("creditorStatus = '%s'", filter);
+            }
         }
 
         List<Model> creditors = Model.Manager.factoryFor(Creditor.class).fetch(
@@ -23,33 +35,34 @@ public class Creditors extends ApplicationController {
                 order,
                 new ArrayList<String>(),
                 search,
-                null
+                where
         );
 
-        Long count = Model.Manager.factoryFor(Creditor.class).count(new ArrayList<String>(), search, null);
+        Long count = Model.Manager.factoryFor(Creditor.class).count(new ArrayList<String>(), search, where);
 
         renderArgs.put("pageSize", getPageSize());
-        render(creditors, count);
+        render(creditors, count, filter);
     }
 
-    public static void form(Long id) {
-        initRenderArgs();
-        if (id == null) {
-            render();
-        }
-
+    public static void show(Long id) {
+        notFoundIfNull(id);
         Creditor creditor = Creditor.findById(id);
         notFoundIfNull(creditor);
 
         render(creditor);
     }
+    
+    public static void form(Long id) {
+        initRenderArgs();
+        if (id == null) {
+            Creditor creditor = new Creditor();
+            creditor.creditorStatus = CreditorStatus.DUE;
+            render("@create", creditor);
+        }
 
-    public static void payForm(Long id) {
-        notFoundIfNull(id);
         Creditor creditor = Creditor.findById(id);
         notFoundIfNull(creditor);
 
-        initRenderArgs();
         render(creditor);
     }
 
@@ -59,12 +72,34 @@ public class Creditors extends ApplicationController {
             render("@form", creditor);
         }
 
+        creditor.buildAndSaveCreditorEntries();
+
         creditor.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("creditor")));
-        index(1, null, null, null);
+        index(CreditorStatus.DUE.toString(), 1, null, null, null);
+    }
+
+    public static void discountAmountDue(Long creditorId) {
+        notFoundIfNull(creditorId);
+        Creditor creditor = Creditor.findById(creditorId);
+        notFoundIfNull(creditor);
+
+        creditor.buildAndSaveDiscountEntries();
+
+        closeCreditor(creditor, "creditor.successfullyDiscounted");
+    }
+
+    private static void closeCreditor(Creditor creditor, String messageKey) {
+        creditor.close();
+
+        flash.success(Messages.get(messageKey));
+        index(CreditorStatus.DUE.toString(), 1, null, null, null);
     }
 
     private static void initRenderArgs() {
+        renderArgs.put("paymentAccounts", Account.getPaymentAccounts());
+        renderArgs.put("inputTaxAccounts", Account.getInputTaxAccounts());
+        renderArgs.put("valueAddedTaxRates", ValueAddedTaxRate.findAll());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());
     }
 }

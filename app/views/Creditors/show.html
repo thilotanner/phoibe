@@ -1,0 +1,145 @@
+#{extends 'main.html' /}
+#{set title:messages.get('creditor') /}
+
+<ul class="breadcrumb">
+    <li>&{'accounting'} <span class="divider">/</span></li>
+    <li><a href="@{index}">&{'creditors'}</a> <span class="divider">/</span></li>
+    <li class="active">&{'creditor'}</li>
+</ul>
+
+#{editHeader creditor.id /}
+
+<dl>
+    <dt>&{'creditor.supplier.id'}</dt>
+    <dd><a href="@{Contacts.show(creditor.supplier.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(creditor.supplier.id)}">${creditor.supplier.label}</a></dd>
+
+    <dt>&{'creditor.reference'}</dt>
+    <dd>${creditor.reference}</dd>
+
+    <dt>&{'creditor.creditorStatus'}</dt>
+    <dd>#{creditorStatus creditor /}</dd>
+
+    <dt>&{'creditor.due'}</dt>
+    <dd>${creditor.due.format()}</dd>
+
+    <dt>&{'creditor.amount.rawValue'}</dt>
+    <dd>${creditor.amount.rawValue}</dd>
+
+    <dt>&{'creditor.valueAddedTaxRate.id'}</dt>
+    <dd>${creditor.valueAddedTaxRate}</dd>
+
+    <dt>&{'creditor.inputTaxAccount.id'}</dt>
+    <dd>${creditor.inputTaxAccount.getLabel()}</dd>
+
+    <dt>&{'creditor.amountDue'}</dt>
+    <dd>${creditor.getAmountDue()}</dd>
+</dl>
+
+<div class="page-header">
+    <h2>&{'creditor.creditorEntries'}</h2>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'entry.date'}</th>
+        <th>&{'entry.description'}</th>
+        <th>&{'entry.voucher'}</th>
+        <th>&{'entry.debit.id'}</th>
+        <th>&{'entry.credit.id'}</th>
+        <th>&{'entry.amount.rawValue'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${creditor.creditorEntry.date?.format()}</td>
+        <td>${creditor.creditorEntry.description}</td>
+        <td>${creditor.creditorEntry.voucher}</td>
+        <td>${creditor.creditorEntry.debit?.label}</td>
+        <td>${creditor.creditorEntry.credit?.label}</td>
+        <td>${creditor.creditorEntry.amount.label}</td>
+    </tr>
+    <tr>
+        <td>${creditor.valueAddedTaxEntry.date?.format()}</td>
+        <td>${creditor.valueAddedTaxEntry.description}</td>
+        <td>${creditor.valueAddedTaxEntry.voucher}</td>
+        <td>${creditor.valueAddedTaxEntry.debit?.label}</td>
+        <td>${creditor.valueAddedTaxEntry.credit?.label}</td>
+        <td>${creditor.valueAddedTaxEntry.amount.label}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="page-header">
+    <h2>&{'creditorPayments'}</h2>
+</div>
+#{if creditor.creditorStatus == models.CreditorStatus.DUE}
+<div class="well">
+    <a href="@{CreditorPayments.create(creditor.id)}"
+       class="btn btn-primary">&{'create', messages.get('creditorPayment')}</a>
+    <a href="@{Creditors.discountAmountDue(creditor.id)}"
+       class="btn btn-warning">&{'creditor.discountAmountDue'}</a>
+</div>
+#{/if}
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'creditorPayment.amount.rawValue'}</th>
+        <th>&{'creditorPayment.paid'}</th>
+        <th>&{'creditorPayment.paymentAccount.id'}</th>
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:creditor.creditorPayments, as:'creditorPayment'}
+    <tr>
+        <td>${creditorPayment.amount}</td>
+        <td>${creditorPayment.paid.format()}</td>
+        <td>${creditorPayment.paymentEntry.credit.getLabel()}</td>
+        <td>
+            <a href="@{CreditorPayments.show(creditorPayment.id)}">&{'show'}</a>
+            #{if creditor.creditorStatus == models.CreditorStatus.DUE}
+                <a href="@{CreditorPayments.form(creditorPayment.id)}">&{'edit'}</a>
+            #{/if}
+        </td>
+    </tr>
+    #{/list}
+
+    </tbody>
+</table>
+
+#{if creditor.amountDueEntry}
+<h2>&{'creditor.amountDueEntries'}</h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'entry.date'}</th>
+        <th>&{'entry.description'}</th>
+        <th>&{'entry.voucher'}</th>
+        <th>&{'entry.debit.id'}</th>
+        <th>&{'entry.credit.id'}</th>
+        <th>&{'entry.amount.rawValue'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${creditor.amountDueEntry.date?.format()}</td>
+        <td>${creditor.amountDueEntry.description}</td>
+        <td>${creditor.amountDueEntry.voucher}</td>
+        <td>${creditor.amountDueEntry.debit?.label}</td>
+        <td>${creditor.amountDueEntry.credit?.label}</td>
+        <td>${creditor.amountDueEntry.amount.label}</td>
+    </tr>
+    <tr>
+        <td>${creditor.valueAddedTaxCorrectionEntry.date?.format()}</td>
+        <td>${creditor.valueAddedTaxCorrectionEntry.description}</td>
+        <td>${creditor.valueAddedTaxCorrectionEntry.voucher}</td>
+        <td>${creditor.valueAddedTaxCorrectionEntry.debit?.label}</td>
+        <td>${creditor.valueAddedTaxCorrectionEntry.credit?.label}</td>
+        <td>${creditor.valueAddedTaxCorrectionEntry.amount.label}</td>
+    </tr>
+    </tbody>
+</table>
+#{/if}
+
+<div id="modal" class="modal fade hide"></div>

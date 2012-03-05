@@ -6,6 +6,7 @@ addValueAddedTax=zuzügl. MWSt.
 administration=Administration
 all=alle
 cancel=abbrechen
+correction=Korrektur
 create=%s erstellen
 createAction=erstellen
 createQuestion=Sind Sie sicher, dass Sie «%s» erstellen möchten?
@@ -23,7 +24,6 @@ indexing=Indexierung
 indexingSuccessfullyStarted=%s-Indexierung wurde erfolgreich gestartet
 isReferenced=%s-Objekt kann nicht gelöscht werden, da es referenziert ist.
 logout=%s abmelden
-pay=bezahlen
 products=Produkte
 search=suchen
 searchAdministration=Such-Administration
@@ -36,6 +36,7 @@ successfullyFinished=%s wurde erfolgreich beendet
 successfullySaved=%s wurde erfolgreich gespeichert
 true=Ja
 updated=Änderungsdatum
+valueAddedTax=MWSt.
 workflow=Auftragsdurchlauf
 
 # Models
@@ -117,13 +118,27 @@ creditors.overdue=Überfällige Kreditoren
 creditor.supplier.id=Lieferant
 creditor.reference=Referenz
 creditor.amount.rawValue=Betrag
-creditor.amountPaid.rawValue=Betrag bezahlt
+creditor.inputTaxAccount.id=Vorsteuer-Konto
+creditor.valueAddedTaxRate.id=Mehrwertsteuersatz
+creditor.amountDue=Restbetrag
 creditor.due=Fälligkeit
 creditor.paid=Bezahlt am
 creditor.creditorStatus=Kreditorstatus
 creditor.creditorStatus.DUE=fällig
 creditor.creditorStatus.PAID=bezahlt
 creditor.creditorStatus.OVERDUE=überfällig
+creditor.discount=Skonto
+creditor.discountAmountDue=Restbetrag skontieren
+creditor.successfullyDiscounted=Restbetrag wurde erfolgreich skontiert
+creditor.creditorEntries=Kreditoren-Buchungen
+creditor.amountDueEntries=Restbetrag-Buchungen
+
+creditorPayment=Zahlung
+creditorPayments=Zahlungen
+creditorPayment.amount.rawValue=Betrag
+creditorPayment.paid=Bezahlt am
+creditorPayment.paymentAccount.id=Zahlungskonto
+creditorPayment.paymentEntry=Zahlungs-Buchung
 
 currency=Währung
 currencies=Währungen
@@ -148,12 +163,15 @@ debitor.successfullyDiscounted=Restbetrag wurde erfolgreich skontiert
 debitor.chargeOff=Abschreibung
 debitor.chargeOffAmountDue=Restbetrag abschreiben
 debitor.successfullyChargedOff=Restbetrag wurde erfolgreich abgeschrieben
+debitor.debitorEntries=Debitoren-Buchungen
+debitor.amountDueEntries=Restbetrag-Buchungen
 
 debitorPaymentReceipt=Zahlungseingang
 debitorPaymentReceipts=Zahlungseingänge
 debitorPaymentReceipt.amount.rawValue=Betrag
 debitorPaymentReceipt.paid=Bezahlt am
 debitorPaymentReceipt.paymentAccount.id=Zahlungskonto
+debitorPaymentReceipt.paymentEntry=Zahlungs-Buchung
 
 entry=Buchung
 entries=Buchungen
@@ -195,6 +213,9 @@ metricProductReportItem.amount=Menge
 metricProductReportItem.description=Beschreibung
 metricProductReportItem.retailPricePerMetric.rawValue=Verkaufspreis
 metricProductReportItem.metricProduct.id=Metrisches Produkt
+
+openingBalance=Eröffnungssaldo
+openingBalances=Eröffnungssaldi
 
 order=Auftrag
 orders=Aufträge

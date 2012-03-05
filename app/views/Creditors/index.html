@@ -8,6 +8,18 @@
 
 #{addHeader 'creditor' /}
 
+<ul class="nav nav-pills">
+    <li#{if filter == 'DUE'} class="active"#{/if}>
+        <a href="@{index('DUE', 1, null, null, null)}">&{'creditor.creditorStatus.DUE'}</a>
+    </li>
+    <li#{if filter == 'PAID'} class="active"#{/if}>
+        <a href="@{index('PAID', 1, null, null, null)}">&{'creditor.creditorStatus.PAID'}</a>
+    </li>
+    <li#{if filter == null} class="active"#{/if}>
+        <a href="@{index(null, 1, null, null, null)}">&{'all'}</a>
+    </li>
+</ul>
+
 #{tableSearch /}
 <table class="table table-striped">
     <thead>
@@ -15,10 +27,8 @@
             <th>&{'creditor.creditorStatus'}</th>
             <th>&{'creditor.supplier.id'}</th>
             #{tableSorter objectName:'creditor', fieldName:'reference' /}
-            <th>&{'creditor.amount.rawValue'}</th>
             <th>&{'creditor.due'}</th>
-            <th>&{'creditor.amountPaid.rawValue'}</th>
-            <th>&{'creditor.paid'}</th>
+            <th>&{'creditor.amountDue'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -28,14 +38,12 @@
             <td>#{creditorStatus creditor /}</td>
             <td>${creditor.supplier.label}</td>
             <td>${creditor.reference}</td>
-            <td>${creditor.amount.label}</td>
             <td>${creditor.due.format()}</td>
-            <td>${creditor.amountPaid?.label}</td>
-            <td>${creditor.paid?.format()}</td>
+            <td>${creditor.getAmountDue().getLabel()}</td>
             <td>
+                <a href="@{show(creditor.id)}">&{'show'}</a>
                 #{if creditor.creditorStatus.toString() != 'PAID'}
-                <a href="@{form(creditor.id)}">&{'edit'}</a> |
-                <a href="@{payForm(creditor.id)}">&{'pay'}</a>
+                | <a href="@{form(creditor.id)}">&{'edit'}</a>
                 #{/if}
             </td>
         </tr>

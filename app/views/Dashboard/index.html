@@ -51,10 +51,7 @@
                 <td>${creditor.amount.label}</td>
                 <td>${creditor.due.format()}</td>
                 <td>
-                    #{if creditor.creditorStatus.toString() != 'PAID'}
-                        <a href="@{Creditors.form(creditor.id)}">&{'edit'}</a> |
-                        <a href="@{Creditors.payForm(creditor.id)}">&{'pay'}</a>
-                    #{/if}
+                    <a href="@{Creditors.show(creditor.id)}">&{'show'}</a>
                 </td>
             </tr>
             #{/list}

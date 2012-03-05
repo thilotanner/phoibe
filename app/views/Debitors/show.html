@@ -29,7 +29,43 @@
     <dd>${debitor.amountDue}</dd>
 </dl>
 
-<h2>&{'debitorPaymentReceipts'}</h2>
+<div class="page-header">
+    <h2>&{'debitor.debitorEntries'}</h2>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'entry.date'}</th>
+        <th>&{'entry.description'}</th>
+        <th>&{'entry.voucher'}</th>
+        <th>&{'entry.debit.id'}</th>
+        <th>&{'entry.credit.id'}</th>
+        <th>&{'entry.amount.rawValue'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${debitor.debitorEntry.date?.format()}</td>
+        <td>${debitor.debitorEntry.description}</td>
+        <td>${debitor.debitorEntry.voucher}</td>
+        <td>${debitor.debitorEntry.debit?.label}</td>
+        <td>${debitor.debitorEntry.credit?.label}</td>
+        <td>${debitor.debitorEntry.amount.label}</td>
+    </tr>
+    <tr>
+        <td>${debitor.valueAddedTaxEntry.date?.format()}</td>
+        <td>${debitor.valueAddedTaxEntry.description}</td>
+        <td>${debitor.valueAddedTaxEntry.voucher}</td>
+        <td>${debitor.valueAddedTaxEntry.debit?.label}</td>
+        <td>${debitor.valueAddedTaxEntry.credit?.label}</td>
+        <td>${debitor.valueAddedTaxEntry.amount.label}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="page-header">
+    <h2>&{'debitorPaymentReceipts'}</h2>
+</div>
 #{if debitor.debitorStatus == models.DebitorStatus.DUE}
 <div class="well">
     <a href="@{DebitorPaymentReceipts.create(debitor.id)}"
@@ -46,6 +82,7 @@
     <tr>
         <th>&{'debitorPaymentReceipt.amount.rawValue'}</th>
         <th>&{'debitorPaymentReceipt.paid'}</th>
+        <th>&{'debitorPaymentReceipt.paymentAccount.id'}</th>
         <th>&{'actions'}</th>
     </tr>
     </thead>
@@ -54,7 +91,9 @@
     <tr>
         <td>${debitorPaymentReceipt.amount}</td>
         <td>${debitorPaymentReceipt.paid.format()}</td>
+        <td>${debitorPaymentReceipt.paymentEntry.debit.getLabel()}</td>
         <td>
+            <a href="@{DebitorPaymentReceipts.show(debitorPaymentReceipt.id)}">&{'show'}</a>
             #{if debitor.debitorStatus == models.DebitorStatus.DUE}
             <a href="@{DebitorPaymentReceipts.form(debitorPaymentReceipt.id)}">&{'edit'}</a>
             #{/if}
@@ -64,5 +103,39 @@
 
     </tbody>
 </table>
+
+#{if debitor.amountDueEntry}
+<h2>&{'debitor.amountDueEntries'}</h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'entry.date'}</th>
+        <th>&{'entry.description'}</th>
+        <th>&{'entry.voucher'}</th>
+        <th>&{'entry.debit.id'}</th>
+        <th>&{'entry.credit.id'}</th>
+        <th>&{'entry.amount.rawValue'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${debitor.amountDueEntry.date?.format()}</td>
+        <td>${debitor.amountDueEntry.description}</td>
+        <td>${debitor.amountDueEntry.voucher}</td>
+        <td>${debitor.amountDueEntry.debit?.label}</td>
+        <td>${debitor.amountDueEntry.credit?.label}</td>
+        <td>${debitor.amountDueEntry.amount.label}</td>
+    </tr>
+    <tr>
+        <td>${debitor.valueAddedTaxCorrectionEntry?.date?.format()}</td>
+        <td>${debitor.valueAddedTaxCorrectionEntry?.description}</td>
+        <td>${debitor.valueAddedTaxCorrectionEntry?.voucher}</td>
+        <td>${debitor.valueAddedTaxCorrectionEntry?.debit?.label}</td>
+        <td>${debitor.valueAddedTaxCorrectionEntry?.credit?.label}</td>
+        <td>${debitor.valueAddedTaxCorrectionEntry?.amount?.label}</td>
+    </tr>
+    </tbody>
+</table>
+#{/if}
 
 <div id="modal" class="modal fade hide"></div>

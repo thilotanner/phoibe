@@ -228,7 +228,11 @@ public class Report extends EnhancedModel {
         }
         return nesb.toString();
     }
-    
+
+    public BigDecimal getValueAddedTaxToTotalPriceRatio() {
+        return new BigDecimal(getTax().value).divide(new BigDecimal(getTotalPrice().value));
+    }
+
     public String getLabel() {
         return String.format("%s - %d", reportType.name, id);
     }

@@ -3,7 +3,6 @@ package controllers;
 import models.Debitor;
 import models.DebitorStatus;
 import models.Entry;
-import models.OrderStatus;
 import play.data.validation.Valid;
 import play.db.Model;
 import play.i18n.Messages;
@@ -69,10 +68,9 @@ public class Debitors extends ApplicationController {
         Debitor debitor = Debitor.findById(debitorId);
         notFoundIfNull(debitor);
 
-        Entry entry = debitor.buildDiscountEntry();
-        entry.save();
+        debitor.buildAndSaveDiscountEntries();
 
-        closeDebitor(debitor, entry, "debitor.successfullyDiscounted");
+        closeDebitor(debitor, "debitor.successfullyDiscounted");
     }
     
     public static void chargeOffAmountDue(Long debitorId) {
@@ -80,14 +78,13 @@ public class Debitors extends ApplicationController {
         Debitor debitor = Debitor.findById(debitorId);
         notFoundIfNull(debitor);
 
-        Entry entry = debitor.buildChargeOffEntry();
-        entry.save();
+        debitor.buildAndSaveChargeOffEntries();
 
-        closeDebitor(debitor, entry, "debitor.successfullyChargedOff");
+        closeDebitor(debitor, "debitor.successfullyChargedOff");
     }
     
-    private static void closeDebitor(Debitor debitor, Entry amountDueEntry, String messageKey) {
-        debitor.close(amountDueEntry);
+    private static void closeDebitor(Debitor debitor, String messageKey) {
+        debitor.close();
 
         flash.success(Messages.get(messageKey));
         index(DebitorStatus.DUE.toString(), 1, null, null, null);

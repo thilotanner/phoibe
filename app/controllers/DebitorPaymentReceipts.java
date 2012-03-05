@@ -10,6 +10,15 @@ import play.i18n.Messages;
 import util.i18n.CurrencyProvider;
 
 public class DebitorPaymentReceipts extends ApplicationController {
+    
+    public static void show(Long id) {
+        notFoundIfNull(id);
+        DebitorPaymentReceipt debitorPaymentReceipt = DebitorPaymentReceipt.findById(id);
+        notFoundIfNull(debitorPaymentReceipt);
+
+        render(debitorPaymentReceipt);
+    }
+    
     public static void create(Long debitorId) {
         notFoundIfNull(debitorId);
         Debitor debitor = Debitor.findById(debitorId);
@@ -44,7 +53,7 @@ public class DebitorPaymentReceipts extends ApplicationController {
 
         if(debitorPaymentReceipt.debitor.getAmountDue().value == 0l) {
             // close debitor
-            debitorPaymentReceipt.debitor.close(null);
+            debitorPaymentReceipt.debitor.close();
         }
 
         flash.success(Messages.get("successfullySaved", Messages.get("debitorPaymentReceipt")));

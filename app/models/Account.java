@@ -22,6 +22,10 @@ public class Account extends EnhancedModel {
         return getAccountForConfigurationKey("accounting.revenueAccount.number");
     }
 
+    public static Account getValueAddedTaxAccount() {
+        return getAccountForConfigurationKey("accounting.valueAddedTaxAccount.number");
+    }
+
     public static Account getDiscountAccount() {
         return getAccountForConfigurationKey("accounting.discountAccount.number");
     }
@@ -30,8 +34,24 @@ public class Account extends EnhancedModel {
         return getAccountForConfigurationKey("accounting.chargeOffAccount.number");
     }
 
+    public static Account getCreditorAccount() {
+        return getAccountForConfigurationKey("accounting.creditorAccount.number");
+    }
+
+    public static Account getPurchasesAccount() {
+        return getAccountForConfigurationKey("accounting.purchasesAccount.number");
+    }
+
+    public static Account getPurchaseDiscountAccount() {
+        return getAccountForConfigurationKey("accounting.purchaseDiscountAccount.number");
+    }
+
     public static List<Account> getPaymentAccounts() {
         return getAccountsForConfigurationKey("accounting.paymentAccounts.numbers");
+    }
+
+    public static List<Account> getInputTaxAccounts() {
+        return getAccountsForConfigurationKey("accounting.inputTaxAccounts.numbers");
     }
     
     private static Account getAccountForConfigurationKey(String configurationKey) {

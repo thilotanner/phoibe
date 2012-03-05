@@ -1,0 +1,46 @@
+#{extends 'main.html' /}
+#{set title:messages.get('debitorPaymentReceipt') /}
+
+<ul class="breadcrumb">
+    <li>&{'accounting'} <span class="divider">/</span></li>
+    <li><a href="@{Debitors.index}">&{'debitors'}</a> <span class="divider">/</span></li>
+    <li><a href="@{Debitors.show(debitorPaymentReceipt.debitor.id)}">&{'debitor'} ${debitorPaymentReceipt.debitor.id}</a> <span class="divider">/</span></li>
+    <li class="active">&{'debitorPaymentReceipt'}</li>
+</ul>
+
+<div class="page-header">
+    <h1>&{'debitorPaymentReceipt'}</h1>
+</div>
+
+<dl>
+    <dt>&{'debitorPaymentReceipt.amount.rawValue'}</dt>
+    <dd>${debitorPaymentReceipt.amount}</dd>
+
+    <dt>&{'debitorPaymentReceipt.paid'}</dt>
+    <dd>${debitorPaymentReceipt.paid.format()}
+</dl>
+
+<h2>&{'debitorPaymentReceipt.paymentEntry'}</h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'entry.date'}</th>
+        <th>&{'entry.description'}</th>
+        <th>&{'entry.voucher'}</th>
+        <th>&{'entry.debit.id'}</th>
+        <th>&{'entry.credit.id'}</th>
+        <th>&{'entry.amount.rawValue'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${debitorPaymentReceipt.paymentEntry.date?.format()}</td>
+        <td>${debitorPaymentReceipt.paymentEntry.description}</td>
+        <td>${debitorPaymentReceipt.paymentEntry.voucher}</td>
+        <td>${debitorPaymentReceipt.paymentEntry.debit?.label}</td>
+        <td>${debitorPaymentReceipt.paymentEntry.credit?.label}</td>
+        <td>${debitorPaymentReceipt.paymentEntry.amount.label}</td>
+    </tr>
+    </tbody>
+</table>
+

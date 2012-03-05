@@ -1,0 +1,38 @@
+#{extends 'main.html' /}
+
+#{form @save(), class:'form-horizontal'}
+    #{field property:'creditorPayment.id', object:creditorPayment}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+    #{field property:'creditorPayment.creditor.id', object:creditorPayment}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+<fieldset>
+    <legend>&{'creditorPayment'}</legend>
+
+    #{textField property:'creditorPayment.amount.rawValue', object:creditorPayment, help:defaultCurrency.getCurrencyCode() /}
+
+    #{field property:'creditorPayment.amount.currencyCode', object:creditorPayment}
+        <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
+    #{/field}
+
+    #{dateField property:'creditorPayment.paid', object:creditorPayment /}
+
+    #{field property:'creditorPayment.paymentAccount.id', object:creditorPayment}
+        <div class="control-group ${field.errorClass}">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                #{select field.name, items:paymentAccounts, valueProperty:'id', labelProperty:'description', value:field.value /}
+                <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+            </div>
+        </div>
+    #{/field}
+</fieldset>
+
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
+    <a href="@{Creditors.show(creditorPayment.creditor.id)}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}
