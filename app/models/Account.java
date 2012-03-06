@@ -126,7 +126,7 @@ public class Account extends EnhancedModel {
         }
         
         if(accountGroup.accountType == AccountType.ASSET ||
-           accountGroup.accountType == AccountType.LIABILITY) {
+           accountGroup.accountType == AccountType.EXPENSE) {
             // debit account
             balance = balance.add(getDebitSum(accountingPeriod));
             balance = balance.subtract(getCreditSum(accountingPeriod));
