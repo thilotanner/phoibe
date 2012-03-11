@@ -4,20 +4,6 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        CKEDITOR.replace('metricProduct_description', {
-            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
-            coreStyles_bold	: { element : 'b' },
-		    coreStyles_italic : { element : 'i' },
-            enterMode: CKEDITOR.ENTER_BR
-        });
-
-        CKEDITOR.replace('metricProduct_comments', {
-            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
-            coreStyles_bold	: { element : 'b' },
-		    coreStyles_italic : { element : 'i' },
-            enterMode: CKEDITOR.ENTER_BR
-        });
-
         createAutocomplete($('#metricProduct_supplier_id'), "@{Contacts.search}", #{jsAction @Contacts.popover(':id') /}, "${messages.get('contact')}");
     });
 </script>
@@ -33,7 +19,7 @@
 
     #{textField property:'metricProduct.name', object:metricProduct /}
 
-    #{textArea property:'metricProduct.description', object:metricProduct /}
+    #{editorTextArea property:'metricProduct.description', object:metricProduct /}
 
     %{
         if(metricProduct?.supplier?.id != null) {
@@ -59,17 +45,9 @@
 
     #{textField property:'metricProduct.priceUnit', object:metricProduct /}
 
-    #{textField property:'metricProduct.purchasePricePerMetric.rawValue', object:metricProduct, help:defaultCurrency.getCurrencyCode() /}
+    #{moneyField property:'metricProduct.purchasePricePerMetric', object:metricProduct, currencyCode:defaultCurrency.getCurrencyCode() /}
 
-    #{field property:'metricProduct.purchasePricePerMetric.currencyCode', object:metricProduct}
-    <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
-    #{/field}
-
-    #{textField property:'metricProduct.retailPricePerMetric.rawValue', object:metricProduct, help:defaultCurrency.getCurrencyCode() /}
-
-    #{field property:'metricProduct.retailPricePerMetric.currencyCode', object:metricProduct}
-    <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
-    #{/field}
+    #{moneyField property:'metricProduct.retailPricePerMetric', object:metricProduct, currencyCode:defaultCurrency.getCurrencyCode() /}
 
     #{field property:'metricProduct.valueAddedTaxRate.id', object:metricProduct}
     <div class="control-group">
@@ -80,7 +58,7 @@
     </div>
     #{/field}
 
-    #{textArea property:'metricProduct.comments', object:metricProduct /}
+    #{editorTextArea property:'metricProduct.comments', object:metricProduct /}
 
 </fieldset>
 

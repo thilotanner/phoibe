@@ -31,8 +31,11 @@
     <div class="control-group ${field.errorClass}">
         <label class="control-label" for="${field.id}">&{openingBalance.account.label}</label>
         <div class="controls">
-            <input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}" class="span6">
-            <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${openingBalance.openingBalance.currencyCode}#{/else}</span>
+            <div class="input-prepend">
+                <span class="add-on">${openingBalance.openingBalance.currencyCode}</span>
+                <input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}" class="span2">
+                <span class="help-inline">#{if field.error}${field.error}#{/if}</span>
+            </div>
         </div>
     </div>
     #{/field}

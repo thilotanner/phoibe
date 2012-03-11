@@ -12,11 +12,7 @@
 <fieldset>
     <legend>&{'debitorPaymentReceipt'}</legend>
 
-    #{textField property:'debitorPaymentReceipt.amount.rawValue', object:debitorPaymentReceipt, help:defaultCurrency.getCurrencyCode() /}
-
-    #{field property:'debitorPaymentReceipt.amount.currencyCode', object:debitorPaymentReceipt}
-    <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
-    #{/field}
+    #{moneyField property:'debitorPaymentReceipt.amount', object:debitorPaymentReceipt, currencyCode:defaultCurrency.getCurrencyCode() /}
 
     #{dateField property:'debitorPaymentReceipt.paid', object:debitorPaymentReceipt /}
 

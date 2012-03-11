@@ -1,0 +1,9 @@
+#{field property:_property, object:_object}
+<div class="control-group ${field.errorClass}">
+    <label class="control-label" for="${field.id}">&{field.name}</label>
+    <div class="controls">
+        <textarea rel="editor" class="input-xlarge" id="${field.id}" name="${field.name}" rows="3" cols="80">${field.value}</textarea>
+        <span class="help-block">${field.error}</span>
+    </div>
+</div>
+#{/field}

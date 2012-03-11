@@ -4,10 +4,7 @@ import play.Play;
 import util.i18n.CurrencyProvider;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,9 +111,13 @@ public class Account extends EnhancedModel {
         return sum;
     }
 
+    public OpeningBalance getOpeningBalance(AccountingPeriod accountingPeriod) {
+        return OpeningBalance.find("account.id = ? AND accountingPeriod.id = ?", id, accountingPeriod.id).first();
+    }
+
     public Money getBalance(AccountingPeriod accountingPeriod) {
         // check if opening balance exists
-        OpeningBalance openingBalance = OpeningBalance.find("account.id = ?", id).first();
+        OpeningBalance openingBalance = getOpeningBalance(accountingPeriod);
 
         Money balance;
         if(openingBalance != null) {
@@ -125,8 +126,7 @@ public class Account extends EnhancedModel {
             balance = new Money(CurrencyProvider.getDefaultCurrency());
         }
         
-        if(accountGroup.accountType == AccountType.ASSET ||
-           accountGroup.accountType == AccountType.EXPENSE) {
+        if(accountGroup.accountType.isDebitAccount()) {
             // debit account
             balance = balance.add(getDebitSum(accountingPeriod));
             balance = balance.subtract(getCreditSum(accountingPeriod));

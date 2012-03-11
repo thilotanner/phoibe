@@ -49,6 +49,28 @@
         </tr>
     </thead>
     <tbody>
+        #{if account.getOpeningBalance(currentAccountingPeriod)}
+        <tr>
+            <td></td>
+            <td>&{'openingBalance'}</td>
+            <td></td>
+            #{if account.accountGroup.accountType.isDebitAccount()}
+            <td>${account.getOpeningBalance(currentAccountingPeriod).openingBalance}</td>
+            <td></td>
+            #{/if}
+            #{else}
+            <td></td>
+            <td>${account.getOpeningBalance(currentAccountingPeriod).openingBalance}</td>
+            #{/else}
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        #{/if}
         #{list items:account.getDebitEntries(currentAccountingPeriod), as:'entry'}
         <tr>
             <td>${entry.date?.format()}</td>

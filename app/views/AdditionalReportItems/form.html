@@ -1,20 +1,6 @@
 #{extends 'main.html' /}
 #{set title:messages.get('additionalReportItem') /}
 
-#{set 'moreScripts'}
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        CKEDITOR.replace('additionalReportItem_description', {
-            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
-            coreStyles_bold	: { element : 'b' },
-		    coreStyles_italic : { element : 'i' },
-            enterMode: CKEDITOR.ENTER_BR
-        });
-    });
-</script>
-#{/set}
-
 #{form @save(), class:'form-horizontal'}
 
 #{field property:'additionalReportItem.id', object:additionalReportItem}
@@ -43,13 +29,9 @@
     </div>
     #{/field}
 
-    #{textArea property:'additionalReportItem.description', object:additionalReportItem /}
+    #{editorTextArea property:'additionalReportItem.description', object:additionalReportItem /}
 
-    #{textField property:'additionalReportItem.retailPricePerMetric.rawValue', object:additionalReportItem, help:defaultCurrency.getCurrencyCode() /}
-
-    #{field property:'additionalReportItem.retailPricePerMetric.currencyCode', object:additionalReportItem}
-    <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
-    #{/field}
+    #{moneyField property:'additionalReportItem.retailPricePerMetric', object:additionalReportItem, currencyCode:defaultCurrency.getCurrencyCode() /}
 
     #{field property:'additionalReportItem.valueAddedTaxRate.id', object:additionalReportItem}
     <div class="control-group">

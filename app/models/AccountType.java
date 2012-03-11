@@ -4,5 +4,9 @@ public enum AccountType {
     ASSET,
     LIABILITY,
     EXPENSE,
-    REVENUE
+    REVENUE;
+
+    public boolean isDebitAccount() {
+        return this.equals(ASSET) || this.equals(EXPENSE);
+    }
 }

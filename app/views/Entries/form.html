@@ -115,11 +115,8 @@
 
     #{autocompleteTextField property:'entry.credit.id', object:entry, label:entry?.credit?.label /}
 
-    #{textField property:'entry.amount.rawValue', object:entry, help:defaultCurrency.getCurrencyCode() /}
+    #{moneyField property:'entry.amount', object:entry, currencyCode:defaultCurrency.getCurrencyCode() /}
 
-    #{field property:'entry.amount.currencyCode', object:entry}
-    <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
-    #{/field}
 </fieldset>
 
 <div class="form-actions">

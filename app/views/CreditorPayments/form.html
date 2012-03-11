@@ -12,11 +12,7 @@
 <fieldset>
     <legend>&{'creditorPayment'}</legend>
 
-    #{textField property:'creditorPayment.amount.rawValue', object:creditorPayment, help:defaultCurrency.getCurrencyCode() /}
-
-    #{field property:'creditorPayment.amount.currencyCode', object:creditorPayment}
-        <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
-    #{/field}
+    #{moneyField property:'creditorPayment.amount', object:creditorPayment, currencyCode:defaultCurrency.getCurrencyCode() /}
 
     #{dateField property:'creditorPayment.paid', object:creditorPayment /}
 

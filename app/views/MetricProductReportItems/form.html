@@ -4,14 +4,6 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        CKEDITOR.replace('metricProductReportItem_description', {
-            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
-            coreStyles_bold	: { element : 'b' },
-            coreStyles_italic : { element : 'i' },
-            enterMode: CKEDITOR.ENTER_BR
-        });
-
-
         createAutocompleteForMetricProducts($('#metricProductReportItem_metricProduct_id'), "@{MetricProducts.search}", #{jsAction @MetricProducts.popover(':id') /}, "${messages.get('metricProduct')}");
     });
 
@@ -54,9 +46,7 @@
                         chooserElement.siblings('.help-inline').first().html('<span class="label">Info</span>');
                         chooserElement.siblings('.help-inline').first().children('.label').first().popover({
                             title: function() { return infoTitle },
-                            offset: 10,
-                            html: true,
-                            placement: 'below',
+                            placement: 'bottom',
                             content: function() {
                                 $.ajax({
                                     url: infoUrl({id: ui.item.value}),
@@ -120,13 +110,9 @@
 
     #{textField property:'metricProductReportItem.amount', object:metricProductReportItem /}
 
-    #{textArea property:'metricProductReportItem.description', object:metricProductReportItem /}
+    #{editorTextArea property:'metricProductReportItem.description', object:metricProductReportItem /}
 
-    #{textField property:'metricProductReportItem.retailPricePerMetric.rawValue', object:metricProductReportItem, help:defaultCurrency.getCurrencyCode() /}
-
-    #{field property:'metricProductReportItem.retailPricePerMetric.currencyCode', object:precalculatedProductReportItem}
-        <input type="hidden" value="${defaultCurrency.getCurrencyCode()}" name="${field.name}"/>
-    #{/field}
+    #{moneyField property:'metricProductReportItem.retailPricePerMetric', object:metricProductReportItem, currencyCode:defaultCurrency.getCurrencyCode() /}
 
 </fieldset>
 

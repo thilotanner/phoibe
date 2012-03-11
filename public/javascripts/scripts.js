@@ -36,7 +36,14 @@ $(document).ready(function() {
 
     $('[rel=datepicker]').datepicker($.datepicker.regional[ "de" ]);
 
-
+    $('[rel=editor]').each(function(index) {
+        CKEDITOR.replace($(this).attr('id'), {
+            toolbar: [ [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ] ],
+            coreStyles_bold	: { element : 'b' },
+            coreStyles_italic : { element : 'i' },
+            enterMode: CKEDITOR.ENTER_BR
+        });
+    });
 });
 
 function createAutocomplete(hiddenElement, ajaxUrl, infoUrl, infoTitle) {

@@ -1,5 +1,5 @@
 #{if metricProduct.description}
-${metricProduct.description.raw()}<br />
+<strong>${metricProduct.name}</strong><br />
 #{/if}
 
 #{if metricProduct.supplier}
@@ -21,5 +21,5 @@ ${metricProduct.supplier.label}<br />
 &{'metricProduct.valueAddedTaxRate.id'}: ${metricProduct.valueAddedTaxRate}<br />
 
 #{if metricProduct.comments}
-${metricProduct.comments}<br />
+${metricProduct.comments?.raw()}<br />
 #{/if}

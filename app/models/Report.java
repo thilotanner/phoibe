@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -230,7 +231,7 @@ public class Report extends EnhancedModel {
     }
 
     public BigDecimal getValueAddedTaxToTotalPriceRatio() {
-        return new BigDecimal(getTax().value).divide(new BigDecimal(getTotalPrice().value));
+        return new BigDecimal(getTax().value).divide(new BigDecimal(getTotalPrice().value), 10, RoundingMode.HALF_UP);
     }
 
     public String getLabel() {
