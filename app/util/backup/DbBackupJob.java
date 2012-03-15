@@ -103,8 +103,23 @@ public class DbBackupJob extends BatchJob {
         if(mysqlBinPath.length() > 0 && !mysqlBinPath.endsWith(File.separator)) {
             mysqlBinPath = String.format("%s%s", mysqlBinPath, File.separator);
         }
-        
-        String command = String.format("%smysqldump -u%s -p%s %s > %s", mysqlBinPath, user, password, database, backupFile.getAbsolutePath());
+
+
+        String command;
+        if(password != null && !password.isEmpty()) {
+            command = String.format("%smysqldump -u%s -p%s %s > %s",
+                    mysqlBinPath,
+                    user,
+                    password,
+                    database,
+                    backupFile.getAbsolutePath());
+        } else {
+            command = String.format("%smysqldump -u%s %s > %s",
+                    mysqlBinPath,
+                    user,
+                    database,
+                    backupFile.getAbsolutePath());
+        }
 
         batchJobLogger.info(String.format("Run command: %s", command));
 
