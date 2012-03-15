@@ -23,6 +23,9 @@ public class DbBackupJob extends BatchJob {
     public void doBatchJob(BatchJobLogger batchJobLogger) throws Exception
     {
         File backupFolder = Play.getFile("backup/");
+        if(!backupFolder.exists() && !backupFolder.mkdirs()) {
+            throw new RuntimeException("Unable to create backup folder: " + backupFolder.getAbsolutePath());
+        }
         
         backupCleanup(backupFolder, batchJobLogger);
 
