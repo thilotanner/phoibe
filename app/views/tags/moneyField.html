@@ -3,16 +3,12 @@
     <label class="control-label" for="${field.id}">&{field.name}</label>
     <div class="controls">
         <div class="input-prepend">
-            <span class="add-on">${_currencyCode}</span>
-            <input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}" class="span2">
-            <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+            <span class="add-on">${_currencyCode}</span><input type="text" id="${field.id}" name="${field.name}" value="#{if _value}${_value}#{/if}#{else}${field.value}#{/else}" class="span2">
         </div>
+        <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
 #{/field}
-
-#{field property:_property + '.currencyCode', object:_object}
-        <input type="hidden" value="${_currencyCode}" name="${field.name}"/>
-#{/field}
-
     </div>
 </div>
-
+#{field property:_property + '.currencyCode', object:_object}
+<input type="hidden" value="${_currencyCode}" name="${field.name}"/>
+#{/field}

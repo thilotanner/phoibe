@@ -1,0 +1,51 @@
+#{extends 'main.html' /}
+#{set title:messages.get('batchJobRun') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'administration'} <span class="divider">/</span></li>
+    <li class="active">&{'batchJobRuns'}</li>
+</ul>
+
+<div class="page-header">
+    #{if batchJobRun.isUnacknowledged()}
+    <span class="pull-right">
+        <a href="@{acknowledge(batchJobRun.id)}" class="btn btn-success"><span class="icon-ok icon-white"></span> &{'acknowledge'}</a>
+    </span>
+    #{/if}
+    <h1>#{get 'title' /}</h1>
+</div>
+
+<dl>
+    <dt>&{'batchJobRun.batchJobRunStatus'}</dt>
+    <dd>#{batchJobRunStatus batchJobRun /}</dd>
+
+    <dt>&{'batchJobRun.jobClassName'}</dt>
+    <dd>${batchJobRun.jobClassName}</dd>
+
+    <dt>&{'batchJobRun.startDate'}</dt>
+    <dd>${batchJobRun.startDate}</dd>
+
+    <dt>&{'batchJobRun.endDate'}</dt>
+    <dd>${batchJobRun.endDate}</dd>
+</dl>
+
+#{if batchJobRun.log && batchJobRun.log.length() > 0}
+<div class="page-header">
+    <h2>&{'batchJobRun.log'}</h2>
+</div>
+<pre>
+${batchJobRun.log}
+</pre>
+#{/if}
+
+#{if batchJobRun.exception && batchJobRun.exception.length() > 0}
+<div class="page-header">
+    <h2>&{'batchJobRun.exception'}</h2>
+</div>
+<h3>${batchJobRun.exceptionTitle}</h3>
+<pre>
+${batchJobRun.exception}
+</pre>
+#{/if}
+
+

@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+#{set title:messages.get('backup') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'administration'} <span class="divider">/</span></li>
+    <li class="active">&{'backup'}</li>
+</ul>
+
+<div class="page-header">
+    <h1>#{get 'title' /}</h1>
+</div>
+
+<div class="well">
+    <a href="@{backupDb()}"
+       class="btn btn-primary">&{'backup.start', messages.get('backup.dbBackup')}</a>
+</div>
+
+
+
+

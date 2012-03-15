@@ -1,0 +1,18 @@
+#{extends 'main.html' /}
+#{set title:messages.get('status') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'administration'} <span class="divider">/</span></li>
+    <li class="active">&{'status'}</li>
+</ul>
+
+<div class="page-header">
+    <h1>#{get 'title' /}</h1>
+</div>
+
+<pre>
+${status}
+</pre>
+
+
+

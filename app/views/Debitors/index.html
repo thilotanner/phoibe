@@ -43,8 +43,10 @@
         <td>${debitor.due.format()}</td>
         <td>${debitor.getAmountDue().asRounded()}</td>
         <td>
-            <a href="@{show(debitor.id)}">&{'show'}</a> |
-            <a href="@{form(debitor.id)}">&{'edit'}</a>
+            <a href="@{show(debitor.id)}">&{'show'}</a>
+            #{if debitor.isEditable()}
+            | <a href="@{form(debitor.id)}">&{'edit'}</a>
+            #{/if}
         </td>
     </tr>
     #{/list}

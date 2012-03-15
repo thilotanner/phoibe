@@ -7,12 +7,11 @@
                    id="${field.id}"
                    name="${field.name}"
                    value="#{if _value}${_value}#{/if}#{else}${field.value?.format()}#{/else}" class="span2"
-                   rel="datepicker">
-            <span class="add-on"><span class="icon-calendar"></span></span>
-            <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+                   rel="datepicker"><span class="add-on"><span class="icon-calendar"></span></span>
         </div>
+        <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
     </div>
-
-    <input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>
 </div>
+<input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>
+
 #{/field}

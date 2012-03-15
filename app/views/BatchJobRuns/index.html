@@ -1,0 +1,78 @@
+#{extends 'main.html' /}
+#{set title:messages.get('batchJobRuns') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'administration'} <span class="divider">/</span></li>
+    <li class="active">&{'batchJobRuns'}</li>
+</ul>
+
+<div class="page-header">
+    <h1>#{get 'title' /}</h1>
+</div>
+
+<pre>
+${status}
+</pre>
+
+<div class="page-header">
+    <h2>&{'batchJobRun.runningJobs'}</h2>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'batchJobRun.batchJobRunStatus'}</th>
+        <th>&{'batchJobRun.jobClassName'}</th>
+        <th>&{'batchJobRun.startDate'}</th>
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:batchJobs, as:'batchJob'}
+    <tr>
+        <td>#{batchJobRunStatus batchJob.batchJobRun /}</td>
+        <td>${batchJob.batchJobRun.jobClassName}</td>
+        <td>${batchJob.batchJobRun.startDate}</td>
+        <td>
+            <a href="@{showRunning(batchJob_index)}">&{'show'}</a>
+        </td>
+    </tr>
+    #{/list}
+    </tbody>
+</table>
+
+<div class="page-header">
+    <h2>&{'batchJobRun.finishedJobRuns'}</h2>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'batchJobRun.batchJobRunStatus'}</th>
+        <th>&{'batchJobRun.jobClassName'}</th>
+        <th>&{'batchJobRun.startDate'}</th>
+        <th>&{'batchJobRun.endDate'}</th>
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:batchJobRuns, as:'batchJobRun'}
+    <tr>
+        <td>#{batchJobRunStatus batchJobRun /}</td>
+        <td>${batchJobRun.jobClassName}</td>
+        <td>${batchJobRun.startDate}</td>
+        <td>${batchJobRun.endDate}</td>
+        <td>
+            <a href="@{show(batchJobRun.id)}">&{'show'}</a>
+            #{if batchJobRun.isUnacknowledged()}
+            | <a href="@{acknowledge(batchJobRun.id)}">&{'acknowledge'}</a>
+            #{/if}
+        </td>
+    </tr>
+    #{/list}
+    </tbody>
+</table>
+
+#{pagination count:count, pageSize:pageSize /}
+
+

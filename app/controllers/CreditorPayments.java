@@ -3,6 +3,7 @@ package controllers;
 import models.Account;
 import models.Creditor;
 import models.CreditorPayment;
+import models.Money;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.i18n.Messages;
@@ -25,6 +26,7 @@ public class CreditorPayments extends ApplicationController {
 
         CreditorPayment creditorPayment = new CreditorPayment();
         creditorPayment.creditor = creditor;
+        creditorPayment.amount = new Money(creditor.getAmountDue());
 
         initRenderArgs();
         render("@form", creditorPayment);

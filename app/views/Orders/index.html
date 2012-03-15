@@ -44,8 +44,10 @@
             <td>${order.description}</td>
             <td><a href="@{Contacts.show(order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.shippingContact.id)}">${order.shippingContact.label}</a></td>
             <td>
-                <a href="@{show(order.id)}">&{'show'}</a> |
-                <a href="@{form(order.id)}">&{'edit'}</a>
+                <a href="@{show(order.id)}">&{'show'}</a>
+                #{if order.isEditable()}
+                | <a href="@{form(order.id)}">&{'edit'}</a>
+                #{/if}
             </td>
         </tr>
         #{/list}

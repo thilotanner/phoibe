@@ -1,6 +1,7 @@
 .DS_Store
 *.iws
 
+backup/*
 data/**/*
 logs/*
 modules/*

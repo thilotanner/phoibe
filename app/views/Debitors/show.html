@@ -7,7 +7,14 @@
     <li class="active">&{'debitor'}</li>
 </ul>
 
-#{editHeader debitor.id /}
+<div class="page-header">
+    #{if debitor.isEditable()}
+    <span class="pull-right">
+        <a href="@{form(debitor.id)}" class="btn btn-primary"><span class="icon-pencil icon-white"></span> &{'edit'}</a>
+    </span>
+    #{/if}
+    <h1>#{get 'title' /}</h1>
+</div>
 
 <dl>
     <dt>&{'order'}</dt>
@@ -66,7 +73,7 @@
 <div class="page-header">
     <h2>&{'debitorPaymentReceipts'}</h2>
 </div>
-#{if debitor.debitorStatus == models.DebitorStatus.DUE}
+#{if debitor.isEditable()}
 <div class="well">
     <a href="@{DebitorPaymentReceipts.create(debitor.id)}"
        class="btn btn-primary">&{'create', messages.get('debitorPaymentReceipt')}</a>
@@ -137,5 +144,3 @@
     </tbody>
 </table>
 #{/if}
-
-<div id="modal" class="modal fade hide"></div>

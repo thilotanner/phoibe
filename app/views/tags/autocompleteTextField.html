@@ -7,12 +7,10 @@
                    id="${field.id}_chooser"
                    name="${field.id}_chooser"
                    value="${_label}"
-                   class="span6" />
-            <span class="add-on"><span class="icon-search"></span></span>
-            <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
+                   class="span6" /><span class="add-on"><span class="icon-search"></span></span>
         </div>
+        <span class="help-inline">#{if field.error}${field.error}#{/if}#{else}${_help}#{/else}</span>
     </div>
-
-    <input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>
 </div>
+<input type="hidden" value="${field.value}" name="${field.name}" id="${field.id}"/>
 #{/field}

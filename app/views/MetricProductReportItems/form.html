@@ -43,8 +43,8 @@
                     chooserElement.val(ui.item.label);
 
                     if(infoUrl) {
-                        chooserElement.siblings('.help-inline').first().html('<span class="label">Info</span>');
-                        chooserElement.siblings('.help-inline').first().children('.label').first().popover({
+                        chooserElement.parent().siblings('.help-inline').first().html('<span class="label">Info</span>');
+                        chooserElement.parent().siblings('.help-inline').first().children('.label').first().popover({
                             title: function() { return infoTitle },
                             placement: 'bottom',
                             content: function() {

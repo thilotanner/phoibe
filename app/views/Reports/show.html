@@ -56,7 +56,7 @@
 </dl>
 
 
-#{if report.currentReport}
+#{if report.isEditable()}
 <h2>&{'workflow'}</h2>
 <div class="well">
     #{if report.order.orderStatus.toString() == 'IN_PROGRESS'}
@@ -82,7 +82,7 @@
     <a href="@{download(report.id)}" class="btn btn-primary"><span class="icon-print icon-white"></span> &{'downloadPdf'}</a>
 </div>
 
-#{if report.currentReport && report.order.orderStatus.toString() == 'IN_PROGRESS'}
+#{if report.isEditable()}
 <h2>&{'reportItems'}</h2>
 <div class="well">
     <a href="@{MetricProductReportItems.create(report.id)}" class="btn btn-primary"><span class="icon-plus icon-white"></span> &{'create', messages.get('metricProductReportItem')}</a>
@@ -110,7 +110,7 @@
             <td>${reportItem.retailPricePerMetric}</td>
             <td>${reportItem.totalPrice}</td>
             <td>
-                #{if report.currentReport && report.order.orderStatus.toString() == 'IN_PROGRESS'}
+                #{if report.isEditable()}
                 <a href="@{reportItemForm(reportItem.id)}">&{'edit'}</a>
                 <a href="@{confirmDeleteItem(reportItem.id)}" modal=modal>&{'delete'}</a>
                 #{/if}
@@ -128,14 +128,18 @@
             <td><strong>&{'report.rebatePercentage'}</strong></td>
             <td id="rebatePercentage">${report.rebatePercentage.percentage()}</td>
             <td>
+                #{if report.isEditable()}
                 <a href="@{rebatePercentageForm(report.id)}" modal="modal">&{'edit'}</a>
+                #{/if}
             </td>
         </tr>
         <tr>
             <td><strong>&{'report.conditions'}</strong></td>
             <td id="conditions">${report.conditions}</td>
             <td>
+                #{if report.isEditable()}
                 <a href="@{conditionsForm(report.id)}" modal="modal">&{'edit'}</a>
+                #{/if}
             </td>
         </tr>
     </tbody>
@@ -189,6 +193,6 @@
     </tbody>
 </table>
 
-<div id="modal" class="modal fade hide"></div>
+
 
 

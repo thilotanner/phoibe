@@ -1,0 +1,19 @@
+#{extends 'main.html' /}
+
+#{form @save(), class:'form-horizontal'}
+    #{field property:'debitor.id', object:debitor}
+    <input type="hidden" value="${field.value}" name="${field.name}"/>
+    #{/field}
+
+<fieldset>
+    <legend>&{'debitor'}</legend>
+
+    #{dateField property:'debitor.due', object:debitor /}
+
+</fieldset>
+
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
+    <a href="@{Debitors.show(debitor)}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}

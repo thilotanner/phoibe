@@ -42,7 +42,7 @@
             <td>${creditor.getAmountDue().getLabel()}</td>
             <td>
                 <a href="@{show(creditor.id)}">&{'show'}</a>
-                #{if creditor.creditorStatus.toString() != 'PAID'}
+                #{if creditor.isEditable()}
                 | <a href="@{form(creditor.id)}">&{'edit'}</a>
                 #{/if}
             </td>

@@ -141,4 +141,8 @@ public class Creditor extends EnhancedModel {
         creditorStatus = CreditorStatus.PAID;
         this.save();
     }
+
+    public boolean isEditable() {
+        return creditorStatus == CreditorStatus.DUE;
+    }
 }

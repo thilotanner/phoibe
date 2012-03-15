@@ -45,18 +45,18 @@ public class Entries extends ApplicationController {
         render(entries, count, currentAccountingPeriod);
     }
 
-    public static void form(Long id) {
-        initRenderArgs();
-        if (id == null) {
-            render();
-        }
-
+    public static void show(Long id) {
+        notFoundIfNull(id);
         Entry entry = Entry.findById(id);
         notFoundIfNull(entry);
-
         render(entry);
     }
-
+    
+    public static void form() {
+        initRenderArgs();
+        render();
+    }
+    
     public static void save(@Valid Entry entry) {
         if(Validation.hasErrors()) {
             initRenderArgs();
@@ -65,6 +65,25 @@ public class Entries extends ApplicationController {
 
         entry.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("entry")));
+        index(null, 1, null, null, null);
+    }
+
+    public static void cancelModal(Long id) {
+        notFoundIfNull(id);
+        Entry entry = Entry.findById(id);
+        notFoundIfNull(entry);
+        render(entry);
+    }
+
+    public static void cancel(Long id) {
+        notFoundIfNull(id);
+        Entry entry = Entry.findById(id);
+        notFoundIfNull(entry);
+        
+        Entry reverseEntry = entry.buildReverseEntry();
+        reverseEntry.loggedSave(getCurrentUser());
+        
+        flash.success(Messages.get("successfullyCreated", Messages.get("entry.reverseEntry")));
         index(null, 1, null, null, null);
     }
 

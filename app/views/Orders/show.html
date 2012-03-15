@@ -6,7 +6,14 @@
   <li class="active">${order.description}</li>
 </ul>
 
-#{editHeader order.id /}
+<div class="page-header">
+    #{if order.isEditable()}
+    <span class="pull-right">
+        <a href="@{form(order.id)}" class="btn btn-primary"><span class="icon-pencil icon-white"></span> &{'edit'}</a>
+    </span>
+    #{/if}
+    <h1>#{get 'title' /}</h1>
+</div>
 
 <dl>
     <dt>&{'order.reference'}</dt>
@@ -34,6 +41,7 @@
     <dd>${order.comments?.raw()}</dd>
 </dl>
 
+#{if order.isEditable()}
 <h2>&{'workflow'}</h2>
 <div class="well">
     #{if order.orderStatus.toString() == 'NEW'}
@@ -60,6 +68,7 @@
            modal="modal"><span class="icon-remove icon-white"></span> &{'abort'}</a>
     #{/if}
 </div>
+#{/if}
 
 #{if order.currentReport}
 <h2>&{'order.currentReport'}</h2>
@@ -80,9 +89,8 @@
             <td>
                 <a href="@{Reports.show(order.currentReport.id)}">&{'show'}</a> |
                 <a href="@{Reports.download(order.currentReport.id)}">&{'downloadPdf'}</a>
-      </td>
+            </td>
         </tr>
-
     </tbody>
 </table>
 
@@ -112,5 +120,3 @@
         #{/list}
     </tbody>
 </table>
-
-<div id="modal" class="modal fade hide"></div>

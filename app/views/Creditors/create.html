@@ -5,7 +5,7 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        createAutocomplete($('#creditor_supplier_id'), "@{Contacts.search}");
+        createAutocomplete($('#creditor_supplier_id'), "@{Contacts.search}", #{jsAction @Contacts.popover(':id') /}, "${messages.get('contact')}");
     });
 </script>
 #{/set}

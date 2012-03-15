@@ -1,0 +1,19 @@
+%{
+
+additionalClass = '';
+if(_arg.isValid()) {
+    additionalClass = 'label-success';
+} else {
+    additionalClass = 'blink label-important';
+}
+
+}%
+
+<span class="label ${additionalClass}">
+    #{if _arg.isValid()}
+        &{'entry.valid'}
+    #{/if}
+    #{else}
+        &{'entry.invalid'}
+    #{/else}
+</span>

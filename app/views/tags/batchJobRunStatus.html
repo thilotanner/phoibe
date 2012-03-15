@@ -1,0 +1,23 @@
+%{
+
+additionalClass = '';
+if(_arg.batchJobRunStatus.toString() == 'FAILED') {
+    if(!_arg.acknowledged) {
+        additionalClass = 'blink label-important';
+    } else {
+        additionalClass = 'label-warning';
+    }
+} else if(_arg.batchJobRunStatus.toString() == 'SUCCESS') {
+    additionalClass = 'label-success';
+}
+
+}%
+
+<span class="label ${additionalClass}">
+    #{if _arg.batchJobRunStatus.toString() == 'FAILED' && !_arg.acknowledged}
+    &{'batchJobRun.batchJobRunStatus.UNACKNOWLEDGED'}
+    #{/if}
+    #{else}
+    &{'batchJobRun.batchJobRunStatus.' + _arg.batchJobRunStatus}
+    #{/else}
+</span>

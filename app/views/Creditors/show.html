@@ -7,7 +7,14 @@
     <li class="active">&{'creditor'}</li>
 </ul>
 
-#{editHeader creditor.id /}
+<div class="page-header">
+    #{if creditor.isEditable()}
+    <span class="pull-right">
+        <a href="@{form(creditor.id)}" class="btn btn-primary"><span class="icon-pencil icon-white"></span> &{'edit'}</a>
+    </span>
+    #{/if}
+    <h1>#{get 'title' /}</h1>
+</div>
 
 <dl>
     <dt>&{'creditor.supplier.id'}</dt>
@@ -141,5 +148,3 @@
     </tbody>
 </table>
 #{/if}
-
-<div id="modal" class="modal fade hide"></div>

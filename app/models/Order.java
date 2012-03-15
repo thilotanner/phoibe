@@ -41,4 +41,8 @@ public class Order extends EnhancedModel {
 
     @Enumerated(EnumType.STRING)
     public OrderStatus orderStatus;
+
+    public boolean isEditable() {
+        return orderStatus == OrderStatus.NEW || orderStatus == OrderStatus.IN_PROGRESS;
+    }
 }

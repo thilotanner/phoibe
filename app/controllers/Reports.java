@@ -71,7 +71,7 @@ public class Reports extends ApplicationController {
         Report report = Report.findById(id);
         notFoundIfNull(report);
 
-        if(!report.isCurrentReport()) {
+        if(!report.isEditable()) {
             flash.now("info", Messages.get("report.onlyCurrentReportsAreChangeable"));
         }
 

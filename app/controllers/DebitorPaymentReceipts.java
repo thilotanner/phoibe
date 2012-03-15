@@ -4,6 +4,7 @@ import models.Account;
 import models.Debitor;
 import models.DebitorPaymentReceipt;
 import models.DebitorStatus;
+import models.Money;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.i18n.Messages;
@@ -26,6 +27,7 @@ public class DebitorPaymentReceipts extends ApplicationController {
 
         DebitorPaymentReceipt debitorPaymentReceipt = new DebitorPaymentReceipt();
         debitorPaymentReceipt.debitor = debitor;
+        debitorPaymentReceipt.amount = new Money(debitor.getAmountDue());
 
         initRenderArgs();
         render("@form", debitorPaymentReceipt);

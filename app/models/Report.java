@@ -234,6 +234,13 @@ public class Report extends EnhancedModel {
         return new BigDecimal(getTax().value).divide(new BigDecimal(getTotalPrice().value), 10, RoundingMode.HALF_UP);
     }
 
+    public boolean isEditable() {
+        return order.orderStatus == OrderStatus.IN_PROGRESS &&
+               isCurrentReport() &&
+               reportType.reportTransitions != null &&
+               reportType.reportTransitions.size() > 0;
+    }
+
     public String getLabel() {
         return String.format("%s - %d", reportType.name, id);
     }

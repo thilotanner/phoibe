@@ -2,6 +2,9 @@ package models;
 
 import play.data.validation.Required;
 import play.data.validation.Valid;
+import play.db.jpa.JPABase;
+import play.i18n.Messages;
+import util.hashing.HashingUtils;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -36,4 +39,78 @@ public class Entry extends EnhancedModel {
     @Valid
     @Embedded
     public Money amount;
+    
+    public String checksum;
+    
+    @ManyToOne
+    public Entry canceledEntry;
+    
+    public String calculateChecksum() {
+        Entry entry = null;
+        if(id == null) {
+            // get entry with highest id 
+            entry = Entry.find("order by id DESC").first();
+        } else if (id > 1) {
+            // get previous entry
+            entry = Entry.findById(id - 1);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        if(entry != null) {
+            sb.append(entry.checksum);
+        }
+        sb.append(accountingPeriod.description);
+        sb.append(date.getTime());
+        sb.append(description);
+        sb.append(voucher);
+        sb.append(debit.number);
+        sb.append(credit.number);
+        sb.append(amount.toString());
+        
+        return HashingUtils.calculateSHA(sb.toString());
+    }
+    
+    public boolean isValid() {
+        return checksum.equals(calculateChecksum());    
+    }
+
+    public boolean isCancelable() {
+        return !(canceledEntry != null || Entry.count("canceledEntry.id = ?", id) > 0);
+    }
+
+    public Entry buildReverseEntry() {
+        Entry reverseEntry = new Entry();
+        reverseEntry.accountingPeriod = accountingPeriod;
+        reverseEntry.date = date;
+        reverseEntry.description = String.format("%s: %s", Messages.get("entry.reverseEntry"), description);
+        reverseEntry.voucher = voucher;
+        reverseEntry.debit = credit;
+        reverseEntry.credit = debit;
+        reverseEntry.amount = amount;
+        reverseEntry.canceledEntry = this;
+        return reverseEntry;
+    }
+    
+    @Override
+    public synchronized <Entry extends JPABase> Entry loggedSave(User user) {
+        check();
+
+        return super.loggedSave(user);
+    }
+
+    @Override
+    public synchronized <Entry extends JPABase> Entry save() {
+        check();
+        
+        return super.save();
+    }
+    
+    private void check() {
+        if(id != null || getUpdated() != null) {
+            throw new RuntimeException("Not allowed to update entries!");
+        }
+            
+        // calculate checksum
+        checksum = calculateChecksum();
+    }
 }

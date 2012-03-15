@@ -155,6 +155,10 @@ public class Debitor extends EnhancedModel {
         save();
     }
 
+    public boolean isEditable() {
+        return debitorStatus == DebitorStatus.DUE;
+    }
+
     private void buildAndSaveVatCorrectionEntry() {
         valueAddedTaxCorrectionEntry = new Entry();
         valueAddedTaxCorrectionEntry.date = new Date();

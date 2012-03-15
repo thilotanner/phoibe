@@ -22,7 +22,6 @@
         <tr>
             #{tableSorter objectName:'entry', fieldName:'date' /}
             #{tableSorter objectName:'entry', fieldName:'description' /}
-            #{tableSorter objectName:'entry', fieldName:'voucher' /}
             <th>&{'entry.debit.id'}</th>
             <th>&{'entry.credit.id'}</th>
             <th>&{'entry.amount.rawValue'}</th>
@@ -34,12 +33,14 @@
         <tr>
             <td>${entry.date?.format()}</td>
             <td>${entry.description}</td>
-            <td>${entry.voucher}</td>
             <td>${entry.debit?.label}</td>
             <td>${entry.credit?.label}</td>
             <td>${entry.amount.label}</td>
             <td>
-                <a href="@{form(entry.id)}">&{'edit'}</a>
+                <a href="@{show(entry.id)}">&{'show'}</a>
+                #{if entry.isCancelable()}
+                <a modal="modal" href="@{cancelModal(entry.id)}">&{'entry.cancel'}</a>
+                #{/if}
             </td>
         </tr>
         #{/list}

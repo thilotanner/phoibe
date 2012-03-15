@@ -81,8 +81,8 @@ function createAutocomplete(hiddenElement, ajaxUrl, infoUrl, infoTitle) {
                 hiddenElement.val(ui.item.value);
                 chooserElement.val(ui.item.label);
                 if(infoUrl) {
-                    chooserElement.siblings('.help-inline').first().html('<span class="label">Info</span>');
-                    chooserElement.siblings('.help-inline').first().children('.label').first().popover({
+                    chooserElement.parent().siblings('.help-inline').first().html('<span class="label">Info</span>');
+                    chooserElement.parent().siblings('.help-inline').first().children('.label').first().popover({
                         title: function() { return infoTitle },
                         placement: 'bottom',
                         content: function() {
@@ -117,8 +117,8 @@ function submitModal(modalElement, ajaxUrl, infoUrl, infoTitle) {
             var object = jQuery.parseJSON(data.responseText);
             $('#' + element.attr('target')).val(object.id);
             $('#' + element.attr('target') + '_chooser').val(object.label);
-            $('#' + element.attr('target') + '_chooser').siblings('.help-inline').first().html('<span class="label">Info</span>');
-            $('#' + element.attr('target') + '_chooser').siblings('.help-inline').first().children('.label').first().popover({
+            $('#' + element.attr('target') + '_chooser').parent().siblings('.help-inline').first().html('<span class="label">Info</span>');
+            $('#' + element.attr('target') + '_chooser').parent().siblings('.help-inline').first().children('.label').first().popover({
                 title: function() { return infoTitle },
                 offset: 10,
                 html: true,

@@ -1,0 +1,47 @@
+#{extends 'main.html' /}
+#{set title:messages.get('entry') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'accounting'} <span class="divider">/</span></li>
+    <li class="active">&{'entries'}</li>
+</ul>
+
+<div class="page-header">
+    #{if entry.isCancelable()}
+    <span class="pull-right">
+        <a modal="modal" href="@{cancelModal(entry.id)}" class="btn btn-danger"><span class="icon-remove icon-white"></span> &{'entry.cancel'}</a>
+    </span>
+    #{/if}
+    <h1>&{'entry'}</h1>
+</div>
+
+<dl>
+    <dt>&{'entry.accountingPeriod.id'}</dt>
+    <dd>${entry.accountingPeriod.description}</dd>
+
+    <dt>&{'entry.date'}</dt>
+    <dd>${entry.date.format()}</dd>
+
+    <dt>&{'entry.description'}</dt>
+    <dd>${entry.description}</dd>
+
+    <dt>&{'entry.voucher'}</dt>
+    <dd>${entry.voucher}</dd>
+
+    <dt>&{'entry.debit.id'}</dt>
+    <dd>${entry.debit.getLabel()}</dd>
+
+    <dt>&{'entry.credit.id'}</dt>
+    <dd>${entry.credit.getLabel()}</dd>
+
+    <dt>&{'entry.amount.rawValue'}</dt>
+    <dd>${entry.amount}</dd>
+
+    <dt>&{'entry.checksum'}</dt>
+    <dd>${entry.checksum}<br />#{checksumValidation entry /}</dd>
+
+    #{if entry.canceledEntry}
+    <dt>&{'entry.canceledEntry'}</dt>
+    <dd><a href="@{show(entry.canceledEntry.id)}">${entry.canceledEntry.description}</a></dd>
+    #{/if}
+</dl>
