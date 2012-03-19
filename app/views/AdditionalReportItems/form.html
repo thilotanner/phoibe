@@ -1,6 +1,15 @@
 #{extends 'main.html' /}
 #{set title:messages.get('additionalReportItem') /}
 
+<h2>&{'order'}</h2>
+<dl>
+    <dt>&{'order.description'}</dt>
+    <dd>${additionalReportItem.report.order.description}</dd>
+
+    <dt>&{'order.comments'}</dt>
+    <dd>${additionalReportItem.report.order.comments?.raw()}</dd>
+</dl>
+
 #{form @save(), class:'form-horizontal'}
 
 #{field property:'additionalReportItem.id', object:additionalReportItem}

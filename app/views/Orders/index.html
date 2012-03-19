@@ -33,7 +33,7 @@
         <tr>
             <th>&{'order.orderStatus'}</th>
             #{tableSorter objectName:'order', fieldName:'description' /}
-            <th>&{'order.shippingContact.id'}</th>
+            <th>&{'order.orderingContact.id'}</th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
@@ -42,7 +42,7 @@
         <tr>
             <td>#{orderStatus order /}</td>
             <td>${order.description}</td>
-            <td><a href="@{Contacts.show(order.shippingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.shippingContact.id)}">${order.shippingContact.label}</a></td>
+            <td><a href="@{Contacts.show(order.orderingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.orderingContact.id)}">${order.orderingContact.label}</a></td>
             <td>
                 <a href="@{show(order.id)}">&{'show'}</a>
                 #{if order.isEditable()}

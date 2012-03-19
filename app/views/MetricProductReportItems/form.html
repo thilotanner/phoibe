@@ -79,6 +79,14 @@
 </script>
 #{/set}
 
+<h2>&{'order'}</h2>
+<dl>
+    <dt>&{'order.description'}</dt>
+    <dd>${metricProductReportItem.report.order.description}</dd>
+
+    <dt>&{'order.comments'}</dt>
+    <dd>${metricProductReportItem.report.order.comments?.raw()}</dd>
+</dl>
 
 #{form @save(), class:'form-horizontal'}
 
