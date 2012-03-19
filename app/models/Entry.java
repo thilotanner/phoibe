@@ -5,17 +5,23 @@ import play.data.validation.Valid;
 import play.db.jpa.JPABase;
 import play.i18n.Messages;
 import util.hashing.HashingUtils;
+import util.string.NonEmptyStringBuilder;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 public class Entry extends EnhancedModel {
 
+    private static final String CHECKSUM_DELIMITER = "|";
+    private static final DateFormat CHECKSUM_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    
     @ManyToOne
     public AccountingPeriod accountingPeriod;
 
@@ -55,19 +61,20 @@ public class Entry extends EnhancedModel {
             entry = Entry.findById(id - 1);
         }
         
-        StringBuilder sb = new StringBuilder();
+        NonEmptyStringBuilder nesb = new NonEmptyStringBuilder();
+        nesb.setDelimiter(CHECKSUM_DELIMITER);
         if(entry != null) {
-            sb.append(entry.checksum);
+            nesb.append(entry.checksum);
         }
-        sb.append(accountingPeriod.description);
-        sb.append(date.getTime());
-        sb.append(description);
-        sb.append(voucher);
-        sb.append(debit.number);
-        sb.append(credit.number);
-        sb.append(amount.toString());
-        
-        return HashingUtils.calculateSHA(sb.toString());
+        nesb.append(accountingPeriod.description);
+        nesb.append(CHECKSUM_DATE_FORMAT.format(date.getTime()));
+        nesb.append(description);
+        nesb.append(voucher);
+        nesb.append(debit.number);
+        nesb.append(credit.number);
+        nesb.append(amount.toString());
+
+        return HashingUtils.calculateSHA(nesb.toString());
     }
     
     public boolean isValid() {
