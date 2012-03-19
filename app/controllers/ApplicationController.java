@@ -17,47 +17,49 @@ public class ApplicationController extends Controller {
     private static final int DEFAULT_PAGE_SIZE = 10;
 
     private static final int LOG_PRIORITY = -10000;
-       private static final int USER_PRIORITY = -1000;
+    private static final int USER_PRIORITY = -1000;
+    private static final int APPLICATION_NAME_PRIORITY = -100;
 
-       @Before(priority = LOG_PRIORITY)
-       public static void logAction()
-       {
-           if (Logger.log4j.isDebugEnabled()) {
-               List<String> parameters = new ArrayList<String>();
-               parameters.add(request.toString());
-               for (Map.Entry entry : params.allSimple().entrySet()) {
-                   parameters.add(String.format("%s->%s", entry.getKey(), entry.getValue()));
-               }
-               Logger.debug(StringUtils.join(parameters, " | "));
-           }
-       }
+    @Before(priority = LOG_PRIORITY)
+    public static void logAction() {
+        if (Logger.log4j.isDebugEnabled()) {
+            List<String> parameters = new ArrayList<String>();
+            parameters.add(request.toString());
+            for (Map.Entry entry : params.allSimple().entrySet()) {
+                parameters.add(String.format("%s->%s", entry.getKey(), entry.getValue()));
+            }
+            Logger.debug(StringUtils.join(parameters, " | "));
+        }
+    }
 
-       @Before(priority = USER_PRIORITY)
-       public static void currentUser() throws Throwable
-       {
-           String username = ApplicationSecurity.connected();
+    @Before(priority = USER_PRIORITY)
+    public static void currentUser() throws Throwable {
+        String username = ApplicationSecurity.connected();
 
-           if (username != null) {
-               User user = User.find("username = ?", username).first();
-               if (user != null) {
-                   renderArgs.put("currentUser", user);
-               }
-           }
-       }
+        if (username != null) {
+            User user = User.find("username = ?", username).first();
+            if (user != null) {
+                renderArgs.put("currentUser", user);
+            }
+        }
+    }
 
-       public static User getCurrentUser()
-       {
-           Object user = renderArgs.get("currentUser");
+    @Before(priority = APPLICATION_NAME_PRIORITY)
+    public static void applicationName() {
+        renderArgs.put("applicationName", Play.configuration.getProperty("application.name", "Phoibe"));
+    }
 
-           if (user != null)
-               return (User) user;
+    public static User getCurrentUser() {
+        Object user = renderArgs.get("currentUser");
 
-           return null;
-       }
+        if (user != null)
+            return (User) user;
+
+        return null;
+    }
 
 
-    public static int getPageSize()
-    {
+    public static int getPageSize() {
         try {
             return Integer.parseInt(Play.configuration.getProperty("paging.pageSize"));
         } catch (Exception e) {
