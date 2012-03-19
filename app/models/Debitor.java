@@ -28,7 +28,7 @@ public class Debitor extends EnhancedModel {
         Entry debitorEntry = new Entry();
         debitorEntry.debit = Account.getDebitorAccount();
         debitorEntry.credit = Account.getRevenueAccount();
-        debitorEntry.amount = report.getTotalPrice();
+        debitorEntry.amount = report.getTotalPrice().subtract(report.getRebate());
         debitorEntry.date = new Date();
         debitorEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
         debitorEntry.voucher = report.id.toString();
