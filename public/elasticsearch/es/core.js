@@ -153,7 +153,11 @@
 				var mapping = state.metadata.indices[index].mappings;
 				for(var type in mapping) {
 					indices[index].types.push(type);
-					types[type] = { indices: [ index ], fields: {} };
+					if( type in types ) {
+						types[type].indices.push( index );
+					} else {
+						types[type] = { indices: [ index ], fields: {} };
+					}
 					getFields(mapping[type].properties, type, index, [ fields, types[type].fields, indices[index].fields ]);
 				}
 			}
@@ -391,7 +395,7 @@
 								if(! columns.contains(field_name)) {
 									columns.push(field_name);
 								}
-								row[field_name] = (spec[prop] || "null").toString();
+								row[field_name] = (spec[prop] === null ? "null" : spec[prop] ).toString();
 							} else {
 								// TODO: field not in metadata index
 							}

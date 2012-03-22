@@ -1,8 +1,8 @@
 package search;
 
 import org.apache.commons.lang.Validate;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.facet.AbstractFacetBuilder;
 import org.elasticsearch.search.sort.SortBuilder;

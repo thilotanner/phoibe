@@ -3,8 +3,10 @@
 require:
     - play
     - play -> secure
-    - com.google.guava -> guava 11.0.1
-    - net.sf.jasperreports -> jasperreports 4.5.0:
+    - com.google.guava -> guava 11.0.2
+    - org.elasticsearch -> elasticsearch 0.19.1
+    - com.googlecode.flyway -> flyway-core 1.5
+    - net.sf.jasperreports -> jasperreports 4.5.1:
         exclude:
             - org.hibernate -> *
             - ehcache -> *
@@ -12,8 +14,6 @@ require:
             - javax.persistence -> persistence-api
             - javax.servlet -> servlet-api
             - mondrian -> *
-    - org.elasticsearch -> elasticsearch 0.18.7
-    - com.googlecode.flyway -> flyway-core 1.5
 
 repositories:
     - sonatype:

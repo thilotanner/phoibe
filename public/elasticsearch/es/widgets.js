@@ -196,6 +196,8 @@
 					section.body.append(new es.ui.DateHistogram({ printEl: section.body.find("INPUT"), cluster: this.cluster, query: this.query, spec: spec }));
 				} else if(spec.core_type === "number") {
 					section.body.append(this._numericFilter_template(spec));
+				} else if(spec.core_type === 'boolean') {
+					section.body.append(this._booleanFilter_template(spec));
 				}
 				section.loaded = true;
 			}
@@ -268,6 +270,17 @@
 			jEl.data("uqid", uqid);
 			this.requestUpdate(jEv);
 		},
+		_booleanFilterChange_handler: function( jEv ) {
+			var jEl = $(jEv.target).closest("SELECT");
+			var val = jEl.val();
+			var spec = jEl.data("spec");
+			var uqid = jEl.data("uqid") || null;
+			uqid && this.query.removeClause(uqid);
+			if(val !== 'any') {
+				jEl.data("uqid", this.query.addClause(val, spec.field_name, "term", "must") );
+			}
+			this.requestUpdate(jEv);
+		},
 		_main_template: function() {
 			return { tag: "DIV", id: this.id(), cls: "queryFilter", children: [
 				this._aliasSelector_template(),
@@ -323,6 +336,13 @@
 		},
 		_numericFilter_template: function(spec) {
 			return { tag: "INPUT", data: { spec: spec }, onKeyup: this._numericFilterChange_handler };
+		},
+		_booleanFilter_template: function(spec) {
+			return { tag: "SELECT", data: { spec: spec }, onChange: this._booleanFilterChange_handler,
+				children: [ "any", "true", "false" ].map( function( val ) {
+					return { tag: "OPTION", value: val, text: val };
+				})
+			};
 		}
 	});
 
@@ -421,16 +441,22 @@
 		},
 		_request_handler: function(jEv) {
 			if(! this._validateJson_handler()) return;
+
+			var path = this.pathEl.val(),
+					type = this.typeEl.val(),
+					query = JSON.stringify(JSON.parse(this.dataEl.val())),
+					transform = this.transformEl.val(),
+					base_uri = this.base_uriEl.val();
 			if(jEv && jEv.originalEvent) { // if the user click request
 				if(this.timer) {
 					window.clearTimeout(this.timer); // stop any cron jobs
 				}
 				delete this.prevData; // remove data from previous cron runs
 				this.outEl.text(acx.text("AnyRequest.Requesting"));
-				var path = this.pathEl.val(),
-						type = this.typeEl.val(),
-						query = JSON.stringify(JSON.parse(this.dataEl.val())),
-						transform = this.transformEl.val();
+				if( ! /\/$/.test( base_uri )) {
+					base_uri += "/";
+					this.base_uriEl.val( base_uri );
+				}
 				for(var i = 0; i < this.history.length; i++) {
 					if(this.history[i].path === path
 							&& this.history[i].type === type
@@ -454,7 +480,7 @@
 					.scrollLeft(0);
 			}
 			this.config.cluster.request({
-				url: this.base_uriEl.val() + path,
+				url: base_uri + path,
 				type: type,
 				data: query,
 				success: this._responseWriter_handler
@@ -1179,7 +1205,7 @@
 				return this['value']('boolean', value.toString());
 			},
 			"value": function (type, value) {
-				if (/^(http|https):\/\/[^\s]+$/.test(value)) {
+				if (/^(http|https|file):\/\/[^\s]+$/.test(value)) {
 					return this['value'](type, { tag: "A", href: value, target: "_blank", text: value } );
 				}
 				return { tag: "SPAN", cls: "jsonPretty-" + type, text: value };

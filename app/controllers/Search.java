@@ -15,6 +15,8 @@ public class Search extends ApplicationController {
     }
 
     public static void indexContacts() {
+        ElasticSearch.deleteIndex(Contact.class);
+        
         for(Contact contact : Contact.<Contact>findAll()) {
             ElasticSearch.index(contact);
         }
@@ -24,6 +26,8 @@ public class Search extends ApplicationController {
     }
 
     public static void indexMetricProducts() {
+        ElasticSearch.deleteIndex(MetricProduct.class);
+
         for(MetricProduct metricProduct : MetricProduct.<MetricProduct>findAll()) {
             ElasticSearch.index(metricProduct);
         }

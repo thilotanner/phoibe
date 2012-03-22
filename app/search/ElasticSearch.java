@@ -1,8 +1,12 @@
 package search;
 
+import org.elasticsearch.action.Action;
+import org.elasticsearch.action.ListenableActionFuture;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.admin.indices.mapping.delete.DeleteMappingResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.action.search.SearchRequestBuilder;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.ImmutableSettings.Builder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -17,6 +21,8 @@ import search.mapping.ModelMapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class ElasticSearch {
 
@@ -69,6 +75,22 @@ public class ElasticSearch {
 		event.now();
     }
 
+    public static <M extends Model> void deleteIndex(Class<M> clazz) {
+        // Check if object is searchable
+        if (!MappingUtil.isSearchable(clazz)) {
+            throw new IllegalArgumentException("model is not searchable");
+        }
+
+        ModelMapper<M> mapper = getMapper(clazz);
+        ListenableActionFuture<DeleteIndexResponse> action =
+                client.admin().indices().prepareDelete(mapper.getIndexName()).execute();
+        try {
+            action.get(); // wait until mapping is deleted
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to delete mapping", e);
+        }
+    }
+    
     private static <M extends Model> ModelMapper<M> getMapper(Class<M> clazz) {
 		if (mappers.containsKey(clazz)) {
 			return (ModelMapper<M>) mappers.get(clazz);
@@ -96,8 +118,7 @@ public class ElasticSearch {
 	static <T extends Model> SearchRequestBuilder builder(QueryBuilder query, Class<T> clazz) {
 		ModelMapper<T> mapper = getMapper(clazz);
 		String index = mapper.getIndexName();
-		SearchRequestBuilder builder = client.prepareSearch(index).setSearchType(SearchType.QUERY_THEN_FETCH).setQuery(query);
-		return builder;
+		return client.prepareSearch(index).setSearchType(SearchType.QUERY_THEN_FETCH).setQuery(query);
 	}
 
 	/**
