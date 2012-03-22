@@ -69,12 +69,17 @@ public class Creditors extends ApplicationController {
     public static void save(@Valid Creditor creditor) {
         if(Validation.hasErrors()) {
             initRenderArgs();
-            render("@form", creditor);
+            if(creditor.id == null) {
+                render("@create", creditor);
+            } else {
+                render("@form", creditor);
+            }
         }
 
         creditor.buildAndSaveCreditorEntries();
 
         creditor.loggedSave(getCurrentUser());
+
         flash.success(Messages.get("successfullySaved", Messages.get("creditor")));
         index(CreditorStatus.DUE.toString(), 1, null, null, null);
     }
