@@ -139,7 +139,12 @@ public class Money implements Cloneable {
     public Money percentage(BigDecimal percentage) {
         return multiply(percentage.divide(new BigDecimal(100)));
     }
-    
+
+    public boolean isPositive() {
+        return value >= 0;
+    }
+
+
     private void calculateValue() {
         try {
             value = new BigDecimal(rawValue).multiply(getConversionFactor()).longValue();

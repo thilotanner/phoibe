@@ -59,6 +59,21 @@
     }%
     #{autocompleteTextField property:'order.billingContact.id', object:order, label:order?.billingContact?.label, help:help.raw()  /}
 
+    #{if order.id == null}
+    #{field property:'order.accountingPeriod.id', object:order}
+        <div class="control-group">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                <select name="${field.name}">
+                    #{list items:accountingPeriods, as:'accountingPeriod'}
+                        <option value="${accountingPeriod.id}"#{if accountingPeriod.active} selected="selected"#{/if}>${accountingPeriod.description}</option>
+                    #{/list}
+                </select>
+            </div>
+        </div>
+    #{/field}
+    #{/if}
+
     #{editorTextArea property:'order.comments', object:order /}
 </fieldset>
 

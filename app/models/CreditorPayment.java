@@ -2,6 +2,7 @@ package models;
 
 import play.data.validation.Required;
 import play.data.validation.Valid;
+import play.db.jpa.GenericModel;
 import play.i18n.Messages;
 
 import javax.persistence.Embedded;

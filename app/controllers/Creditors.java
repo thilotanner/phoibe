@@ -104,7 +104,7 @@ public class Creditors extends ApplicationController {
     private static void initRenderArgs() {
         renderArgs.put("paymentAccounts", Account.getPaymentAccounts());
         renderArgs.put("inputTaxAccounts", Account.getInputTaxAccounts());
-        renderArgs.put("valueAddedTaxRates", ValueAddedTaxRate.findAll());
+        renderArgs.put("valueAddedTaxRates", ValueAddedTaxRate.findAllWithZeroRate());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());
     }
 }

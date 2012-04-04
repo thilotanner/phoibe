@@ -17,7 +17,7 @@
 
 <dl>
     <dt>&{'order.reference'}</dt>
-    <dd>${order.id}</dd>
+    <dd>${order.getReferenceNumber()}</dd>
 
     <dt>&{'order.description'}</dt>
     <dd>${order.description}</dd>
@@ -34,6 +34,9 @@
     <dt>&{'order.billingContact.id'}</dt>
     <dd><a href="@{Contacts.show(order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.billingContact.id)}">${order.billingContact?.label}</a></dd>
 
+    <dt>&{'accountingPeriod'}</dt>
+    <dd>${order.accountingPeriod.description}</dd>
+
     <dt>&{'updated'}</dt>
     <dd>#{updated order /}</dd>
 
@@ -42,7 +45,9 @@
 </dl>
 
 #{if order.isEditable()}
-<h2>&{'workflow'}</h2>
+<div class="page-header">
+    <h2>&{'workflow'}</h2>
+</div>
 <div class="well">
     #{if order.orderStatus.toString() == 'NEW'}
         #{list items:rootReportTypes, as:'rootReportType'}
@@ -71,7 +76,9 @@
 #{/if}
 
 #{if order.currentReport}
-<h2>&{'order.currentReport'}</h2>
+<div class="page-header">
+    <h2>&{'order.currentReport'}</h2>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -96,7 +103,9 @@
 
 #{/if}
 
-<h2>&{'report.allReports'}</h2>
+<div class="page-header">
+    <h2>&{'report.allReports'}</h2>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -120,3 +129,32 @@
         #{/list}
     </tbody>
 </table>
+
+<div class="page-header">
+    <span class="pull-right">
+        <a modal="modal" href="@{OrderAttachments.modalUpload(order.id)}" class="btn btn-primary"><span class="icon-plus icon-white"></span>  &{'create', messages.get('orderAttachment')}</a>
+    </span>
+    <h2>&{'orderAttachments'}</h2>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>&{'orderAttachment.fileName'}</th>
+            <th>&{'actions'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:order.getAttachments(), as:'attachment'}
+        <tr>
+            <td>${attachment.getFilename()}</td>
+            <td>
+                <a href="${attachment.getDownloadPath()}">&{'download'}</a>
+                #{if order.isEditable()}
+                | <a modal="modal" href="@{OrderAttachments.delete(order.id, attachment.getFilename())}">&{'delete'}</a>
+                #{/if}
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table> 

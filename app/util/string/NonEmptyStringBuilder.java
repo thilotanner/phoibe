@@ -16,7 +16,7 @@ public class NonEmptyStringBuilder {
             if(written) {
                 sb.append(delimiter);
             }
-            sb.append(string);
+            sb.append(string.trim());
             written = true;
         }
         return this;

@@ -46,7 +46,11 @@
     <div class="control-group">
         <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
-            #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:additionalReportItem?.valueAddedTaxRate?.id, id:field.id /}
+            <select name="${field.name}" id="${field.id}">
+                #{list items:valueAddedTaxRates, as:'valueAddedTaxRate'}
+                    <option value="${valueAddedTaxRate.id}">${valueAddedTaxRate.getLabel()}</option>
+                #{/list}
+            </select>
         </div>
     </div>
     #{/field}

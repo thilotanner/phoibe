@@ -1,1 +1,1 @@
-INSERT INTO `AccountingPeriod` VALUES(1, '2012-02-18 17:20:16', '2012-02-18 18:01:30', 1, '2011');
+INSERT INTO `AccountingPeriod` VALUES(1, '2012-02-18 17:20:16', '2012-02-18 18:01:30', 1, '2012');

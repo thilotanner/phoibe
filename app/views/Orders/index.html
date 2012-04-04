@@ -48,6 +48,9 @@
                 #{if order.isEditable()}
                 | <a href="@{form(order.id)}">&{'edit'}</a>
                 #{/if}
+                #{if order.isDeletable()}
+                | <a modal="modal" href="@{delete(order.id)}">&{'delete'}</a>
+                #{/if}
             </td>
         </tr>
         #{/list}

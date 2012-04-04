@@ -28,17 +28,21 @@ public class Entries extends ApplicationController {
             page = 1;
         }
         
+        List<String> properties = new ArrayList<String>();
+        properties.add("description");
+        properties.add("voucher");
+        
         List<Model> entries = Model.Manager.factoryFor(Entry.class).fetch(
                 (page - 1) * getPageSize(),
                 getPageSize(),
                 orderBy,
                 order,
-                new ArrayList<String>(),
+                properties,
                 search,
                 where
         );
 
-        Long count = Model.Manager.factoryFor(Entry.class).count(new ArrayList<String>(), search, where);
+        Long count = Model.Manager.factoryFor(Entry.class).count(properties, search, where);
 
         renderArgs.put("pageSize", getPageSize());
         initRenderArgs(); // accounting periods

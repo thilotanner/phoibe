@@ -30,7 +30,7 @@ public class Debitor extends EnhancedModel {
         debitorEntry.credit = Account.getRevenueAccount();
         debitorEntry.amount = report.getTotalPrice().subtract(report.getRebate());
         debitorEntry.date = new Date();
-        debitorEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
+        debitorEntry.accountingPeriod = report.order.accountingPeriod;
         debitorEntry.voucher = report.id.toString();
         debitorEntry.description = String.format("%s: %s", Messages.get("debitor"), report.getLabel());
         debitorEntry.save();
@@ -41,7 +41,7 @@ public class Debitor extends EnhancedModel {
         valueAddedTaxEntry.credit = Account.getValueAddedTaxAccount();
         valueAddedTaxEntry.amount = report.getTax();
         valueAddedTaxEntry.date = new Date();
-        valueAddedTaxEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
+        valueAddedTaxEntry.accountingPeriod = report.order.accountingPeriod;
         valueAddedTaxEntry.voucher = report.id.toString();
         valueAddedTaxEntry.description = String.format("%s %s: %s", Messages.get("valueAddedTax"), Messages.get("debitor"), report.getLabel());
         valueAddedTaxEntry.save();
@@ -118,7 +118,7 @@ public class Debitor extends EnhancedModel {
     public void buildAndSaveDiscountEntries() {
         amountDueEntry = new Entry();
         amountDueEntry.date = new Date();
-        amountDueEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
+        amountDueEntry.accountingPeriod = report.order.accountingPeriod;
         amountDueEntry.debit = Account.getDiscountAccount();
         amountDueEntry.credit = Account.getDebitorAccount();
         amountDueEntry.amount = getAmountDue().divide(BigDecimal.ONE.add(report.getValueAddedTaxToTotalPriceRatio()));
@@ -133,7 +133,7 @@ public class Debitor extends EnhancedModel {
     public void buildAndSaveChargeOffEntries() {
         amountDueEntry = new Entry();
         amountDueEntry.date = new Date();
-        amountDueEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
+        amountDueEntry.accountingPeriod = report.order.accountingPeriod;
         amountDueEntry.debit = Account.getChargeOffAccount();
         amountDueEntry.credit = Account.getDebitorAccount();
         amountDueEntry.amount = getAmountDue().divide(BigDecimal.ONE.add(report.getValueAddedTaxToTotalPriceRatio()));
@@ -162,7 +162,7 @@ public class Debitor extends EnhancedModel {
     private void buildAndSaveVatCorrectionEntry() {
         valueAddedTaxCorrectionEntry = new Entry();
         valueAddedTaxCorrectionEntry.date = new Date();
-        valueAddedTaxCorrectionEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
+        valueAddedTaxCorrectionEntry.accountingPeriod = report.order.accountingPeriod;
         valueAddedTaxCorrectionEntry.debit = Account.getValueAddedTaxAccount();
         valueAddedTaxCorrectionEntry.credit = Account.getDebitorAccount();
         valueAddedTaxCorrectionEntry.amount = report.getTaxedTotalPrice().subtract(getAmountPaid()).subtract(amountDueEntry.amount);

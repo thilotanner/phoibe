@@ -31,7 +31,7 @@
         <div class="control-group">
             <label class="control-label" for="${field.id}">&{field.name}</label>
             <div class="controls">
-                #{select field.name, items:inputTaxAccounts, valueProperty:'id', labelProperty:'description', value:creditor?.inputTaxAccount?.id, id:field.id /}
+                #{select field.name, items:inputTaxAccounts, valueProperty:'id', labelProperty:'description', value:creditor?.inputTaxAccount?.id, id:field.id, size:'_', class:'span6' /}
             </div>
         </div>
     #{/field}
@@ -40,7 +40,11 @@
         <div class="control-group">
             <label class="control-label" for="${field.id}">&{field.name}</label>
             <div class="controls">
-                #{select field.name, items:valueAddedTaxRates, valueProperty:'id', labelProperty:'description', value:metricProduct?.valueAddedTaxRate?.id, id:field.id /}
+                <select name="${field.name}" id="${field.id}">
+                    #{list items:valueAddedTaxRates, as:'valueAddedTaxRate'}
+                    <option value="${valueAddedTaxRate.id}">${valueAddedTaxRate.getLabel()}</option>
+                    #{/list}
+                </select>
             </div>
         </div>
     #{/field}

@@ -1,5 +1,6 @@
 package controllers;
 
+import models.AccountingPeriod;
 import models.Order;
 import models.OrderStatus;
 import models.ReportType;
@@ -31,6 +32,11 @@ public class Orders extends ApplicationController {
         }
         if(OrderStatus.ABORTED.toString().equals(filter)) {
             where = String.format("orderStatus = '%s'", filter);
+        }
+
+        // remove all deleted orders
+        if(where == null) {
+            where = "orderStatus != 'DELETED'";
         }
         
         List<Model> orders = Model.Manager.factoryFor(Order.class).fetch(
@@ -66,6 +72,7 @@ public class Orders extends ApplicationController {
     }
 
     public static void form(Long id) {
+        initRenderArgs();
         Order order;
         if (id == null) {
             order = new Order();
@@ -80,6 +87,7 @@ public class Orders extends ApplicationController {
 
     public static void save(@Valid Order order) {
         if(Validation.hasErrors()) {
+            initRenderArgs();
             render("@form", order);
         }
 
@@ -111,7 +119,7 @@ public class Orders extends ApplicationController {
     public static void abort(Long id) {
         changeOrderStatus(id, OrderStatus.ABORTED);
     }
-
+    
     private static void changeOrderStatus(Long id, OrderStatus orderStatus) {
         notFoundIfNull(id);
         Order order = Order.findById(id);
@@ -126,5 +134,27 @@ public class Orders extends ApplicationController {
         }
 
         show(order.id);
+    }
+    
+    public static void delete(Long id) {
+        notFoundIfNull(id);
+        Order order = Order.findById(id);
+        notFoundIfNull(order);
+        render(order);
+    }
+    
+    public static void destroy(Long id) {
+        notFoundIfNull(id);
+        Order order = Order.findById(id);
+        notFoundIfNull(order);
+        order.orderStatus = OrderStatus.DELETED;
+        order.save();
+        
+        flash.success(Messages.get("successfullyDeleted", Messages.get("order")));
+        index(null, 1, null, null, null);
+    }
+
+    private static void initRenderArgs() {
+        renderArgs.put("accountingPeriods", AccountingPeriod.findAll());
     }
 }

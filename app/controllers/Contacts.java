@@ -6,9 +6,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import models.Contact;
+import org.elasticsearch.action.search.SearchPhaseExecutionException;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import play.Logger;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.i18n.Messages;
@@ -19,6 +21,7 @@ import search.SearchResults;
 import util.i18n.CountryProvider;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Contacts extends ApplicationController {
@@ -53,10 +56,21 @@ public class Contacts extends ApplicationController {
 
         query.hydrate(true);
 
-		SearchResults<Contact> results = query.fetch();
-        List<Contact> contacts = results.objects;
+        List<Contact> contacts;
+        Long count;
+        
+        try {
+            SearchResults<Contact> results = query.fetch();
+            contacts = results.objects;
+            count = results.totalCount;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+            flash.now("warning", Messages.get("errorInSearchQuery"));
 
-        Long count = results.totalCount;
+            contacts = new ArrayList<Contact>();
+            count = 0l;
+        }
+
         renderArgs.put("pageSize", getPageSize());
         render(contacts, count);
     }

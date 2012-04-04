@@ -84,7 +84,13 @@ public class Account extends EnhancedModel {
 
     public String getLabel() {
         return String.format("%s %s", number, description);
+    }  
+    
+    public List<Entry> getEntries(AccountingPeriod accountingPeriod) {
+        return Entry.find("accountingPeriod = ? and (debit = ? or credit = ?) order by date asc, id asc",
+                accountingPeriod, this, this).fetch();
     }
+
     
     public List<Entry> getDebitEntries(AccountingPeriod accountingPeriod) {
         return Entry.find("debit = ? AND accountingPeriod = ?", this, accountingPeriod).fetch();

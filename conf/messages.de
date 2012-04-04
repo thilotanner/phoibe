@@ -17,6 +17,7 @@ delete=löschen
 deleteQuestion=Sind Sie sicher, dass Sie «%s» löschen möchten?
 downloadPdf=PDF herunterladen
 edit=bearbeiten
+errorInSearchQuery=Fehler in der Suchanfrage. Keine Resultate.
 false=Nein
 finish=beenden
 finishQuestion=Sind Sie sicher, dass Sie %s beenden möchten?
@@ -254,14 +255,25 @@ order.description=Beschreibung
 order.orderingContact.id=Auftraggeber
 order.shippingContact.id=Auftragskontakt
 order.billingContact.id=Rechnungsadresse
+order.accountingPeriod.id=Buchungsperiode
 order.comments=Kommentare
 order.orderStatus=Auftragsstatus
 order.orderStatus.NEW=neu
 order.orderStatus.IN_PROGRESS=in Bearbeitung
 order.orderStatus.FINISHED=beendet
 order.orderStatus.ABORTED=abgebrochen
+order.orderStatus.DELETED=gelöscht
 order.currentReport=Aktueller Bericht
 order.reference=Referenz-Nummer
+
+orderAttachment=Anhang
+orderAttachments=Anhänge
+orderAttachment.file=Datei
+orderAttachment.fileName=Dateiname
+orderAttachment.fileNotFound=Datei konnte nicht gefunden werden
+orderAttachment.unableToCreateAttachmentFolder=Dateiordner konnte nicht erstellt werden
+orderAttachment.unableToCopyFile=Datei konnte nicht kopiert werden
+orderAttachment.fileExistsAlready=Datei existiert bereits
 
 profitAndLossAccount=Erfolgsrechnung
 profitAndLossAccount.expenses=Aufwand
@@ -321,6 +333,7 @@ valueAddedTaxRates=Mehrwertsteuersätze
 valueAddedTaxRate.description=Beschreibung
 valueAddedTaxRate.rate=Steuersatz
 valueAddedTaxRate.recapitulation=Rekapitulation MWSt.
+valueAddedTaxRate.zeroRate=Ohne MWSt.
 
 # Paging
 # ~~~~~

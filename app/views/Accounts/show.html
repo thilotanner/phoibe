@@ -34,7 +34,7 @@
 
 <dl>
     <dt>&{'account.balance'}</dt>
-    <dd>${account.getBalance(currentAccountingPeriod)}</dd>
+    <dd>#{coloredMoney account.getBalance(currentAccountingPeriod) /}</dd>
 </dl>
 
 
@@ -46,6 +46,7 @@
             <th>&{'entry.voucher'}</th>
             <th>&{'entry.debit.id'}</th>
             <th>&{'entry.credit.id'}</th>
+            <th>&{'account.balance'}</th>
         </tr>
     </thead>
     <tbody>
@@ -62,6 +63,7 @@
             <td></td>
             <td>${account.getOpeningBalance(currentAccountingPeriod).openingBalance}</td>
             #{/else}
+            <td></td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -69,40 +71,25 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         #{/if}
-        #{list items:account.getDebitEntries(currentAccountingPeriod), as:'entry'}
+        #{list items:account.getEntries(currentAccountingPeriod), as:'entry'}
         <tr>
             <td>${entry.date?.format()}</td>
             <td>${entry.description}</td>
             <td>${entry.voucher}</td>
+            #{if entry.debit.id == account.id}
             <td>${entry.amount}</td>
             <td></td>
-        </tr>
-        #{/list}
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><strong>${account.getDebitSum(currentAccountingPeriod)}</strong></td>
-            <td></td>
-        </tr>
-        #{list items:account.getCreditEntries(currentAccountingPeriod), as:'entry'}
-        <tr>
-            <td>${entry.date?.format()}</td>
-            <td>${entry.description}</td>
-            <td>${entry.voucher}</td>
+            #{/if}
+            #{else}
             <td></td>
             <td>${entry.amount}</td>
+            #{/else}
+            <td>#{coloredMoney entry.getBalance(currentAccountingPeriod, account) /}</td>
         </tr>
         #{/list}
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><strong>${account.getCreditSum(currentAccountingPeriod)}</strong></td>
-        </tr>
     </tbody>
 </table>
 

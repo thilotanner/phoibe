@@ -65,6 +65,7 @@
         <td>${creditor.creditorEntry.credit?.label}</td>
         <td>${creditor.creditorEntry.amount.label}</td>
     </tr>
+    #{if creditor.valueAddedTaxEntry}
     <tr>
         <td>${creditor.valueAddedTaxEntry.date?.format()}</td>
         <td>${creditor.valueAddedTaxEntry.description}</td>
@@ -73,6 +74,7 @@
         <td>${creditor.valueAddedTaxEntry.credit?.label}</td>
         <td>${creditor.valueAddedTaxEntry.amount.label}</td>
     </tr>
+    #{/if}
     </tbody>
 </table>
 
@@ -137,6 +139,7 @@
         <td>${creditor.amountDueEntry.credit?.label}</td>
         <td>${creditor.amountDueEntry.amount.label}</td>
     </tr>
+    #{if creditor.valueAddedTaxCorrectionEntry}
     <tr>
         <td>${creditor.valueAddedTaxCorrectionEntry.date?.format()}</td>
         <td>${creditor.valueAddedTaxCorrectionEntry.description}</td>
@@ -145,6 +148,7 @@
         <td>${creditor.valueAddedTaxCorrectionEntry.credit?.label}</td>
         <td>${creditor.valueAddedTaxCorrectionEntry.amount.label}</td>
     </tr>
+    #{/if}
     </tbody>
 </table>
 #{/if}

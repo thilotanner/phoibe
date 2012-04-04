@@ -11,6 +11,10 @@ GET     /                                       Dashboard.index
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
+# Attachments
+GET     /attachments/                           staticDir:data/attachments
+
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 

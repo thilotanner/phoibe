@@ -8,9 +8,11 @@ import com.google.gson.JsonSerializer;
 import models.Metric;
 import models.MetricProduct;
 import models.ValueAddedTaxRate;
+import org.elasticsearch.action.search.SearchPhaseExecutionException;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import play.Logger;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.i18n.Messages;
@@ -21,6 +23,7 @@ import util.i18n.CurrencyProvider;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MetricProducts extends ApplicationController {
@@ -55,10 +58,21 @@ public class MetricProducts extends ApplicationController {
 
         query.hydrate(true);
 
-		SearchResults<MetricProduct> results = query.fetch();
-        List<MetricProduct> metricProducts = results.objects;
+        List<MetricProduct> metricProducts;
+        Long count;
 
-        Long count = results.totalCount;
+        try {
+            SearchResults<MetricProduct> results = query.fetch();
+            metricProducts = results.objects;
+            count = results.totalCount;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+            flash.now("warning", Messages.get("errorInSearchQuery"));
+            
+            metricProducts = new ArrayList<MetricProduct>();
+            count = 0l;
+        }
+
 
         renderArgs.put("pageSize", getPageSize());
         render(metricProducts, count);

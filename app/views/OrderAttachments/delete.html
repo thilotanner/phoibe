@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <a data-dismiss="modal" class="close">&times;</a>
+    <h3>&{'order'}</h3>
+</div>
+<div class="modal-body">
+    <p>&{'deleteQuestion', orderAttachment.getFilename()}</p>
+</div>
+<div class="modal-footer">
+    <a href="@{destroy(order.id, orderAttachment.getFilename())}" class="btn btn-danger">&{'delete'}</a>
+    <a href="@{Orders.show(order.id)}" class="btn secondary">&{'cancel'}</a>
+</div>

@@ -84,6 +84,8 @@ public class Creditor extends EnhancedModel {
         // minus amount due entry (discount)
         if(amountDueEntry != null && amountDueEntry.amount != null) {
             amountDue = amountDue.subtract(amountDueEntry.amount);
+        }
+        if(valueAddedTaxCorrectionEntry != null && valueAddedTaxCorrectionEntry.amount != null) {
             amountDue = amountDue.subtract(valueAddedTaxCorrectionEntry.amount);
         }
 
@@ -95,9 +97,18 @@ public class Creditor extends EnhancedModel {
     }
 
     public void buildAndSaveCreditorEntries() {
+        Money amount;
+        if(valueAddedTaxRate != null) {
+            // with value added text
+            amount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
+        } else {
+            // without value added text
+            amount = getAmountDue();
+        }
+       
         creditorEntry = new Entry();
         creditorEntry.date = new Date();
-        creditorEntry.amount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
+        creditorEntry.amount = amount;
         creditorEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
         creditorEntry.debit = Account.getPurchasesAccount();
         creditorEntry.credit = Account.getCreditorAccount();
@@ -105,35 +116,48 @@ public class Creditor extends EnhancedModel {
         creditorEntry.description = String.format("%s: %s - %s", Messages.get("creditor"), supplier.getLabel(), reference);
         creditorEntry.save();
 
-        valueAddedTaxEntry = new Entry();
-        valueAddedTaxEntry.debit = inputTaxAccount;
-        valueAddedTaxEntry.credit = Account.getCreditorAccount();
-        valueAddedTaxEntry.amount = amount.subtract(creditorEntry.amount);
-        valueAddedTaxEntry.date = new Date();
-        valueAddedTaxEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
-        valueAddedTaxEntry.voucher = reference;
-        valueAddedTaxEntry.description = String.format("%s %s: %s - %s", Messages.get("valueAddedTax"), Messages.get("creditor"), supplier.getLabel(), reference);
-        valueAddedTaxEntry.save();
+        if(valueAddedTaxRate != null) {
+            valueAddedTaxEntry = new Entry();
+            valueAddedTaxEntry.debit = inputTaxAccount;
+            valueAddedTaxEntry.credit = Account.getCreditorAccount();
+            valueAddedTaxEntry.amount = amount.subtract(creditorEntry.amount);
+            valueAddedTaxEntry.date = new Date();
+            valueAddedTaxEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
+            valueAddedTaxEntry.voucher = reference;
+            valueAddedTaxEntry.description = String.format("%s %s: %s - %s", Messages.get("valueAddedTax"), Messages.get("creditor"), supplier.getLabel(), reference);
+            valueAddedTaxEntry.save();
+        }
     }
 
     public void buildAndSaveDiscountEntries() {
+        Money amount;
+        if(valueAddedTaxRate != null) {
+            // with value added text
+            amount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
+        } else {
+            // without value added text
+            amount = getAmountDue();
+        }
+
         amountDueEntry = new Entry();
         amountDueEntry.date = new Date();
         amountDueEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
         amountDueEntry.debit = Account.getCreditorAccount();
         amountDueEntry.credit = Account.getPurchaseDiscountAccount();
-        amountDueEntry.amount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
+        amountDueEntry.amount = amount;
         amountDueEntry.description = String.format("%s: %s - %s", Messages.get("creditor.discount"), supplier.getLabel(), reference);
         amountDueEntry.save();
 
-        valueAddedTaxCorrectionEntry = new Entry();
-        valueAddedTaxCorrectionEntry.date = new Date();
-        valueAddedTaxCorrectionEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
-        valueAddedTaxCorrectionEntry.debit = Account.getCreditorAccount();
-        valueAddedTaxCorrectionEntry.credit = inputTaxAccount;
-        valueAddedTaxCorrectionEntry.amount = amount.subtract(getAmountPaid()).subtract(amountDueEntry.amount);
-        valueAddedTaxCorrectionEntry.description = String.format("%s %s: %s - %s", Messages.get("valueAddedTax"), Messages.get("correction"), supplier.getLabel(), reference);
-        valueAddedTaxCorrectionEntry.save();
+        if(valueAddedTaxRate != null) {
+            valueAddedTaxCorrectionEntry = new Entry();
+            valueAddedTaxCorrectionEntry.date = new Date();
+            valueAddedTaxCorrectionEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
+            valueAddedTaxCorrectionEntry.debit = Account.getCreditorAccount();
+            valueAddedTaxCorrectionEntry.credit = inputTaxAccount;
+            valueAddedTaxCorrectionEntry.amount = amount.subtract(getAmountPaid()).subtract(amountDueEntry.amount);
+            valueAddedTaxCorrectionEntry.description = String.format("%s %s: %s - %s", Messages.get("valueAddedTax"), Messages.get("correction"), supplier.getLabel(), reference);
+            valueAddedTaxCorrectionEntry.save();
+        }
     }
 
     public void close() {
