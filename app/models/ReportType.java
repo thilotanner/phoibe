@@ -5,8 +5,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import play.data.validation.Required;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import java.util.List;

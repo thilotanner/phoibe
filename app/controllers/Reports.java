@@ -15,7 +15,6 @@ import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.i18n.Messages;
 import play.mvc.Http;
-import util.extensions.PercentageExtensions;
 import util.reporting.ReportPDFCreator;
 import util.transition.TransitionStrategy;
 

@@ -5,9 +5,6 @@ import play.data.validation.Valid;
 import play.i18n.Messages;
 import util.i18n.CurrencyProvider;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

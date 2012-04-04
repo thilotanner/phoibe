@@ -1,9 +1,7 @@
 package search;
 
-import org.elasticsearch.action.Action;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
-import org.elasticsearch.action.admin.indices.mapping.delete.DeleteMappingResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -21,8 +19,6 @@ import search.mapping.ModelMapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 public class ElasticSearch {
 

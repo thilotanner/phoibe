@@ -3,7 +3,6 @@ package controllers;
 import models.Account;
 import models.Debitor;
 import models.DebitorPaymentReceipt;
-import models.DebitorStatus;
 import models.Money;
 import play.data.validation.Valid;
 import play.data.validation.Validation;

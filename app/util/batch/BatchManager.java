@@ -14,7 +14,6 @@
 package util.batch;
 
 import play.Play;
-import play.PlayPlugin;
 import play.jobs.JobsPlugin;
 
 import java.util.ArrayList;

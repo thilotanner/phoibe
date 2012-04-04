@@ -4,7 +4,6 @@ import models.Account;
 import models.Creditor;
 import models.CreditorStatus;
 import models.DebitorStatus;
-import models.Entry;
 import models.ValueAddedTaxRate;
 import play.data.validation.Valid;
 import play.data.validation.Validation;

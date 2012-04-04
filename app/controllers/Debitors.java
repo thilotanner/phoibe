@@ -2,7 +2,6 @@ package controllers;
 
 import models.Debitor;
 import models.DebitorStatus;
-import models.Entry;
 import play.data.validation.Valid;
 import play.db.Model;
 import play.i18n.Messages;
