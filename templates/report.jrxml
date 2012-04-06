@@ -42,7 +42,7 @@
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Referenz-Nr. " + $P{report}.order.id]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Referenz-Nr. " + $P{report}.order.getReferenceNumber()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="263" y="125" width="220" height="93"/>

@@ -33,7 +33,9 @@ public class OrderAttachments extends ApplicationController {
             Orders.show(order.id);
         }
 
-        File targetFile = new File(order.getAttachmentFolder(), file.getName());
+        String filename = OrderAttachment.sanitizeFilename(file.getName());
+        
+        File targetFile = new File(order.getAttachmentFolder(), filename);
         if(targetFile.exists()) {
             flash.error(Messages.get("orderAttachment.fileExistsAlready"));
             Orders.show(order.id);

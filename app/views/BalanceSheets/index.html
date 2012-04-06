@@ -18,7 +18,9 @@
     #{/list}
 </ul>
 
-<h2>&{'balanceSheet.assets'}</h2>
+<div class="page-header">
+    <h2>&{'balanceSheet.assets'}</h2>
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -39,24 +41,26 @@
     <tr>
         <td>${account.number}</td>
         <td>${account.description}</td>
-        <td>${account.getBalance(balanceSheet.getAccountingPeriod())}</td>
+        <td>#{coloredMoney account.getBalance(balanceSheet.getAccountingPeriod()) /}</td>
     </tr>
     #{/list}
     <tr>
         <td></td>
         <td></td>
-        <td><strong>${accountGroup.getBalance(balanceSheet.getAccountingPeriod())}</strong></td>
+        <td><strong>#{coloredMoney accountGroup.getBalance(balanceSheet.getAccountingPeriod()) /}</strong></td>
     </tr>
     #{/list}
     <tr>
         <td></td>
         <td></td>
-        <td><strong>${balanceSheet.getAssetBalance()}</strong></td>
+        <td><strong>#{coloredMoney balanceSheet.getAssetBalance() /}</strong></td>
     </tr>
     </tbody>
 </table>
 
-<h2>&{'balanceSheet.liabilities'}</h2>
+<div class="page-header">
+    <h2>&{'balanceSheet.liabilities'}</h2>
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -77,19 +81,34 @@
     <tr>
         <td>${account.number}</td>
         <td>${account.description}</td>
-        <td>${account.getBalance(balanceSheet.getAccountingPeriod())}</td>
+        <td>#{coloredMoney account.getBalance(balanceSheet.getAccountingPeriod()) /}</td>
     </tr>
     #{/list}
     <tr>
         <td></td>
         <td></td>
-        <td><strong>${accountGroup.getBalance(balanceSheet.getAccountingPeriod())}</strong></td>
+        <td><strong>#{coloredMoney accountGroup.getBalance(balanceSheet.getAccountingPeriod()) /}</strong></td>
     </tr>
     #{/list}
     <tr>
         <td></td>
         <td></td>
-        <td><strong>${balanceSheet.getLiabilityBalance()}</strong></td>
+        <td><strong>#{coloredMoney balanceSheet.getLiabilityBalance() /}</strong></td>
     </tr>
     </tbody>
 </table>
+
+<div class="page-header">
+    <h2>&{'balanceSheet.profit'}</h2>
+</div>
+
+#{if balanceSheet.getProfit().isPositive()}
+<div class="alert alert-success">
+    <strong>&{'profitAndLossAccount.profit'}: ${balanceSheet.getProfit()}</strong>
+</div>
+#{/if}
+#{else}
+<div class="alert alert-error">
+    <strong>&{'profitAndLossAccount.loss'}: ${balanceSheet.getProfit()}</strong>
+</div>
+#{/else}

@@ -9,6 +9,14 @@ import java.io.File;
 
 public class OrderAttachment {
     
+    public static String sanitizeFilename(String filename) {
+        filename = filename.replaceAll(File.separator, "-");
+        filename = filename.replaceAll(File.pathSeparator, "-");
+        filename = filename.replaceAll("\\s+", "_");
+
+        return filename;
+    }
+    
     private File file;
 
     public OrderAttachment(File file) {

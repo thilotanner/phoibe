@@ -1,6 +1,11 @@
-#{if _arg.isPositive()}
-${_arg}
-#{/if}
-#{else}
-<span style="color: red;">${_arg}</span>
-#{/else}
+%{
+
+if(_arg.isPositive()) {
+    color = "green";
+} else {
+    color = "red";
+}
+
+}%
+
+<span style="color: ${color};">${_arg}</span>

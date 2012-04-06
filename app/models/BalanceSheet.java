@@ -48,4 +48,8 @@ public class BalanceSheet {
         }
         return balance;
     }
+    
+    public Money getProfit() {
+        return getAssetBalance().subtract(getLiabilityBalance());
+    }
 }

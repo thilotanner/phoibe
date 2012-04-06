@@ -18,7 +18,9 @@
 #{/list}
 </ul>
 
-<h2>&{'profitAndLossAccount.expenses'}</h2>
+<div class="page-header">
+    <h2>&{'profitAndLossAccount.expenses'}</h2>
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -39,24 +41,26 @@
         <tr>
             <td>${account.number}</td>
             <td>${account.description}</td>
-            <td>${account.getBalance(profitAndLossAccount.getAccountingPeriod())}</td>
+            <td>#{coloredMoney account.getBalance(profitAndLossAccount.getAccountingPeriod()) /}</td>
         </tr>
         #{/list}
     <tr>
         <td></td>
         <td></td>
-        <td><strong>${accountGroup.getBalance(profitAndLossAccount.getAccountingPeriod())}</strong></td>
+        <td><strong>#{coloredMoney accountGroup.getBalance(profitAndLossAccount.getAccountingPeriod()) /}</strong></td>
     </tr>
     #{/list}
     <tr>
         <td></td>
         <td></td>
-        <td><strong>${profitAndLossAccount.getExpenseBalance()}</strong></td>
+        <td><strong>#{coloredMoney profitAndLossAccount.getExpenseBalance() /}</strong></td>
     </tr>
     </tbody>
 </table>
 
-<h2>&{'profitAndLossAccount.revenue'}</h2>
+<div class="page-header">
+    <h2>&{'profitAndLossAccount.revenue'}</h2>
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -77,19 +81,34 @@
         <tr>
             <td>${account.number}</td>
             <td>${account.description}</td>
-            <td>${account.getBalance(profitAndLossAccount.getAccountingPeriod())}</td>
+            <td>#{coloredMoney account.getBalance(profitAndLossAccount.getAccountingPeriod()) /}</td>
         </tr>
         #{/list}
     <tr>
         <td></td>
         <td></td>
-        <td><strong>${accountGroup.getBalance(profitAndLossAccount.getAccountingPeriod())}</strong></td>
+        <td><strong>#{coloredMoney accountGroup.getBalance(profitAndLossAccount.getAccountingPeriod()) /}</strong></td>
     </tr>
     #{/list}
     <tr>
         <td></td>
         <td></td>
-        <td><strong>${profitAndLossAccount.getRevenueBalance()}</strong></td>
+        <td><strong>#{coloredMoney profitAndLossAccount.getRevenueBalance() /}</strong></td>
     </tr>
     </tbody>
 </table>
+
+<div class="page-header">
+    <h2>&{'profitAndLossAccount.profit'}</h2>
+</div>
+
+#{if profitAndLossAccount.getProfit().isPositive()}
+<div class="alert alert-success">
+    <strong>&{'profitAndLossAccount.profit'}: ${profitAndLossAccount.getProfit()}</strong>
+</div>
+#{/if}
+#{else}
+<div class="alert alert-error">
+    <strong>&{'profitAndLossAccount.loss'}: ${profitAndLossAccount.getProfit()}</strong>
+</div>
+#{/else}

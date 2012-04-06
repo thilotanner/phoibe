@@ -181,7 +181,7 @@ public class MetricProducts extends ApplicationController {
         notFoundIfNull(id);
         MetricProduct metricProduct = MetricProduct.findById(id);
         notFoundIfNull(metricProduct);
-        renderHtml(metricProduct.retailPricePerMetric.toString());
+        renderHtml(metricProduct.retailPricePerMetric.rawValue);
     }
 
     private static void initRenderArgs() {

@@ -92,6 +92,9 @@ balanceSheet=Bilanz
 balanceSheet.assets=Aktiven
 balanceSheet.liabilities=Passiven
 balanceSheet.balance=Saldo
+balanceSheet.profit=Gewinn
+balanceSheet.loss=Verlust
+balanceSheet.profitDifference=Gewinndifferenz gegenüber der Erfolgrechnung: %s
 
 batchJobRun=Prozess
 batchJobRuns=Prozesse
@@ -279,6 +282,9 @@ profitAndLossAccount=Erfolgsrechnung
 profitAndLossAccount.expenses=Aufwand
 profitAndLossAccount.revenue=Ertrag
 profitAndLossAccount.balance=Saldo
+profitAndLossAccount.profit=Gewinn
+profitAndLossAccount.loss=Verlust
+profitAndLossAccount.profitDifference=Gewinndifferenz gegenüber der Bilanz: %s
 
 report=Bericht
 reports=Berichte

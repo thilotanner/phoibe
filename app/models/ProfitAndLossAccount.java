@@ -48,4 +48,8 @@ public class ProfitAndLossAccount {
         }
         return balance;
     }
+    
+    public Money getProfit() {
+        return getRevenueBalance().subtract(getExpenseBalance());
+    }
 }
