@@ -44,6 +44,7 @@ public class MetricProduct extends Product {
     @ManyToOne
     public ValueAddedTaxRate valueAddedTaxRate;
 
+    @Required
     @ElasticSearchEmbedded
     @ManyToOne
     public Contact supplier;
