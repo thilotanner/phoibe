@@ -119,13 +119,30 @@ public class Contacts extends ApplicationController {
         }
 
         contact.loggedSave(getCurrentUser());
-        renderJSON(String.format("{ \"id\" : %s, \"label\" : \"%s\" }", contact.id, contact.getLabel()));
+
+        renderJSON(contact, new JsonSerializer<Contact>() {
+
+            public JsonElement serialize(Contact contact, Type type,
+                                         JsonSerializationContext jsonSerializationContext)
+            {
+                JsonObject object = new JsonObject();
+                object.addProperty("id", contact.id);
+                object.addProperty("label", contact.getLabel());
+                return object;
+            }
+        });
     }
 
     public static void delete(Long id) {
         notFoundIfNull(id);
         Contact contact = Contact.findById(id);
         notFoundIfNull(contact);
+
+        if(!contact.isDeletable()) {
+            flash.error(Messages.get("isReferenced", Messages.get("contact")));
+            index(1, null, null, null);
+        }
+
         render(contact);
     }
 
@@ -133,6 +150,11 @@ public class Contacts extends ApplicationController {
         notFoundIfNull(id);
         Contact contact = Contact.findById(id);
         notFoundIfNull(contact);
+
+        if(!contact.isDeletable()) {
+            flash.error(Messages.get("isReferenced", Messages.get("contact")));
+            index(1, null, null, null);
+        }
 
         try {
             contact.loggedDelete(getCurrentUser());
@@ -160,8 +182,16 @@ public class Contacts extends ApplicationController {
 
         query.hydrate(true);
 
-		SearchResults<Contact> results = query.fetch();
-        List<Contact> contacts = results.objects;
+        List<Contact> contacts;
+
+        try {
+            SearchResults<Contact> results = query.fetch();
+            contacts = results.objects;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+
+            contacts = new ArrayList<Contact>();
+        }
 
         renderJSON(contacts, new JsonSerializer<Contact>() {
 

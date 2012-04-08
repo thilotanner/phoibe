@@ -109,4 +109,28 @@ public class Contact extends EnhancedModel {
         nesb.append(postalCode).append(city);
         return nesb.toString();
     }
+
+    public boolean isDeletable() {
+        if(getNumberOfDBReferences(MetricProduct.class, "supplier") > 0l) {
+            return false;
+        }
+
+        if(getNumberOfDBReferences(Creditor.class, "supplier") > 0l) {
+            return false;
+        }
+
+        if(getNumberOfDBReferences(Order.class, "orderingContact") > 0l) {
+            return false;
+        }
+
+        if(getNumberOfDBReferences(Order.class, "shippingContact") > 0l) {
+            return false;
+        }
+
+        if(getNumberOfDBReferences(Order.class, "billingContact") > 0l) {
+            return false;
+        }
+
+        return true;
+    }
 }

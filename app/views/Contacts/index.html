@@ -28,9 +28,11 @@
             <td>${contact.street}</td>
             <td>${contact.city}</td>
             <td>
-                <a href="@{show(contact.id)}">&{'show'}</a> |
-                <a href="@{form(contact.id)}">&{'edit'}</a> |
-                <a modal="modal" href="@{delete(contact.id)}">&{'delete'}</a>
+                <a href="@{show(contact.id)}">&{'show'}</a>
+                | <a href="@{form(contact.id)}">&{'edit'}</a>
+                #{if contact.isDeletable()}
+                | <a modal="modal" href="@{delete(contact.id)}">&{'delete'}</a>
+                #{/if}
             </td>
         </tr>
         #{/list}

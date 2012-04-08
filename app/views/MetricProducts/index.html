@@ -27,9 +27,10 @@
             <td>${metricProduct.metric.symbol}</td>
             <td>${metricProduct.retailPricePerMetric.label}</td>
             <td>
-                <a href="@{form(metricProduct.id)}">&{'edit'}</a> |
-                <a href="@{delete(metricProduct.id)}"
-                   modal="modal">&{'delete'}</a>
+                <a href="@{form(metricProduct.id)}">&{'edit'}</a>
+                #{if metricProduct.isDeletable()}
+                | <a href="@{delete(metricProduct.id)}" modal="modal">&{'delete'}</a>
+                #{/if}
             </td>
         </tr>
         #{/list}

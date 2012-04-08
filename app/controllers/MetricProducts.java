@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import models.Contact;
 import models.Metric;
 import models.MetricProduct;
 import models.ValueAddedTaxRate;
@@ -114,6 +115,12 @@ public class MetricProducts extends ApplicationController {
         notFoundIfNull(id);
         MetricProduct metricProduct = MetricProduct.findById(id);
         notFoundIfNull(metricProduct);
+        
+        if(!metricProduct.isDeletable()) {
+            flash.error(Messages.get("isReferenced", Messages.get("metricProduct")));
+            index(1, null, null, null);
+        }
+        
         render(metricProduct);
     }
 
@@ -121,6 +128,11 @@ public class MetricProducts extends ApplicationController {
         notFoundIfNull(id);
         MetricProduct metricProduct = MetricProduct.findById(id);
         notFoundIfNull(metricProduct);
+
+        if(!metricProduct.isDeletable()) {
+            flash.error(Messages.get("isReferenced", Messages.get("metricProduct")));
+            index(1, null, null, null);
+        }
 
         try {
             metricProduct.loggedDelete(getCurrentUser());
@@ -147,8 +159,16 @@ public class MetricProducts extends ApplicationController {
 
         query.hydrate(true);
 
-		SearchResults<MetricProduct> results = query.fetch();
-        List<MetricProduct> metricProducts = results.objects;
+        List<MetricProduct> metricProducts;
+
+        try {
+            SearchResults<MetricProduct> results = query.fetch();
+            metricProducts = results.objects;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+
+            metricProducts = new ArrayList<MetricProduct>();
+        }
 
         renderJSON(metricProducts, new JsonSerializer<MetricProduct>() {
 

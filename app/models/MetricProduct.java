@@ -64,4 +64,8 @@ public class MetricProduct extends Product {
             return name;
         }
     }
+
+    public boolean isDeletable() {
+        return !isReferenced(MetricProductReportItem.class);
+    }
 }

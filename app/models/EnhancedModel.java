@@ -76,6 +76,10 @@ public class EnhancedModel extends Model {
     }
 
     protected long getNumberOfDBReferences(Class clazz) {
+        return getNumberOfDBReferences(clazz, getSingularObjectName());
+    }
+
+    protected long getNumberOfDBReferences(Class clazz, String objectName) {
         try {
             EntityManager em = JPA.em();
             CriteriaBuilder qb = em.getCriteriaBuilder();
@@ -83,7 +87,7 @@ public class EnhancedModel extends Model {
             CriteriaQuery<Long> cq = qb.createQuery(Long.class);
             Root r = cq.from(clazz);
             cq.select(qb.count(r));
-            cq.where(qb.equal(r.get(getSingularObjectName()), this));
+            cq.where(qb.equal(r.get(objectName), this));
             return em.createQuery(cq).getSingleResult();
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("Unreferenced property found: " + clazz.getName());
