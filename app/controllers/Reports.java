@@ -152,7 +152,19 @@ public class Reports extends ApplicationController {
         ReportItem reportItem = ReportItem.findById(reportItemId);
         notFoundIfNull(reportItem);
 
+        Report report = reportItem.report;
+
         reportItem.loggedDelete(getCurrentUser());
+
+        report.reportItems.remove(reportItem);
+        
+        // update report item order
+        for(int i = 0; i < report.reportItems.size(); i++) {
+            reportItem = report.reportItems.get(i);
+            reportItem.position = i;
+            reportItem.save();
+        }
+        
         flash.success(Messages.get("successfullyDeleted", Messages.get("reportItem")));
         show(reportItem.report.id);
     }

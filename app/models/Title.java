@@ -2,5 +2,6 @@ package models;
 
 public enum Title {
     MS,
-    MR
+    MR,
+    MR_AND_MS
 }

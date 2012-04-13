@@ -118,6 +118,7 @@ contact.company=Firma
 contact.title=Anrede
 contact.title.MS=Frau
 contact.title.MR=Herr
+contact.title.MR_AND_MS=Herr und Frau
 contact.firstName=Vorname
 contact.lastName=Nachname
 contact.street=Strasse
