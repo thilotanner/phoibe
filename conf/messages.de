@@ -161,6 +161,7 @@ creditor.discountAmountDue=Restbetrag skontieren
 creditor.successfullyDiscounted=Restbetrag wurde erfolgreich skontiert
 creditor.creditorEntries=Kreditoren-Buchungen
 creditor.amountDueEntries=Restbetrag-Buchungen
+creditor.creditorIsPaid=Kreditor ist bereits bezahlt
 
 creditorPayment=Zahlung
 creditorPayments=Zahlungen
@@ -194,6 +195,7 @@ debitor.chargeOffAmountDue=Restbetrag abschreiben
 debitor.successfullyChargedOff=Restbetrag wurde erfolgreich abgeschrieben
 debitor.debitorEntries=Debitoren-Buchungen
 debitor.amountDueEntries=Restbetrag-Buchungen
+debitor.debitorIsPaid=Debitor ist bereits bezahlt
 
 debitorPaymentReceipt=Zahlungseingang
 debitorPaymentReceipts=Zahlungseingänge
@@ -218,6 +220,7 @@ entry.cancel=stornieren
 entry.reverseEntry=Stornobuchung
 entry.canceledEntry=stornierte Buchung
 entry.cancelQuestion=Sind Sie sicher, dass Sie die Buchung «%s» stornieren möchten?
+entry.entryIsCanceled=Buchung ist bereits storniert
 
 entryTemplate=Buchungsvorlage
 entryTemplates=Buchungsvorlagen
@@ -269,6 +272,8 @@ order.orderStatus.ABORTED=abgebrochen
 order.orderStatus.DELETED=gelöscht
 order.currentReport=Aktueller Bericht
 order.reference=Referenz-Nummer
+order.orderIsInProgress=Auftrag ist bereits in Bearbeitung
+order.orderNotInProgress=Auftrag ist nicht in Bearbeitung
 
 orderAttachment=Anhang
 orderAttachments=Anhänge
@@ -312,6 +317,7 @@ reportTransition=Berichts-Transition
 reportTransitions=Berichts-Transitionen
 reportTransition.targetReportType.id=Zielbericht
 reportTransition.transitionStrategyClassName=Transitions-Strategie
+reportTransition.transitionNotApplicable=Berichts-Transition kann nicht angewendet werden
 
 reportType=Bericht
 reportTypes=Berichte

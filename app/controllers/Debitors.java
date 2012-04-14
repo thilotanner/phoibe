@@ -52,31 +52,37 @@ public class Debitors extends ApplicationController {
         render(debitor);
     }
 
-    public static void save(@Valid Debitor debitor) {
+    public synchronized static void save(@Valid Debitor debitor) {
+        sanityCheck(debitor);
+        
         if(validation.hasErrors()) {
             render("@form", debitor);
         }
-
+        
         debitor.loggedSave(getCurrentUser());
         flash.success(Messages.get("successfullySaved", Messages.get("debitor")));
         index(DebitorStatus.DUE.toString(), 1, null, null, null);
     }
 
-    public static void discountAmountDue(Long debitorId) {
+    public synchronized static void discountAmountDue(Long debitorId) {
         notFoundIfNull(debitorId);
         Debitor debitor = Debitor.findById(debitorId);
         notFoundIfNull(debitor);
 
+        sanityCheck(debitor);
+        
         debitor.buildAndSaveDiscountEntries();
 
         closeDebitor(debitor, "debitor.successfullyDiscounted");
     }
     
-    public static void chargeOffAmountDue(Long debitorId) {
+    public synchronized static void chargeOffAmountDue(Long debitorId) {
         notFoundIfNull(debitorId);
         Debitor debitor = Debitor.findById(debitorId);
         notFoundIfNull(debitor);
 
+        sanityCheck(debitor);
+        
         debitor.buildAndSaveChargeOffEntries();
 
         closeDebitor(debitor, "debitor.successfullyChargedOff");
@@ -87,5 +93,13 @@ public class Debitors extends ApplicationController {
 
         flash.success(Messages.get(messageKey));
         index(DebitorStatus.DUE.toString(), 1, null, null, null);
+    }
+    
+    protected static void sanityCheck(Debitor debitor) {
+        // sanity check --> is debitor still due
+        if(debitor.debitorStatus.equals(DebitorStatus.PAID)) {
+            flash.error(Messages.get("debitor.debitorIsPaid"));
+            show(debitor.id);
+        }
     }
 }

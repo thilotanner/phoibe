@@ -35,7 +35,7 @@ public class Reports extends ApplicationController {
         render(order, reportType);
     }
 
-    public static void create(Long orderId, Long reportTypeId) {
+    public synchronized static void create(Long orderId, Long reportTypeId) {
         notFoundIfNull(orderId);
         Order order = Order.findById(orderId);
         notFoundIfNull(order);
@@ -44,6 +44,12 @@ public class Reports extends ApplicationController {
         ReportType reportType = ReportType.findById(reportTypeId);
         notFoundIfNull(reportType);
 
+        // sanity check --> order is new
+        if(!order.orderStatus.equals(OrderStatus.NEW)) {
+            flash.error(Messages.get("order.orderIsInProgress"));
+            Orders.show(order.id);
+        }
+        
         Report report = new Report();
         report.order = order;
         report.reportType = reportType;
@@ -86,7 +92,7 @@ public class Reports extends ApplicationController {
 
         ByteArrayOutputStream outputStream = reportPDFCreator.createPDF();
 
-        String fileName = report.id + ".pdf";
+        String fileName = String.format("%d.pdf", report.id);
 
         renderBinary(new ByteArrayInputStream(outputStream.toByteArray()), fileName,"application/pdf", true);
     }
@@ -103,7 +109,7 @@ public class Reports extends ApplicationController {
         render(report, reportTransition);
     }
 
-    public static void transition(Long id, Long reportTransitionId) {
+    public synchronized static void transition(Long id, Long reportTransitionId) {
         notFoundIfNull(id);
         Report report = Report.findById(id);
         notFoundIfNull(report);
@@ -111,6 +117,12 @@ public class Reports extends ApplicationController {
         notFoundIfNull(reportTransitionId);
         ReportTransition reportTransition = ReportTransition.findById(reportTransitionId);
         notFoundIfNull(reportTransition);
+
+        // sanity check --> is transition possible
+        if(!reportTransition.reportType.equals(report.order.currentReport.reportType)) {
+            flash.error(Messages.get("reportTransition.transitionNotApplicable"));
+            show(report.id);
+        }
 
         try {
             TransitionStrategy transitionStrategy =

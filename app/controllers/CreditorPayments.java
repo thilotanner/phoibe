@@ -41,7 +41,9 @@ public class CreditorPayments extends ApplicationController {
         render(creditorPayment);
     }
 
-    public static void save(@Valid CreditorPayment creditorPayment) {
+    public synchronized static void save(@Valid CreditorPayment creditorPayment) {
+        Creditors.sanityCheck(creditorPayment.creditor);
+
         if(Validation.hasErrors()) {
             initRenderArgs();
             render("@form", creditorPayment);

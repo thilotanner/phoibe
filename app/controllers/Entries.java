@@ -79,10 +79,16 @@ public class Entries extends ApplicationController {
         render(entry);
     }
 
-    public static void cancel(Long id) {
+    public synchronized static void cancel(Long id) {
         notFoundIfNull(id);
         Entry entry = Entry.findById(id);
         notFoundIfNull(entry);
+        
+        // sanity check
+        if(!entry.isCancelable()) {
+            flash.error(Messages.get("entry.entryIsCanceled"));
+            show(entry.id);
+        }
         
         Entry reverseEntry = entry.buildReverseEntry();
         reverseEntry.loggedSave(getCurrentUser());
@@ -90,7 +96,7 @@ public class Entries extends ApplicationController {
         flash.success(Messages.get("successfullyCreated", Messages.get("entry.reverseEntry")));
         index(null, 1, null, null, null);
     }
-
+    
     private static void initRenderArgs() {
         renderArgs.put("accountingPeriods", AccountingPeriod.findAll());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());

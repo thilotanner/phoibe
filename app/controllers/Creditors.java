@@ -65,7 +65,9 @@ public class Creditors extends ApplicationController {
         render(creditor);
     }
 
-    public static void save(@Valid Creditor creditor) {
+    public synchronized static void save(@Valid Creditor creditor) {
+        sanityCheck(creditor);
+
         if(Validation.hasErrors()) {
             initRenderArgs();
             if(creditor.id == null) {
@@ -75,7 +77,9 @@ public class Creditors extends ApplicationController {
             }
         }
 
-        creditor.buildAndSaveCreditorEntries();
+        if(creditor.id == null) {
+            creditor.buildAndSaveCreditorEntries();
+        }
 
         creditor.loggedSave(getCurrentUser());
 
@@ -83,10 +87,12 @@ public class Creditors extends ApplicationController {
         index(CreditorStatus.DUE.toString(), 1, null, null, null);
     }
 
-    public static void discountAmountDue(Long creditorId) {
+    public synchronized static void discountAmountDue(Long creditorId) {
         notFoundIfNull(creditorId);
         Creditor creditor = Creditor.findById(creditorId);
         notFoundIfNull(creditor);
+
+        sanityCheck(creditor);
 
         creditor.buildAndSaveDiscountEntries();
 
@@ -98,6 +104,14 @@ public class Creditors extends ApplicationController {
 
         flash.success(Messages.get(messageKey));
         index(CreditorStatus.DUE.toString(), 1, null, null, null);
+    }
+
+    protected static void sanityCheck(Creditor creditor) {
+        // sanity check --> is creditor still due
+        if(creditor.creditorStatus.equals(CreditorStatus.PAID)) {
+            flash.error(Messages.get("creditor.creditorIsPaid"));
+            show(creditor.id);
+        }
     }
 
     private static void initRenderArgs() {

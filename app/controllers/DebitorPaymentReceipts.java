@@ -41,7 +41,9 @@ public class DebitorPaymentReceipts extends ApplicationController {
         render(debitorPaymentReceipt);
     }
 
-    public static void save(@Valid DebitorPaymentReceipt debitorPaymentReceipt) {
+    public synchronized static void save(@Valid DebitorPaymentReceipt debitorPaymentReceipt) {
+        Debitors.sanityCheck(debitorPaymentReceipt.debitor);
+
         if(Validation.hasErrors()) {
             initRenderArgs();
             render("@form", debitorPaymentReceipt);
