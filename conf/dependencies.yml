@@ -4,8 +4,8 @@ require:
     - play
     - play -> secure
     - com.google.guava -> guava 11.0.2
-    - org.elasticsearch -> elasticsearch 0.19.1
-    - com.googlecode.flyway -> flyway-core 1.5
+    - org.elasticsearch -> elasticsearch 0.19.2
+    - com.googlecode.flyway -> flyway-core 1.6
     - net.sf.jasperreports -> jasperreports 4.5.1:
         exclude:
             - org.hibernate -> *

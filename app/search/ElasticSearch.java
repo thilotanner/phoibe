@@ -85,6 +85,10 @@ public class ElasticSearch {
         } catch (Exception e) {
             throw new RuntimeException("Unable to delete mapping", e);
         }
+        
+        // get Mapper to start a new index WITH the mappings from the code
+        mapper = MapperFactory.getMapper(clazz);
+        ElasticSearchAdapter.startIndex(client, mapper);
     }
     
     private static <M extends Model> ModelMapper<M> getMapper(Class<M> clazz) {

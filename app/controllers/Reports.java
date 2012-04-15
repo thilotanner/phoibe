@@ -119,7 +119,7 @@ public class Reports extends ApplicationController {
         notFoundIfNull(reportTransition);
 
         // sanity check --> is transition possible
-        if(!reportTransition.reportType.equals(report.order.currentReport.reportType)) {
+        if(!report.isEditable() || !reportTransition.reportType.equals(report.reportType)) {
             flash.error(Messages.get("reportTransition.transitionNotApplicable"));
             show(report.id);
         }
@@ -182,12 +182,19 @@ public class Reports extends ApplicationController {
     }
 
     public static void reorderItems(@As(",") Long[] reportItemIds) {
+        ReportItem reportItem = ReportItem.findById(reportItemIds[0]);
+
+        // sanity check --> current report
+        if(!reportItem.report.isEditable()) {
+            Logger.warn("Reordering not allowed");
+            error();
+        }
+
         if(reportItemIds.length == 0) {
             error();
         }
         
-        // sanity check
-        ReportItem reportItem = ReportItem.findById(reportItemIds[0]);
+        // sanity check --> reportItemIds
         if(reportItem.report.reportItems.size() != reportItemIds.length) {
             Logger.error("Wrong number of report items for reordering");
             error();

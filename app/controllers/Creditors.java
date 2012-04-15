@@ -108,7 +108,7 @@ public class Creditors extends ApplicationController {
 
     protected static void sanityCheck(Creditor creditor) {
         // sanity check --> is creditor still due
-        if(creditor.creditorStatus.equals(CreditorStatus.PAID)) {
+        if(!creditor.isEditable()) {
             flash.error(Messages.get("creditor.creditorIsPaid"));
             show(creditor.id);
         }

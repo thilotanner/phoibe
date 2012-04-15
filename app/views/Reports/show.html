@@ -1,5 +1,6 @@
 #{extends 'main.html' /}
 #{set title:messages.get(report.reportType.name) /}
+#{if report.isEditable()}
 #{set 'moreScripts'}
 <script type="text/javascript">
     $(document).ready(function()
@@ -22,6 +23,7 @@
     });
 </script>
 #{/set}
+#{/if}
 
 
 <ul class="breadcrumb">
@@ -114,7 +116,7 @@
     </thead>
     <tbody>
         #{list items:report.reportItems, as:'reportItem'}
-        <tr id="${reportItem.id}" class="move">
+        <tr id="${reportItem.id}"#{if report.isEditable()} class="move"#{/if}>
             <td>${reportItem.amount}</td>
             <td>${reportItem.metric.symbol}</td>
             <td>${reportItem.description?.raw()}</td>

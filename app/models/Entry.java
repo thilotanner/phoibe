@@ -115,9 +115,10 @@ public class Entry extends EnhancedModel {
         if(!debit.id.equals(account.id) && !credit.id.equals(account.id)) {
             throw new IllegalArgumentException("Account must either match debit or credit");
         }
-        
-        return Entry.find(String.format("accountingPeriod = ? and (debit = ? or credit = ?) and id < ? order by date desc, id desc"),
-                accountingPeriod, account, account, this.id).first();
+
+        // entries are sorted by date asc, id asc
+        return Entry.find(String.format("accountingPeriod = ? and (debit = ? or credit = ?) and (date < ? or (date = ? and id < ?)) order by date desc, id desc"),
+                accountingPeriod, account, account, this.date, this.date, this.id).first();
     }
     
     public Money getBalance(AccountingPeriod accountingPeriod, Account account) {
@@ -186,8 +187,6 @@ public class Entry extends EnhancedModel {
         
         return balance;
     }
-    
-    
     
     @Override
     public synchronized <Entry extends JPABase> Entry loggedSave(User user) {

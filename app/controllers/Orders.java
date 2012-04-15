@@ -125,8 +125,8 @@ public class Orders extends ApplicationController {
         Order order = Order.findById(id);
         notFoundIfNull(order);
 
-        // sanity check --> order is in progress
-        if(!order.orderStatus.equals(OrderStatus.IN_PROGRESS)) {
+        // sanity check --> order is new or in progress
+        if(!order.isEditable()) {
             flash.error(Messages.get("order.orderNotInProgress"));
             show(order.id);
         }
