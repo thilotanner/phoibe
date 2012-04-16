@@ -203,7 +203,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="253" splitType="Stretch">
+		<band height="253" splitType="Prevent">
 			<staticText>
 				<reportElement x="223" y="17" width="100" height="12"/>
 				<textElement>

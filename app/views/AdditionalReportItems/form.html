@@ -33,7 +33,7 @@
     <div class="control-group">
         <label class="control-label" for="${field.id}">&{field.name}</label>
         <div class="controls">
-            #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:metricProduct?.metric?.id, id:field.id /}
+            #{select field.name, items:metrics, valueProperty:'id', labelProperty:'symbol', value:additionalReportItem?.metric?.id, id:field.id /}
         </div>
     </div>
     #{/field}
