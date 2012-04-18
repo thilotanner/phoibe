@@ -27,11 +27,13 @@
 
     #{moneyField property:'creditor.amount', object:creditor, currencyCode:defaultCurrency.getCurrencyCode() /}
 
-    #{field property:'creditor.inputTaxAccount.id', object:creditor}
+    #{dateField property:'creditor.due', object:creditor /}
+
+    #{field property:'creditor.expenseAccount.id', object:creditor}
         <div class="control-group">
             <label class="control-label" for="${field.id}">&{field.name}</label>
             <div class="controls">
-                #{select field.name, items:inputTaxAccounts, valueProperty:'id', labelProperty:'description', value:creditor?.inputTaxAccount?.id, id:field.id, size:'_', class:'span6' /}
+                #{select field.name, items:expenseAccounts, valueProperty:'id', labelProperty:'label', value:creditor?.expenseAccount?.id, id:field.id, size:'_', class:'span6' /}
             </div>
         </div>
     #{/field}
@@ -49,7 +51,14 @@
         </div>
     #{/field}
 
-    #{dateField property:'creditor.due', object:creditor /}
+    #{field property:'creditor.inputTaxAccount.id', object:creditor}
+        <div class="control-group">
+            <label class="control-label" for="${field.id}">&{field.name}</label>
+            <div class="controls">
+                #{select field.name, items:inputTaxAccounts, valueProperty:'id', labelProperty:'label', value:creditor?.inputTaxAccount?.id, id:field.id, size:'_', class:'span6' /}
+            </div>
+        </div>
+    #{/field}
 </fieldset>
 
 <div class="form-actions">

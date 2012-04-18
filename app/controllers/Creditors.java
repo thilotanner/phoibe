@@ -103,7 +103,7 @@ public class Creditors extends ApplicationController {
         creditor.close();
 
         flash.success(Messages.get(messageKey));
-        index(CreditorStatus.DUE.toString(), 1, null, null, null);
+        show(creditor.id);
     }
 
     protected static void sanityCheck(Creditor creditor) {
@@ -116,6 +116,7 @@ public class Creditors extends ApplicationController {
 
     private static void initRenderArgs() {
         renderArgs.put("paymentAccounts", Account.getPaymentAccounts());
+        renderArgs.put("expenseAccounts", Account.getExpenseAccounts());
         renderArgs.put("inputTaxAccounts", Account.getInputTaxAccounts());
         renderArgs.put("valueAddedTaxRates", ValueAddedTaxRate.findAllWithZeroRate());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());

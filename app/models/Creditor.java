@@ -35,6 +35,9 @@ public class Creditor extends EnhancedModel {
     public Money amount;
 
     @ManyToOne
+    public Account expenseAccount;
+
+    @ManyToOne
     public ValueAddedTaxRate valueAddedTaxRate;
 
     @ManyToOne
@@ -94,20 +97,20 @@ public class Creditor extends EnhancedModel {
     }
 
     public void buildAndSaveCreditorEntries() {
-        Money amount;
+        Money netAmount;
         if(valueAddedTaxRate != null) {
             // with value added text
-            amount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
+            netAmount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
         } else {
             // without value added text
-            amount = getAmountDue();
+            netAmount = getAmountDue();
         }
        
         creditorEntry = new Entry();
         creditorEntry.date = new Date();
-        creditorEntry.amount = amount;
+        creditorEntry.amount = new Money(netAmount);
         creditorEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
-        creditorEntry.debit = Account.getPurchasesAccount();
+        creditorEntry.debit = expenseAccount;
         creditorEntry.credit = Account.getCreditorAccount();
         creditorEntry.voucher = reference;
         creditorEntry.description = String.format("%s: %s - %s", Messages.get("creditor"), supplier.getLabel(), reference);
@@ -117,7 +120,7 @@ public class Creditor extends EnhancedModel {
             valueAddedTaxEntry = new Entry();
             valueAddedTaxEntry.debit = inputTaxAccount;
             valueAddedTaxEntry.credit = Account.getCreditorAccount();
-            valueAddedTaxEntry.amount = amount.subtract(creditorEntry.amount);
+            valueAddedTaxEntry.amount = this.amount.subtract(creditorEntry.amount);
             valueAddedTaxEntry.date = new Date();
             valueAddedTaxEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
             valueAddedTaxEntry.voucher = reference;
@@ -127,13 +130,13 @@ public class Creditor extends EnhancedModel {
     }
 
     public void buildAndSaveDiscountEntries() {
-        Money amount;
+        Money netAmount;
         if(valueAddedTaxRate != null) {
             // with value added text
-            amount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
+            netAmount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
         } else {
             // without value added text
-            amount = getAmountDue();
+            netAmount = getAmountDue();
         }
 
         amountDueEntry = new Entry();
@@ -141,7 +144,7 @@ public class Creditor extends EnhancedModel {
         amountDueEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
         amountDueEntry.debit = Account.getCreditorAccount();
         amountDueEntry.credit = Account.getPurchaseDiscountAccount();
-        amountDueEntry.amount = amount;
+        amountDueEntry.amount = new Money(netAmount);
         amountDueEntry.description = String.format("%s: %s - %s", Messages.get("creditor.discount"), supplier.getLabel(), reference);
         amountDueEntry.save();
 
@@ -151,7 +154,7 @@ public class Creditor extends EnhancedModel {
             valueAddedTaxCorrectionEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
             valueAddedTaxCorrectionEntry.debit = Account.getCreditorAccount();
             valueAddedTaxCorrectionEntry.credit = inputTaxAccount;
-            valueAddedTaxCorrectionEntry.amount = amount.subtract(getAmountPaid()).subtract(amountDueEntry.amount);
+            valueAddedTaxCorrectionEntry.amount = this.amount.subtract(getAmountPaid()).subtract(amountDueEntry.amount);
             valueAddedTaxCorrectionEntry.description = String.format("%s %s: %s - %s", Messages.get("valueAddedTax"), Messages.get("correction"), supplier.getLabel(), reference);
             valueAddedTaxCorrectionEntry.save();
         }

@@ -92,7 +92,7 @@ public class Debitors extends ApplicationController {
         debitor.close();
 
         flash.success(Messages.get(messageKey));
-        index(DebitorStatus.DUE.toString(), 1, null, null, null);
+        show(debitor.id);
     }
     
     protected static void sanityCheck(Debitor debitor) {

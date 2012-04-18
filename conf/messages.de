@@ -147,6 +147,7 @@ creditors.overdue=Überfällige Kreditoren
 creditor.supplier.id=Lieferant
 creditor.reference=Referenz
 creditor.amount.rawValue=Betrag
+creditor.expenseAccount.id=Aufwands-Konto
 creditor.inputTaxAccount.id=Vorsteuer-Konto
 creditor.valueAddedTaxRate.id=Mehrwertsteuersatz
 creditor.amountDue=Restbetrag

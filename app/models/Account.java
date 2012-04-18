@@ -35,10 +35,6 @@ public class Account extends EnhancedModel {
         return getAccountForConfigurationKey("accounting.creditorAccount.number");
     }
 
-    public static Account getPurchasesAccount() {
-        return getAccountForConfigurationKey("accounting.purchasesAccount.number");
-    }
-
     public static Account getPurchaseDiscountAccount() {
         return getAccountForConfigurationKey("accounting.purchaseDiscountAccount.number");
     }
@@ -81,6 +77,10 @@ public class Account extends EnhancedModel {
 
     @ManyToOne
     public AccountGroup accountGroup;
+
+    public static List<Account> getExpenseAccounts() {
+        return Account.find("accountGroup.accountType = ?", AccountType.EXPENSE).fetch();
+    }
 
     public String getLabel() {
         return String.format("%s %s", number, description);
