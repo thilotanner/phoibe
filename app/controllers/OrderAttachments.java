@@ -24,31 +24,31 @@ public class OrderAttachments extends ApplicationController {
         notFoundIfNull(order);
 
         if(file == null) {
-            flash.error(Messages.get("orderAttachment.fileNotFound"));
+            flash.error(Messages.get("attachment.fileNotFound"));
             Orders.show(order.id);
         }
         
         if(!order.getAttachmentFolder().exists() && !order.getAttachmentFolder().mkdirs()) {
-            flash.error(Messages.get("orderAttachment.unableToCreateAttachmentFolder"));
+            flash.error(Messages.get("attachment.unableToCreateAttachmentFolder"));
             Orders.show(order.id);
         }
 
-        String filename = OrderAttachment.sanitizeFilename(file.getName());
+        String filename = util.file.FileUtils.sanitizeFilename(file.getName());
         
         File targetFile = new File(order.getAttachmentFolder(), filename);
         if(targetFile.exists()) {
-            flash.error(Messages.get("orderAttachment.fileExistsAlready"));
+            flash.error(Messages.get("attachment.fileExistsAlready"));
             Orders.show(order.id);
         }
         
         try {
             FileUtils.copyFile(file, targetFile);
         } catch (IOException e) {
-            flash.error(Messages.get("orderAttachment.unableToCopyFile"));
+            flash.error(Messages.get("attachment.unableToCopyFile"));
             Orders.show(order.id);
         }
 
-        flash.success(Messages.get("successfullyCreated", Messages.get("orderAttachment")));
+        flash.success(Messages.get("successfullyCreated", Messages.get("attachment")));
         Orders.show(order.id);
     }
     
@@ -74,15 +74,15 @@ public class OrderAttachments extends ApplicationController {
                 destroyOrderAttachment(orderAttachment, order);    
             }
         }
-        flash.error(Messages.get("orderAttachment.fileNotFound"));
+        flash.error(Messages.get("attachment.fileNotFound"));
         Orders.show(order.id);
     }
     
     private static void destroyOrderAttachment(OrderAttachment orderAttachment, Order order) {
         if(orderAttachment.delete()) {
-            flash.success(Messages.get("successfullyDeleted", Messages.get("orderAttachment")));
+            flash.success(Messages.get("successfullyDeleted", Messages.get("attachment")));
         } else {
-            flash.error(Messages.get("orderAttachment.unableToDeleteFile"));
+            flash.error(Messages.get("attachment.unableToDeleteFile"));
         }
         Orders.show(order.id);
     }

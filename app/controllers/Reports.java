@@ -21,6 +21,8 @@ import util.transition.TransitionStrategy;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Reports extends ApplicationController {
     public static void confirmCreate(Long orderId, Long reportTypeId) {
@@ -149,6 +151,31 @@ public class Reports extends ApplicationController {
         } else {
             throw new UnsupportedOperationException("Unknown report item class: " + reportItem.getClass().getName());
         }
+    }
+
+    public static void duplicateReportItem(Long reportItemId) {
+        notFoundIfNull(reportItemId);
+        ReportItem reportItem = ReportItem.findById(reportItemId);
+        notFoundIfNull(reportItem);
+
+        // necessary to copy the list in order to prevent update from Hibernate proxy
+        List<ReportItem> currentReportItems = new ArrayList<ReportItem>(reportItem.report.reportItems);
+
+        ReportItem duplicate = reportItem.duplicate();
+        duplicate.id = null;
+        duplicate.report = reportItem.report;
+        duplicate.position = reportItem.position + 1;
+        duplicate.save();
+
+        // reorder following reportItems
+        for(int position = duplicate.position; position < currentReportItems.size(); position++) {
+            ReportItem currentReportItem = currentReportItems.get(position);
+            currentReportItem.position = position + 1;
+            currentReportItem.save();
+        }
+
+        flash.success(Messages.get("successfullyDuplicated", Messages.get("reportItem")));
+        show(reportItem.report.id);
     }
 
     public static void confirmDeleteItem(Long reportItemId) {

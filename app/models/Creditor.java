@@ -1,5 +1,6 @@
 package models;
 
+import play.Play;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.i18n.Messages;
@@ -13,7 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.File;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +46,7 @@ public class Creditor extends EnhancedModel {
     @ManyToOne
     public Account inputTaxAccount;
 
+    @Required
     @Temporal(TemporalType.DATE)
     public Date due;
 
@@ -168,5 +172,28 @@ public class Creditor extends EnhancedModel {
 
     public boolean isEditable() {
         return creditorStatus == CreditorStatus.DUE;
+    }
+
+    public File getAttachmentFolder() {
+        return Play.getFile("data" +
+                File.separator +
+                "attachments" +
+                File.separator +
+                "creditors" +
+                File.separator +
+                this.id +
+                File.separator);
+    }
+
+    public List<CreditorAttachment> getAttachments() {
+        List<CreditorAttachment> creditorAttachments = new ArrayList<CreditorAttachment>();
+
+        if (getAttachmentFolder().exists()) {
+            for(File file : getAttachmentFolder().listFiles()) {
+                creditorAttachments.add(new CreditorAttachment(file));
+            }
+        }
+
+        return creditorAttachments;
     }
 }

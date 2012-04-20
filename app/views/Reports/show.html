@@ -125,6 +125,7 @@
             <td>
                 #{if report.isEditable()}
                 <a href="@{reportItemForm(reportItem.id)}">&{'edit'}</a>
+                | <a href="@{duplicateReportItem(reportItem.id)}">&{'duplicate'}</a>
                 | <a href="@{confirmDeleteItem(reportItem.id)}" modal=modal>&{'delete'}</a>
                 #{/if}
             </td>

@@ -124,8 +124,6 @@ public class Money implements Cloneable {
         return result;
     }
 
-
-
     public Money divide(BigDecimal divisor) {
         BigDecimal bigDecimalValue = new BigDecimal(value);
         BigDecimal resultValue = bigDecimalValue.divide(divisor, 2, RoundingMode.HALF_UP);
@@ -143,7 +141,6 @@ public class Money implements Cloneable {
     public boolean isPositive() {
         return value >= 0;
     }
-
 
     private void calculateValue() {
         try {

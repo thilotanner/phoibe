@@ -68,7 +68,7 @@ public class Contact extends EnhancedModel {
 
     public String getFormattedContact() {
         NonEmptyStringBuilder nesb = new NonEmptyStringBuilder();
-        if(company != null) {
+        if(company != null && !company.isEmpty()) {
             nesb.append(company).addLine();
             if(title != null) {
                 nesb.append(Messages.get("contact.title." + title));

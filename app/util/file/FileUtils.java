@@ -5,8 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class FileUtils {
-    public static File[] dirListByAscendingDate(File folder)
-    {
+    public static File[] dirListByAscendingDate(File folder) {
         if (!folder.isDirectory()) {
             throw new IllegalArgumentException("Provided folder is not a directory");
         }
@@ -17,5 +16,13 @@ public class FileUtils {
             }
         });
         return files;
+    }
+
+    public static String sanitizeFilename(String filename) {
+        filename = filename.replaceAll(File.separator, "-");
+        filename = filename.replaceAll(File.pathSeparator, "-");
+        filename = filename.replaceAll("\\s+", "_");
+
+        return filename;
     }
 }

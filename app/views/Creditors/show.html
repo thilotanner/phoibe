@@ -155,3 +155,26 @@
     </tbody>
 </table>
 #{/if}
+
+<div class="page-header">
+    <h2>&{'attachments'}</h2>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>&{'attachment.fileName'}</th>
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    #{list items:creditor.getAttachments(), as:'attachment'}
+    <tr>
+        <td>${attachment.getFilename()}</td>
+        <td>
+            <a href="${attachment.getDownloadPath()}">&{'download'}</a>
+        </td>
+    </tr>
+    #{/list}
+    </tbody>
+</table>

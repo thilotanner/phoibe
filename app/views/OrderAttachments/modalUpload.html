@@ -1,6 +1,6 @@
 <div class="modal-header">
     <a data-dismiss="modal" class="close">&times;</a>
-    <h3>&{'orderAttachment'}</h3>
+    <h3>&{'attachment'}</h3>
 </div>
 #{form @upload(), id:'modalForm', class:'form-horizontal', enctype:'multipart/form-data'}
 
@@ -9,11 +9,10 @@
     <input type="hidden" value="${order.id}" name="orderId"/>
 
     <fieldset>
-        <legend>&{'orderAttachment'}</legend>
-
+        <legend>&{'attachment'}</legend>
 
         <div class="control-group">
-            <label class="control-label" for="file">&{'orderAttachment.file'}</label>
+            <label class="control-label" for="file">&{'attachment.file'}</label>
             <div class="controls">
                 <input type="file" id="file" name="file" class="input-file">
             </div>

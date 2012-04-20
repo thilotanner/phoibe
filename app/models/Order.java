@@ -77,7 +77,6 @@ public class Order extends EnhancedModel {
                 File.separator +
                 this.id +
                 File.separator);
-        
     }
     
     public List<OrderAttachment> getAttachments() {

@@ -1,5 +1,6 @@
 package models;
 
+import play.data.validation.Required;
 import play.i18n.Messages;
 import util.i18n.CurrencyProvider;
 
@@ -66,6 +67,7 @@ public class Debitor extends EnhancedModel {
     @ManyToOne
     public Report report;
 
+    @Required
     @Temporal(TemporalType.DATE)
     public Date due;
 
