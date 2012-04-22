@@ -24,18 +24,18 @@
 				<textFieldExpression><![CDATA[$P{report}.reportType.name + " - Nr. " + $P{report}.id]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="287" width="39" height="12"/>
+				<reportElement x="0" y="287" width="69" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<text><![CDATA[Betreff:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="299" width="39" height="12"/>
+				<reportElement x="0" y="299" width="69" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<text><![CDATA[Objekt:]]></text>
+				<text><![CDATA[Auftraggeber: ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="244" width="223" height="12"/>
@@ -52,18 +52,18 @@
 				<textFieldExpression><![CDATA[$P{report}.order.billingContact.getFormattedContact()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="39" y="287" width="273" height="12"/>
+				<reportElement x="69" y="287" width="414" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{report}.order.description]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="39" y="299" width="273" height="12"/>
+				<reportElement x="69" y="299" width="243" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{report}.order.shippingContact.getFormattedContact()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{report}.order.orderingContact.getFormattedContact()]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd.MM.yyyy">
 				<reportElement x="330" y="244" width="153" height="12"/>

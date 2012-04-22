@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="testReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="56" rightMargin="56" topMargin="22" bottomMargin="22" isSummaryWithPageHeaderAndFooter="true">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="29"/>
-	<property name="ireport.y" value="436"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="308"/>
 	<style name="style1" fontName="Helvetica" fontSize="8" isUnderline="false" isStrikeThrough="false"/>
 	<parameter name="report" class="models.Report"/>
 	<field name="amount" class="java.lang.Double"/>
@@ -24,18 +24,18 @@
 				<textFieldExpression><![CDATA[$P{report}.reportType.name + " - Nr. " + $P{report}.id]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="287" width="39" height="12"/>
+				<reportElement x="0" y="287" width="69" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<text><![CDATA[Betreff:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="299" width="39" height="12"/>
+				<reportElement x="0" y="299" width="69" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<text><![CDATA[Objekt:]]></text>
+				<text><![CDATA[Auftraggeber: ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="244" width="223" height="12"/>
@@ -52,18 +52,18 @@
 				<textFieldExpression><![CDATA[$P{report}.order.billingContact.getFormattedContact()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="39" y="287" width="273" height="12"/>
+				<reportElement x="69" y="287" width="414" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{report}.order.description]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="39" y="299" width="273" height="12"/>
+				<reportElement x="69" y="299" width="243" height="12"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{report}.order.shippingContact.getFormattedContact()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{report}.order.orderingContact.getFormattedContact()]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd.MM.yyyy">
 				<reportElement x="330" y="244" width="153" height="12"/>
