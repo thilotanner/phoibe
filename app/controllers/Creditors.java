@@ -155,9 +155,17 @@ public class Creditors extends ApplicationController {
         show(creditor.id);
     }
 
-    public synchronized static void discountAmountDue(Long creditorId) {
-        notFoundIfNull(creditorId);
-        Creditor creditor = Creditor.findById(creditorId);
+    public static void confirmDiscountAmountDue(Long id) {
+        notFoundIfNull(id);
+        Creditor creditor = Creditor.findById(id);
+        notFoundIfNull(creditor);
+
+        render(creditor);
+    }
+    
+    public synchronized static void discountAmountDue(Long id) {
+        notFoundIfNull(id);
+        Creditor creditor = Creditor.findById(id);
         notFoundIfNull(creditor);
 
         sanityCheck(creditor);
@@ -184,7 +192,10 @@ public class Creditors extends ApplicationController {
 
     private static void initRenderArgs() {
         renderArgs.put("paymentAccounts", Account.getPaymentAccounts());
-        renderArgs.put("expenseAccounts", Account.getExpenseAccounts());
+        List<Account> expenseAccounts = new ArrayList<Account>();
+        expenseAccounts.addAll(Account.getExpenseAccounts());
+        expenseAccounts.addAll(Account.getAdditionalExpenseAccounts());
+        renderArgs.put("expenseAccounts", expenseAccounts);
         renderArgs.put("inputTaxAccounts", Account.getInputTaxAccounts());
         renderArgs.put("valueAddedTaxRates", ValueAddedTaxRate.findAllWithZeroRate());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());

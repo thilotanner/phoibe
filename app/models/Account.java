@@ -6,6 +6,7 @@ import util.i18n.CurrencyProvider;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -46,7 +47,11 @@ public class Account extends EnhancedModel {
     public static List<Account> getInputTaxAccounts() {
         return getAccountsForConfigurationKey("accounting.inputTaxAccounts.numbers");
     }
-    
+
+    public static List<Account> getAdditionalExpenseAccounts() {
+        return getAccountsForConfigurationKey("accounting.additionalExpenseAccounts.numbers");
+    }
+
     private static Account getAccountForConfigurationKey(String configurationKey) {
         String debitorAccountNumber = Play.configuration.getProperty(configurationKey);
         Account account = Account.find("number = ?", debitorAccountNumber).first();

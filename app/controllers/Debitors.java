@@ -64,9 +64,17 @@ public class Debitors extends ApplicationController {
         index(DebitorStatus.DUE.toString(), 1, null, null, null);
     }
 
-    public synchronized static void discountAmountDue(Long debitorId) {
-        notFoundIfNull(debitorId);
-        Debitor debitor = Debitor.findById(debitorId);
+    public static void confirmDiscountAmountDue(Long id) {
+        notFoundIfNull(id);
+        Debitor debitor = Debitor.findById(id);
+        notFoundIfNull(debitor);
+        
+        render(debitor);
+    }
+    
+    public synchronized static void discountAmountDue(Long id) {
+        notFoundIfNull(id);
+        Debitor debitor = Debitor.findById(id);
         notFoundIfNull(debitor);
 
         sanityCheck(debitor);
@@ -75,10 +83,18 @@ public class Debitors extends ApplicationController {
 
         closeDebitor(debitor, "debitor.successfullyDiscounted");
     }
-    
-    public synchronized static void chargeOffAmountDue(Long debitorId) {
-        notFoundIfNull(debitorId);
-        Debitor debitor = Debitor.findById(debitorId);
+
+    public static void confirmChargeOffAmountDue(Long id) {
+        notFoundIfNull(id);
+        Debitor debitor = Debitor.findById(id);
+        notFoundIfNull(debitor);
+
+        render(debitor);
+    }
+
+    public synchronized static void chargeOffAmountDue(Long id) {
+        notFoundIfNull(id);
+        Debitor debitor = Debitor.findById(id);
         notFoundIfNull(debitor);
 
         sanityCheck(debitor);

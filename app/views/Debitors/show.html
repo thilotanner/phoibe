@@ -77,10 +77,12 @@
 <div class="well">
     <a href="@{DebitorPaymentReceipts.create(debitor.id)}"
        class="btn btn-primary">&{'create', messages.get('debitorPaymentReceipt')}</a>
-    <a href="@{Debitors.discountAmountDue(debitor.id)}"
-       class="btn btn-warning">&{'debitor.discountAmountDue'}</a>
-    <a href="@{Debitors.chargeOffAmountDue(debitor.id)}"
-       class="btn btn-danger">&{'debitor.chargeOffAmountDue'}</a>
+    <a href="@{Debitors.confirmDiscountAmountDue(debitor.id)}"
+       class="btn btn-warning"
+       modal="modal">&{'debitor.discountAmountDue'}</a>
+    <a href="@{Debitors.confirmChargeOffAmountDue(debitor.id)}"
+       class="btn btn-danger"
+       modal="modal">&{'debitor.chargeOffAmountDue'}</a>
 </div>
 #{/if}
 

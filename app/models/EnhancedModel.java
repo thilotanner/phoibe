@@ -1,10 +1,11 @@
 package models;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import play.db.jpa.JPA;
 import play.db.jpa.JPABase;
 import play.db.jpa.Model;
+import util.string.ModelToStringStyle;
 
 import javax.persistence.EntityManager;
 import javax.persistence.MappedSuperclass;
@@ -20,8 +21,6 @@ import java.util.Date;
 @MappedSuperclass
 public class EnhancedModel extends Model {
 
-    private static final int MAX_TO_STRING_LENGTH = 20000;
-    
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
@@ -48,7 +47,7 @@ public class EnhancedModel extends Model {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
+        return ToStringBuilder.reflectionToString(this, ModelToStringStyle.getModelToStringStyle(), false);
     }
 
     public <T extends JPABase> T loggedSave(User user) {

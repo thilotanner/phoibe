@@ -88,8 +88,9 @@
 <div class="well">
     <a href="@{CreditorPayments.create(creditor.id)}"
        class="btn btn-primary">&{'create', messages.get('creditorPayment')}</a>
-    <a href="@{Creditors.discountAmountDue(creditor.id)}"
-       class="btn btn-warning">&{'creditor.discountAmountDue'}</a>
+    <a href="@{Creditors.confirmDiscountAmountDue(creditor.id)}"
+       class="btn btn-warning"
+       modal="modal">&{'creditor.discountAmountDue'}</a>
 </div>
 #{/if}
 
