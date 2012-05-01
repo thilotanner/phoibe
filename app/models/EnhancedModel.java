@@ -1,7 +1,6 @@
 package models;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import play.db.jpa.JPA;
 import play.db.jpa.JPABase;
 import play.db.jpa.Model;
@@ -96,20 +95,6 @@ public class EnhancedModel extends Model {
     private String getSingularObjectName() {
         String objectName = this.getClass().getSimpleName();
         return objectName.substring(0, 1).toLowerCase() + objectName.substring(1, objectName.length());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-
-        final EnhancedModel other = (EnhancedModel) obj;
-
-        return !(!this.id.equals(other.id) && (this.id == null || !this.id.equals(other.id)));
     }
 
     private void logActivity(String message,

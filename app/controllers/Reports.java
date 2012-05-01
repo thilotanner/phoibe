@@ -193,13 +193,16 @@ public class Reports extends ApplicationController {
 
         Report report = reportItem.report;
 
+        // necessary to copy the list in order to prevent update from Hibernate proxy
+        List<ReportItem> currentReportItems = new ArrayList<ReportItem>(report.reportItems);
+        
         reportItem.loggedDelete(getCurrentUser());
 
-        report.reportItems.remove(reportItem);
+        currentReportItems.remove(reportItem);
         
         // update report item order
-        for(int i = 0; i < report.reportItems.size(); i++) {
-            reportItem = report.reportItems.get(i);
+        for(int i = 0; i < currentReportItems.size(); i++) {
+            reportItem = currentReportItems.get(i);
             reportItem.position = i;
             reportItem.save();
         }

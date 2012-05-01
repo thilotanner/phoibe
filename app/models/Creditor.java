@@ -1,5 +1,6 @@
 package models;
 
+import org.joda.time.DateTime;
 import play.Play;
 import play.data.validation.Required;
 import play.data.validation.Valid;
@@ -97,7 +98,9 @@ public class Creditor extends EnhancedModel {
     }
     
     public boolean isOverdue() {
-        return creditorStatus == CreditorStatus.DUE && due.before(new Date());
+        // today midnight --> to get the same result as query the date in database
+        Date date = new DateTime().toDateMidnight().toDate();
+        return creditorStatus == CreditorStatus.DUE && due.before(date);
     }
 
     public void buildAndSaveCreditorEntries() {

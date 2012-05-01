@@ -6,7 +6,6 @@ import util.i18n.CurrencyProvider;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
