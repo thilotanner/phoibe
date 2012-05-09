@@ -4,6 +4,7 @@ import models.Contact;
 import models.MetricProduct;
 import play.i18n.Messages;
 import search.ElasticSearch;
+import search.IndexEvent;
 
 public class Search extends ApplicationController {
     public static void index() {

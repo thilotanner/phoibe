@@ -54,11 +54,9 @@ public class Contacts extends ApplicationController {
             query.addSort(orderBy, sortOrder);
         }
 
-        query.hydrate(true);
-
         List<Contact> contacts;
         Long count;
-        
+
         try {
             SearchResults<Contact> results = query.fetch();
             contacts = results.objects;
@@ -167,43 +165,43 @@ public class Contacts extends ApplicationController {
     }
 
     public static void search(String search) {
-        BoolQueryBuilder qb = QueryBuilders.boolQuery();
-        if(Strings.isNullOrEmpty(search)) {
-            qb.must(QueryBuilders.matchAllQuery());
-        } else {
-            for(String searchPart : search.split("\\s+")) {
-                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
-            }
-        }
-
-        Query<Contact> query = ElasticSearch.query(qb, Contact.class);
-
-        query.from(0).size(getPageSize() * 2);
-
-        query.hydrate(true);
-
-        List<Contact> contacts;
-
-        try {
-            SearchResults<Contact> results = query.fetch();
-            contacts = results.objects;
-        } catch (SearchPhaseExecutionException e) {
-            Logger.warn(String.format("Error in search query: %s", search), e);
-
-            contacts = new ArrayList<Contact>();
-        }
-
-        renderJSON(contacts, new JsonSerializer<Contact>() {
-
-			public JsonElement serialize(Contact contact, Type type,
-					JsonSerializationContext jsonSerializationContext)
-			{
-				JsonObject object = new JsonObject();
-				object.addProperty("id", contact.id);
-				object.addProperty("label", contact.getLabel());
-				return object;
-			}
-		});
+//        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+//        if(Strings.isNullOrEmpty(search)) {
+//            qb.must(QueryBuilders.matchAllQuery());
+//        } else {
+//            for(String searchPart : search.split("\\s+")) {
+//                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
+//            }
+//        }
+//
+//        Query<Contact> query = ElasticSearch.query(qb, Contact.class);
+//
+//        query.from(0).size(getPageSize() * 2);
+//
+//        query.hydrate(true);
+//
+//        List<Contact> contacts;
+//
+//        try {
+//            SearchResults<Contact> results = query.fetch();
+//            contacts = results.objects;
+//        } catch (SearchPhaseExecutionException e) {
+//            Logger.warn(String.format("Error in search query: %s", search), e);
+//
+//            contacts = new ArrayList<Contact>();
+//        }
+//
+//        renderJSON(contacts, new JsonSerializer<Contact>() {
+//
+//			public JsonElement serialize(Contact contact, Type type,
+//					JsonSerializationContext jsonSerializationContext)
+//			{
+//				JsonObject object = new JsonObject();
+//				object.addProperty("id", contact.id);
+//				object.addProperty("label", contact.getLabel());
+//				return object;
+//			}
+//		});
     }
 
     public static void popover(Long id) {

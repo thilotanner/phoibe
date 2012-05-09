@@ -1,177 +1,91 @@
 package search;
 
-import org.apache.commons.lang.Validate;
+import models.EnhancedModel;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.facet.AbstractFacetBuilder;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import play.Logger;
-import play.db.jpa.Model;
-import search.mapping.impl.AbstractFieldMapper;
-import search.transformer.JPATransformer;
-import search.transformer.Transformer;
+import search.source.SourceBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * An elastic search query
- *
- * @param <T>
- *            the generic model to search for
- */
-public class Query<T extends Model> {
+public class Query<M extends EnhancedModel> {
 
-	private final Class<T> clazz;
-	private final QueryBuilder builder;
-	private final List<AbstractFacetBuilder> facets;
-	private final List<SortBuilder> sorts;
+    private final QueryBuilder queryBuilder;
+    private final Class<M> clazz;
+    private final List<SortBuilder> sorts;
 
-	private int from = -1;
-	private int size = -1;
+    private Integer from = null;
+    private Integer size = null;
 
-	private boolean hydrate = false;
+    Query(QueryBuilder queryBuilder, Class<M> clazz) {
+        this.queryBuilder = queryBuilder;
+        this.clazz = clazz;
+        this.sorts = new ArrayList<SortBuilder>();
+    }
 
-	Query(Class<T> clazz, QueryBuilder builder) {
-		Validate.notNull(clazz, "clazz cannot be null");
-		Validate.notNull(builder, "builder cannot be null");
-		this.clazz = clazz;
-		this.builder = builder;
-		this.facets = new ArrayList<AbstractFacetBuilder>();
-		this.sorts = new ArrayList<SortBuilder>();
-	}
+    public Query<M> from(int from) {
+        this.from = from;
+        return this;
+    }
 
-	/**
-	 * Sets from
-	 *
-	 * @param from
-	 *            record index to start from
-	 * @return self
-	 */
-	public Query<T> from(int from) {
-		this.from = from;
+    public Query<M> size(int size) {
+        this.size = size;
+        return this;
+    }
 
-		return this;
-	}
+    public Query<M> addSort(String field, SortOrder order) {
+        sorts.add(SortBuilders.fieldSort(SourceBuilder.SORTABLE_INDEX_PREFIX + field).order(order));
 
-	/**
-	 * Sets fetch size
-	 *
-	 * @param size
-	 *            the fetch size
-	 * @return self
-	 */
-	public Query<T> size(int size) {
-		this.size = size;
+        return this;
+    }
 
-		return this;
-	}
+    public Query<M> addSort(SortBuilder sort) {
+        sorts.add(sort);
+        return this;
+    }
 
-	/**
-	 * Controls entity hydration
-	 *
-	 * @param hydrate
-	 *            hydrate entities
-	 * @return self
-	 */
-	public Query<T> hydrate(boolean hydrate) {
-		this.hydrate = hydrate;
+    public SearchResults<M> fetch() {
+        // Build request
+        SearchRequestBuilder request = ElasticSearch.builder(queryBuilder, clazz);
 
-		return this;
-	}
+        // Sorting
+        for (SortBuilder sort : sorts) {
+            request.addSort(sort);
+        }
 
-	/**
-	 * Adds a facet
-	 *
-	 * @param facet
-	 *            the facet
-	 * @return self
-	 */
-	public Query<T> addFacet(AbstractFacetBuilder facet) {
-		Validate.notNull(facet, "facet cannot be null");
-		facets.add(facet);
+        // Paging
+        if (from != null) {
+            request.setFrom(from);
+        }
+        if (size != null) {
+            request.setSize(size);
+        }
 
-		return this;
-	}
+        if (Logger.isDebugEnabled()) {
+            Logger.debug("ES Query: %s", queryBuilder.toString());
+        }
 
-	/**
-	 * Sorts the result by a specific field
-	 *
-	 * @param field
-	 *            the sort field
-	 * @param order
-	 *            the sort order
-	 * @return self
-	 */
-	public Query<T> addSort(String field, SortOrder order) {
-		Validate.notEmpty(field, "field cannot be null");
-		Validate.notNull(order, "order cannot be null");
+        SearchResponse searchResponse = request.execute().actionGet();
 
-		sorts.add(SortBuilders.fieldSort(AbstractFieldMapper.SORTABLE_INDEX_PREFIX + field).order(order));
+        // total hits
+        long totalHits = searchResponse.getHits().totalHits();
 
-		return this;
-	}
+        // fetch objects
+        final List<Long> ids = new ArrayList<Long>();
+        for (SearchHit hit : searchResponse.getHits()) {
+            ids.add(Long.parseLong(hit.id()));
+        }
 
-	/**
-	 * Adds a generic {@link SortBuilder}
-	 *
-	 * @param sort
-	 *            the sort builder
-	 * @return self
-	 */
-	public Query<T> addSort(SortBuilder sort) {
-		Validate.notNull(sort, "sort cannot be null");
-		sorts.add(sort);
-
-		return this;
-	}
-
-	/**
-	 * Runs the query
-	 *
-	 * @return the search results
-	 */
-	public SearchResults<T> fetch() {
-		// Build request
-		SearchRequestBuilder request = ElasticSearch.builder(builder, clazz);
-
-		// Facets
-		for (AbstractFacetBuilder facet : facets) {
-			request.addFacet(facet);
-		}
-
-		// Sorting
-		for (SortBuilder sort : sorts) {
-			request.addSort(sort);
-		}
-
-		// Paging
-		if (from > -1) {
-			request.setFrom(from);
-		}
-		if (size > -1) {
-			request.setSize(size);
-		}
-
-		// Only load id field for hydrate
-		if (hydrate) {
-			request.addField("_id");
-		}
-
-		if (Logger.isDebugEnabled()) {
-			Logger.debug("ES Query: %s", builder.toString());
-		}
-
-		SearchResponse searchResponse = request.execute().actionGet();
-		SearchResults<T> searchResults = null;
-		if (hydrate) {
-			searchResults = JPATransformer.toSearchResults(searchResponse, clazz);
-		} else {
-			searchResults = Transformer.toSearchResults(searchResponse, clazz);
-		}
-		return searchResults;
-	}
+        List<M> results = new ArrayList<M>();
+        if (ids.size() > 0) {
+            results = EnhancedModel.findByIds(ids, clazz);
+        }
+        return new SearchResults<M>(totalHits, results);
+    }
 }

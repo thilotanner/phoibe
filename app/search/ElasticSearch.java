@@ -1,30 +1,21 @@
 package search;
 
-import org.elasticsearch.action.ListenableActionFuture;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import models.EnhancedModel;
 import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.ImmutableSettings.Builder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
-import org.elasticsearch.search.facet.AbstractFacetBuilder;
-import play.db.jpa.Model;
-import search.adapter.ElasticSearchAdapter;
-import search.mapping.MapperFactory;
-import search.mapping.MappingUtil;
-import search.mapping.ModelMapper;
-
-import java.util.HashMap;
-import java.util.Map;
+import search.indexer.IndexerProvider;
 
 public class ElasticSearch {
 
     private static Node node;
-    static Client client;
-	private static Map<Class<? extends Model>, ModelMapper<? extends Model>> mappers;
+    private static Client client;
+
+    private static IndexerProvider indexerProvider;
 
     public static void start() {
         // Start Node Builder
@@ -36,7 +27,7 @@ public class ElasticSearch {
         node = nb.node();
         client = node.client();
 
-        mappers = new HashMap<Class<? extends Model>, ModelMapper<? extends Model>>();
+        indexerProvider = new IndexerProvider();
     }
 
     public static void stop() {
@@ -45,162 +36,33 @@ public class ElasticSearch {
         node.close();
     }
 
-    public static <M extends Model> void index(M model) {
-		Class<Model> clazz = (Class<Model>) model.getClass();
-
-		// Check if object is searchable
-		if (!MappingUtil.isSearchable(clazz)) {
-			throw new IllegalArgumentException("model is not searchable");
-		}
-
-        ModelMapper<Model> mapper = getMapper(clazz);
-		ElasticSearchIndexEvent event = new ElasticSearchIndexEvent(model, mapper, ElasticSearchIndexEventType.INDEX);
-		event.now();
-	}
-
-    public static <M extends Model> void delete(M model) {
-        Class<Model> clazz = (Class<Model>) model.getClass();
-
-		// Check if object is searchable
-		if (!MappingUtil.isSearchable(clazz)) {
-			throw new IllegalArgumentException("model is not searchable");
-		}
-
-        ModelMapper<Model> mapper = getMapper(clazz);
-		ElasticSearchIndexEvent event = new ElasticSearchIndexEvent(model, mapper, ElasticSearchIndexEventType.DELETE);
-		event.now();
-    }
-
-    public static <M extends Model> void deleteIndex(Class<M> clazz) {
-        // Check if object is searchable
-        if (!MappingUtil.isSearchable(clazz)) {
-            throw new IllegalArgumentException("model is not searchable");
+    public static Client client() {
+        if(client == null) {
+            throw new RuntimeException("ElasticSearch not started");
         }
 
-        ModelMapper<M> mapper = getMapper(clazz);
-        ListenableActionFuture<DeleteIndexResponse> action =
-                client.admin().indices().prepareDelete(mapper.getIndexName()).execute();
-        try {
-            action.get(); // wait until mapping is deleted
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to delete mapping", e);
-        }
-        
-        // get Mapper to start a new index WITH the mappings from the code
-        mapper = MapperFactory.getMapper(clazz);
-        ElasticSearchAdapter.startIndex(client, mapper);
+        return client;
     }
-    
-    private static <M extends Model> ModelMapper<M> getMapper(Class<M> clazz) {
-		if (mappers.containsKey(clazz)) {
-			return (ModelMapper<M>) mappers.get(clazz);
-		}
 
-		ModelMapper<M> mapper = MapperFactory.getMapper(clazz);
-        ElasticSearchAdapter.startIndex(client, mapper);
-		mappers.put(clazz, mapper);
-
-		return mapper;
+    public static <M extends EnhancedModel> void index(M model) {
+        indexerProvider.index(model);
 	}
 
-    /**
-	 * Build a SearchRequestBuilder
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param query
-	 *            the query builder
-	 * @param clazz
-	 *            the clazz
-	 *
-	 * @return the search request builder
-	 */
-	static <T extends Model> SearchRequestBuilder builder(QueryBuilder query, Class<T> clazz) {
-		ModelMapper<T> mapper = getMapper(clazz);
-		String index = mapper.getIndexName();
-		return client.prepareSearch(index).setSearchType(SearchType.QUERY_THEN_FETCH).setQuery(query);
-	}
+    public static <M extends EnhancedModel> void remove(M model) {
+        indexerProvider.remove(model);
+    }
 
-	/**
-	 * Build a Query
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param query
-	 *            the query builder
-	 * @param clazz
-	 *            the clazz
-	 *
-	 * @return the query
-	 */
-	public static <T extends Model> Query<T> query(QueryBuilder query, Class<T> clazz) {
-		return new Query<T>(clazz, query);
-	}
+    public static <M extends EnhancedModel> void deleteIndex(Class<M> clazz) {
+        indexerProvider.deleteIndex(clazz);
+    }
 
-	/**
-	 * Search with optional facets.
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param query
-	 *            the query builder
-	 * @param clazz
-	 *            the clazz
-	 * @param facets
-	 *            the facets
-	 *
-	 * @return the search results
-	 */
-	public static <T extends Model> SearchResults<T> search(QueryBuilder query, Class<T> clazz, AbstractFacetBuilder... facets) {
-		return search(query, clazz, false, facets);
-	}
+    public static <M extends EnhancedModel> Query<M> query(QueryBuilder queryBuilder,
+                                                           Class<M> clazz) {
+        return new Query<M>(queryBuilder, clazz);
+    }
 
-	/**
-	 * Search with optional facets. Hydrates entities
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param queryBuilder
-	 *            the query builder
-	 * @param clazz
-	 *            the clazz
-	 * @param facets
-	 *            the facets
-	 *
-	 * @return the search results
-	 */
-	public static <T extends Model> SearchResults<T> searchAndHydrate(QueryBuilder queryBuilder, Class<T> clazz, AbstractFacetBuilder... facets) {
-		return search(queryBuilder, clazz, true, facets);
-	}
-
-	/**
-	 * Faceted search, hydrates entities if asked to do so.
-	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param query
-	 *            the query builder
-	 * @param clazz
-	 *            the clazz
-	 * @param hydrate
-	 * 			  hydrate JPA entities
-	 * @param facets
-	 *            the facets
-	 *
-	 * @return the search results
-	 */
-	private static <T extends Model> SearchResults<T> search(QueryBuilder query, Class<T> clazz, boolean hydrate, AbstractFacetBuilder... facets) {
-		// Build a query for this search request
-		Query<T> search = query(query, clazz);
-
-		// Control hydration
-		search.hydrate(hydrate);
-
-		// Add facets
-		for( AbstractFacetBuilder facet : facets ) {
-			search.addFacet(facet);
-		}
-
-		return search.fetch();
-	}
+    public static <M extends EnhancedModel> SearchRequestBuilder builder(QueryBuilder queryBuilder,
+                                                                         Class<M> clazz) {
+        return indexerProvider.builder(queryBuilder, clazz);
+    }
 }

@@ -5,42 +5,37 @@ import play.data.validation.Email;
 import play.data.validation.Required;
 import play.data.validation.URL;
 import play.i18n.Messages;
-import search.annotations.ElasticSearchSortable;
-import search.annotations.ElasticSearchable;
+import search.indexer.IndexerListener;
 import util.check.ContactNameCheck;
 import util.string.NonEmptyStringBuilder;
 import util.string.StringUtils;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 
-@ElasticSearchable
 @Entity
+@EntityListeners({IndexerListener.class})
 public class Contact extends EnhancedModel {
 
-    @ElasticSearchSortable
     public String company;
 
     @Enumerated(EnumType.STRING)
     public Title title;
 
-    @ElasticSearchSortable
     public String firstName;
 
-    @ElasticSearchSortable
     @CheckWith(ContactNameCheck.class)
     public String lastName;
 
-    @ElasticSearchSortable
     public String street;
 
     public String postOfficeBox;
 
     public String postalCode;
 
-    @ElasticSearchSortable
     @Required
     public String city;
 

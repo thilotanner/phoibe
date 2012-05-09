@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import play.db.jpa.JPA;
 import play.db.jpa.JPABase;
 import play.db.jpa.Model;
+import util.collection.CollectionUtils;
 import util.string.ModelToStringStyle;
 
 import javax.persistence.EntityManager;
@@ -12,10 +13,12 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Date;
+import java.util.List;
 
 @MappedSuperclass
 public class EnhancedModel extends Model {
@@ -106,5 +109,20 @@ public class EnhancedModel extends Model {
         activityLogEntry.activityLogAction = action;
         activityLogEntry.user = user;
         activityLogEntry.save();
+    }
+
+    public static <M extends EnhancedModel> List<M> findByIds(List<Long> ids, Class<M> clazz) {
+        CriteriaBuilder builder = JPA.em().getCriteriaBuilder();
+        CriteriaQuery<M> criteria = builder.createQuery(clazz);
+        Root<M> root = criteria.from(clazz);
+        criteria.where(root.get("id").in(ids));
+        TypedQuery<M> query = JPA.em().createQuery(criteria);
+
+        List<M> results = query.getResultList();
+
+        // order by id list
+        CollectionUtils.sortByIdList(results, ids);
+
+        return results;
     }
 }
