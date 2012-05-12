@@ -2,20 +2,19 @@ package models;
 
 import play.data.validation.Required;
 import play.data.validation.Valid;
-import search.indexer.IndexerListener;
+import play.db.jpa.JPA;
+import search.ElasticSearch;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 @Entity
-@EntityListeners({IndexerListener.class})
 public class MetricProduct extends Product {
 
     @Required
@@ -66,5 +65,29 @@ public class MetricProduct extends Product {
 
     public boolean isDeletable() {
         return !isReferenced(MetricProductReportItem.class);
+    }
+
+    @Override
+    public MetricProduct save() {
+        MetricProduct metricProduct = super.save();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.index(metricProduct);
+        return metricProduct;
+    }
+
+    @Override
+    public MetricProduct delete() {
+        MetricProduct metricProduct = super.delete();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.remove(metricProduct);
+        return metricProduct;
     }
 }

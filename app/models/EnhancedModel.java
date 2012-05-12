@@ -53,7 +53,7 @@ public class EnhancedModel extends Model {
     }
 
     public <T extends JPABase> T loggedSave(User user) {
-        T object = super.save();
+        T object = save();
 
         logActivity(object.toString(), ActivityLogAction.SAVE, user);
 
@@ -61,7 +61,7 @@ public class EnhancedModel extends Model {
     }
 
     public <T extends JPABase> T loggedDelete(User user) {
-        T object = super.delete();
+        T object = delete();
 
         logActivity(object.toString(), ActivityLogAction.DELETE, user);
 

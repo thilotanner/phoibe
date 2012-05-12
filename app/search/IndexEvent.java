@@ -7,33 +7,37 @@ import search.indexer.Indexer;
 
 public class IndexEvent<M extends EnhancedModel> extends Job {
 
-    private M model;
-    private IndexEventType type;
+    private Long modelId;
+    private Class<M> modelClass;
     private Indexer<M> indexer;
+    private IndexEventType type;
 
-    public IndexEvent(M model,
-                      IndexEventType type,
-                      Indexer<M> indexer) {
-        this.model = model;
-        this.type = type;
+    public IndexEvent(Long modelId,
+                      Class<M> modelClass,
+                      Indexer<M> indexer,
+                      IndexEventType type) {
+        this.modelId = modelId;
+        this.modelClass = modelClass;
         this.indexer = indexer;
+        this.type = type;
     }
 
     @Override
     public void doJob() throws Exception {
 
-        // merge object
-        model = (M) JPA.em().find(model.getClass(), model.id);
-
         if(type == IndexEventType.INDEX) {
+            M model = JPA.em().find(modelClass, modelId);
+
+            if(model == null) {
+                throw new IllegalArgumentException(String.format("Unable to index non-existing model. ID: %d Class: %s",
+                        modelId, modelClass));
+            }
+
             indexer.index(model);
         } else if(type == IndexEventType.REMOVE) {
-            indexer.remove(model);
+            indexer.remove(modelId);
         } else {
             throw new UnsupportedOperationException("Unsupported index event");
         }
-
-        JPA.em().getTransaction().rollback(); // prevent model update
-        JPA.em().getTransaction().begin();
     }
 }

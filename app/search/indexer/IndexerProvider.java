@@ -29,8 +29,12 @@ public class IndexerProvider {
     {
         Indexer indexer = getIndexer(entity.getClass());
 
+        if(entity.id == null) {
+            throw new IllegalArgumentException(String.format("Unable to index entity without id: %s", entity.toString()));
+        }
+
         // schedule an indexer job
-        IndexEvent<M> event = new IndexEvent<M>(entity, IndexEventType.INDEX, indexer);
+        IndexEvent<M> event = new IndexEvent<M>(entity.id, (Class<M>) entity.getClass(), indexer, IndexEventType.INDEX);
         event.now();
     }
 
@@ -38,8 +42,12 @@ public class IndexerProvider {
     {
         Indexer indexer = getIndexer(entity.getClass());
 
+        if(entity.id == null) {
+            throw new IllegalArgumentException(String.format("Unable to index entity without id: %s", entity.toString()));
+        }
+
         // schedule an indexer job
-        IndexEvent<M> event = new IndexEvent<M>(entity, IndexEventType.REMOVE, indexer);
+        IndexEvent<M> event = new IndexEvent<M>(entity.id, (Class<M>) entity.getClass(), indexer, IndexEventType.REMOVE);
         event.now();
     }
 

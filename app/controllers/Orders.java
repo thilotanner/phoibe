@@ -12,7 +12,6 @@ import org.elasticsearch.search.sort.SortOrder;
 import play.Logger;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
-import play.db.Model;
 import play.i18n.Messages;
 import search.ElasticSearch;
 import search.Query;

@@ -30,9 +30,9 @@ public abstract class Indexer<T extends EnhancedModel> {
         }
     }
 
-    public void remove(T model) {
+    public void remove(Long modelId) {
         ElasticSearch.client()
-                .prepareDelete(getIndexName(), getTypeName(), model.getId().toString())
+                .prepareDelete(getIndexName(), getTypeName(), modelId.toString())
                 .execute()
                 .actionGet();
     }

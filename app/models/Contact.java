@@ -4,20 +4,19 @@ import play.data.validation.CheckWith;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.data.validation.URL;
+import play.db.jpa.JPA;
 import play.i18n.Messages;
-import search.indexer.IndexerListener;
+import search.ElasticSearch;
 import util.check.ContactNameCheck;
 import util.string.NonEmptyStringBuilder;
 import util.string.StringUtils;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 
 @Entity
-@EntityListeners({IndexerListener.class})
 public class Contact extends EnhancedModel {
 
     public String company;
@@ -127,5 +126,29 @@ public class Contact extends EnhancedModel {
         }
 
         return true;
+    }
+
+    @Override
+    public Contact save() {
+        Contact contact = super.save();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.index(contact);
+        return contact;
+    }
+
+    @Override
+    public Contact delete() {
+        Contact contact = super.delete();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.remove(contact);
+        return contact;
     }
 }

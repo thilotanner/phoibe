@@ -2,10 +2,10 @@ package models;
 
 import play.Play;
 import play.data.validation.Required;
-import search.indexer.IndexerListener;
+import play.db.jpa.JPA;
+import search.ElasticSearch;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Lob;
@@ -20,7 +20,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "Orders")
-@EntityListeners({IndexerListener.class})
 public class Order extends EnhancedModel {
 
     private static final NumberFormat REFERENCE_NUMBER_FORMAT = new DecimalFormat("000000");
@@ -92,5 +91,29 @@ public class Order extends EnhancedModel {
         }
 
         return orderAttachments;
+    }
+
+    @Override
+    public Order save() {
+        Order order = super.save();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.index(order);
+        return order;
+    }
+
+    @Override
+    public Order delete() {
+        Order order = super.delete();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.remove(order);
+        return order;
     }
 }

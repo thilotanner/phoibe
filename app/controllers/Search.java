@@ -5,7 +5,6 @@ import models.MetricProduct;
 import models.Order;
 import play.i18n.Messages;
 import search.ElasticSearch;
-import search.IndexEvent;
 
 public class Search extends ApplicationController {
     public static void index() {
