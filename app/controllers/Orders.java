@@ -1,13 +1,22 @@
 package controllers;
 
+import com.google.common.base.Strings;
 import models.AccountingPeriod;
 import models.Order;
 import models.OrderStatus;
 import models.ReportType;
+import org.elasticsearch.action.search.SearchPhaseExecutionException;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortOrder;
+import play.Logger;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
+import search.ElasticSearch;
+import search.Query;
+import search.SearchResults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,38 +27,69 @@ public class Orders extends ApplicationController {
             page = 1;
         }
 
-        String where = null;
-        for(ReportType reportType : ReportType.<ReportType>findAll()) {
-            if(reportType.name.equals(filter)) {
-                where = String.format("currentReport.reportType.id = %s AND orderStatus = '%s'", reportType.id, OrderStatus.IN_PROGRESS.toString());
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if(Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
             }
         }
-        if(OrderStatus.NEW.toString().equals(filter)) {
-            where = String.format("orderStatus = '%s'", filter);
-        }
-        if(OrderStatus.FINISHED.toString().equals(filter)) {
-            where = String.format("orderStatus = '%s'", filter);
-        }
-        if(OrderStatus.ABORTED.toString().equals(filter)) {
-            where = String.format("orderStatus = '%s'", filter);
+
+        boolean filterApplied = false;
+        for(ReportType reportType : ReportType.<ReportType>findAll()) {
+            if(reportType.name.equals(filter)) {
+                qb.must(QueryBuilders.fieldQuery("currentReport.reportType.id", reportType.id));
+                qb.must(QueryBuilders.fieldQuery("orderStatus", OrderStatus.IN_PROGRESS.toString()));
+                filterApplied = true;
+            }
         }
 
-        // remove all deleted orders
-        if(where == null) {
-            where = "orderStatus != 'DELETED'";
+        if(filter != null) {
+            try {
+                OrderStatus orderStatus = OrderStatus.valueOf(filter);
+                qb.must(QueryBuilders.fieldQuery("orderStatus", orderStatus.toString()));
+                filterApplied = true;
+            } catch (IllegalArgumentException e) {
+                // do nothing
+            }
         }
-        
-        List<Model> orders = Model.Manager.factoryFor(Order.class).fetch(
-                (page - 1) * getPageSize(),
-                getPageSize(),
-                orderBy,
-                order,
-                new ArrayList<String>(),
-                search,
-                where
-        );
 
-        Long count = Model.Manager.factoryFor(Order.class).count(new ArrayList<String>(), search, where);
+
+        if(!filterApplied) {
+            // exclude all deleted orders
+            qb.mustNot(QueryBuilders.fieldQuery("orderStatus", OrderStatus.DELETED.toString()));
+        }
+
+        Query<Order> query = ElasticSearch.query(qb, Order.class);
+
+        query.from((page - 1) * getPageSize()).size(getPageSize());
+
+        if(!Strings.isNullOrEmpty(orderBy)) {
+            SortOrder sortOrder = SortOrder.ASC;
+            if(!Strings.isNullOrEmpty(order)) {
+                if(order.toLowerCase().equals("desc")) {
+                    sortOrder = SortOrder.DESC;
+                }
+            }
+
+            query.addSort(orderBy, sortOrder);
+        }
+
+        List<Order> orders;
+        Long count;
+
+        try {
+            SearchResults<Order> results = query.fetch();
+            orders = results.objects;
+            count = results.totalCount;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+            flash.now("warning", Messages.get("errorInSearchQuery"));
+
+            orders = new ArrayList<Order>();
+            count = 0l;
+        }
 
         List<String> reportTypes = new ArrayList<String>();
         for(ReportType reportType : ReportType.<ReportType>findAll()) {

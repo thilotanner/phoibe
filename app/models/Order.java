@@ -2,8 +2,10 @@ package models;
 
 import play.Play;
 import play.data.validation.Required;
+import search.indexer.IndexerListener;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Lob;
@@ -18,6 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Orders")
+@EntityListeners({IndexerListener.class})
 public class Order extends EnhancedModel {
 
     private static final NumberFormat REFERENCE_NUMBER_FORMAT = new DecimalFormat("000000");

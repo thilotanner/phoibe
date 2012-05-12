@@ -17,8 +17,8 @@ import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.i18n.Messages;
 import search.ElasticSearch;
-//import search.Query;
-//import search.SearchResults;
+import search.Query;
+import search.SearchResults;
 import util.i18n.CurrencyProvider;
 
 import java.lang.reflect.Type;
@@ -28,54 +28,52 @@ import java.util.List;
 
 public class MetricProducts extends ApplicationController {
     public static void index(int page, String orderBy, String order, String search) {
-//        if (page < 1) {
-//            page = 1;
-//        }
-//
-//        BoolQueryBuilder qb = QueryBuilders.boolQuery();
-//        if(Strings.isNullOrEmpty(search)) {
-//            qb.must(QueryBuilders.matchAllQuery());
-//        } else {
-//            for(String searchPart : search.split("\\s+")) {
-//                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
-//            }
-//        }
-//
-//        Query<MetricProduct> query = ElasticSearch.query(qb, MetricProduct.class);
-//
-//        query.from((page - 1) * getPageSize()).size(getPageSize());
-//
-//        if(!Strings.isNullOrEmpty(orderBy)) {
-//            SortOrder sortOrder = SortOrder.ASC;
-//            if(!Strings.isNullOrEmpty(order)) {
-//                if(order.toLowerCase().equals("desc")) {
-//                    sortOrder = SortOrder.DESC;
-//                }
-//            }
-//
-//            query.addSort(orderBy, sortOrder);
-//        }
-//
-//        query.hydrate(true);
-//
-//        List<MetricProduct> metricProducts;
-//        Long count;
-//
-//        try {
-//            SearchResults<MetricProduct> results = query.fetch();
-//            metricProducts = results.objects;
-//            count = results.totalCount;
-//        } catch (SearchPhaseExecutionException e) {
-//            Logger.warn(String.format("Error in search query: %s", search), e);
-//            flash.now("warning", Messages.get("errorInSearchQuery"));
-//
-//            metricProducts = new ArrayList<MetricProduct>();
-//            count = 0l;
-//        }
-//
-//
-//        renderArgs.put("pageSize", getPageSize());
-//        render(metricProducts, count);
+        if (page < 1) {
+            page = 1;
+        }
+
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if(Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
+            }
+        }
+
+        Query<MetricProduct> query = ElasticSearch.query(qb, MetricProduct.class);
+
+        query.from((page - 1) * getPageSize()).size(getPageSize());
+
+        if(!Strings.isNullOrEmpty(orderBy)) {
+            SortOrder sortOrder = SortOrder.ASC;
+            if(!Strings.isNullOrEmpty(order)) {
+                if(order.toLowerCase().equals("desc")) {
+                    sortOrder = SortOrder.DESC;
+                }
+            }
+
+            query.addSort(orderBy, sortOrder);
+        }
+
+        List<MetricProduct> metricProducts;
+        Long count;
+
+        try {
+            SearchResults<MetricProduct> results = query.fetch();
+            metricProducts = results.objects;
+            count = results.totalCount;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+            flash.now("warning", Messages.get("errorInSearchQuery"));
+
+            metricProducts = new ArrayList<MetricProduct>();
+            count = 0l;
+        }
+
+
+        renderArgs.put("pageSize", getPageSize());
+        render(metricProducts, count);
     }
 
     public static void show(Long id) {
@@ -143,43 +141,41 @@ public class MetricProducts extends ApplicationController {
     }
 
     public static void search(String search) {
-//        BoolQueryBuilder qb = QueryBuilders.boolQuery();
-//        if(Strings.isNullOrEmpty(search)) {
-//            qb.must(QueryBuilders.matchAllQuery());
-//        } else {
-//            for(String searchPart : search.split("\\s+")) {
-//                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
-//            }
-//        }
-//
-//        Query<MetricProduct> query = ElasticSearch.query(qb, MetricProduct.class);
-//
-//        query.from(0).size(getPageSize() * 2);
-//
-//        query.hydrate(true);
-//
-//        List<MetricProduct> metricProducts;
-//
-//        try {
-//            SearchResults<MetricProduct> results = query.fetch();
-//            metricProducts = results.objects;
-//        } catch (SearchPhaseExecutionException e) {
-//            Logger.warn(String.format("Error in search query: %s", search), e);
-//
-//            metricProducts = new ArrayList<MetricProduct>();
-//        }
-//
-//        renderJSON(metricProducts, new JsonSerializer<MetricProduct>() {
-//
-//			public JsonElement serialize(MetricProduct metricProduct, Type type,
-//					JsonSerializationContext jsonSerializationContext)
-//			{
-//				JsonObject object = new JsonObject();
-//				object.addProperty("id", metricProduct.id);
-//				object.addProperty("label", metricProduct.getLabel());
-//				return object;
-//			}
-//		});
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if(Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
+            }
+        }
+
+        Query<MetricProduct> query = ElasticSearch.query(qb, MetricProduct.class);
+
+        query.from(0).size(getPageSize() * 2);
+
+        List<MetricProduct> metricProducts;
+
+        try {
+            SearchResults<MetricProduct> results = query.fetch();
+            metricProducts = results.objects;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+
+            metricProducts = new ArrayList<MetricProduct>();
+        }
+
+        renderJSON(metricProducts, new JsonSerializer<MetricProduct>() {
+
+			public JsonElement serialize(MetricProduct metricProduct, Type type,
+					JsonSerializationContext jsonSerializationContext)
+			{
+				JsonObject object = new JsonObject();
+				object.addProperty("id", metricProduct.id);
+				object.addProperty("label", metricProduct.getLabel());
+				return object;
+			}
+		});
     }
 
     public static void popover(Long id) {

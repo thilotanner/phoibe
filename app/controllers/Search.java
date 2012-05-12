@@ -2,6 +2,7 @@ package controllers;
 
 import models.Contact;
 import models.MetricProduct;
+import models.Order;
 import play.i18n.Messages;
 import search.ElasticSearch;
 import search.IndexEvent;
@@ -34,6 +35,17 @@ public class Search extends ApplicationController {
         }
 
         flash.success(Messages.get("indexingSuccessfullyStarted", Messages.get("metricProducts")));
+        index();
+    }
+
+    public static void indexOrders() {
+        ElasticSearch.deleteIndex(Order.class);
+
+        for(Order order : Order.<Order>findAll()) {
+            ElasticSearch.index(order);
+        }
+
+        flash.success(Messages.get("indexingSuccessfullyStarted", Messages.get("orders")));
         index();
     }
 }

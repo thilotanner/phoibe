@@ -2,17 +2,20 @@ package models;
 
 import play.data.validation.Required;
 import play.data.validation.Valid;
+import search.indexer.IndexerListener;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 @Entity
+@EntityListeners({IndexerListener.class})
 public class MetricProduct extends Product {
 
     @Required

@@ -16,6 +16,9 @@
     <li#{if filter == 'NEW'} class="active"#{/if}>
         <a href="@{index('NEW', 1, null, null, null)}">&{'order.orderStatus.NEW'}</a>
     </li>
+    <li#{if filter == 'IN_PROGRESS'} class="active"#{/if}>
+        <a href="@{index('IN_PROGRESS', 1, null, null, null)}">&{'order.orderStatus.IN_PROGRESS'}</a>
+    </li>
     <li#{if filter == 'FINISHED'} class="active"#{/if}>
         <a href="@{index('FINISHED', 1, null, null, null)}">&{'order.orderStatus.FINISHED'}</a>
     </li>

@@ -2,6 +2,8 @@ package search.indexer;
 
 import models.Contact;
 import models.EnhancedModel;
+import models.MetricProduct;
+import models.Order;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -19,6 +21,8 @@ public class IndexerProvider {
     public IndexerProvider() {
         indexerMap = new HashMap<Class, Indexer>();
         indexerMap.put(Contact.class, new ContactIndexer());
+        indexerMap.put(MetricProduct.class, new MetricProductIndexer());
+        indexerMap.put(Order.class, new OrderIndexer());
     }
 
     public <M extends EnhancedModel> void index(M entity)
