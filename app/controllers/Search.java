@@ -1,10 +1,14 @@
 package controllers;
 
+import deduplication.ContactDeduplicator;
 import models.Contact;
 import models.MetricProduct;
 import models.Order;
 import play.i18n.Messages;
 import search.ElasticSearch;
+
+import java.util.List;
+import java.util.Map;
 
 public class Search extends ApplicationController {
     public static void index() {
@@ -46,5 +50,11 @@ public class Search extends ApplicationController {
 
         flash.success(Messages.get("indexingSuccessfullyStarted", Messages.get("orders")));
         index();
+    }
+
+    public static void deduplicateContacts() throws Exception {
+        ContactDeduplicator deduplicator = new ContactDeduplicator();
+        List<Map<Long, Contact>> duplicates = deduplicator.deduplicate();
+        render(duplicates);
     }
 }

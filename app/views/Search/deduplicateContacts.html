@@ -1,0 +1,49 @@
+#{extends 'main.html' /}
+#{set title:messages.get('duplicates', messages.get('contact')) /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'administration'} <span class="divider">/</span></li>
+    <li class="active">&{'indexing'}</li>
+</ul>
+
+<div class="page-header">
+    <h1>#{get 'title' /}</h1>
+</div>
+
+#{list items:duplicates, as:'duplicate'}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        #{tableSorter objectName:'contact', fieldName:'company' /}
+        #{tableSorter objectName:'contact', fieldName:'firstName' /}
+        #{tableSorter objectName:'contact', fieldName:'lastName' /}
+        #{tableSorter objectName:'contact', fieldName:'street' /}
+        #{tableSorter objectName:'contact', fieldName:'city' /}
+        <th>&{'actions'}</th>
+    </tr>
+    </thead>
+    <tbody>
+        #{list items:duplicate.values(), as:'contact'}
+        <tr>
+            <td>${contact.company}</td>
+            <td>${contact.firstName}</td>
+            <td>${contact.lastName}</td>
+            <td>${contact.street}</td>
+            <td>${contact.city}</td>
+            <td>
+                <a href="@{Contacts.show(contact.id)}">&{'show'}</a>
+                | <a href="@{Contacts.form(contact.id)}">&{'edit'}</a>
+                #{if contact.isDeletable()}
+                    | <a modal="modal" href="@{Contacts.delete(contact.id)}">&{'delete'}</a>
+                #{/if}
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+<hr />
+#{/list}
+
+
+

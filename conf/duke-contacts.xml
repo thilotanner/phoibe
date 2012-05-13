@@ -1,0 +1,58 @@
+<duke>
+    <schema>
+        <threshold>0.998</threshold>
+        <maybe-threshold>0.998</maybe-threshold>
+        <path>data/duke</path>
+
+        <property type="id">
+            <name>id</name>
+        </property>
+
+        <property>
+            <name>company</name>
+            <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
+            <low>0.09</low>
+            <high>0.93</high>
+        </property>
+        <property>
+            <name>firstName</name>
+            <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
+            <low>0.09</low>
+            <high>0.93</high>
+        </property>
+        <property>
+            <name>lastName</name>
+            <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
+            <low>0.09</low>
+            <high>0.93</high>
+        </property>
+        <property>
+            <name>street</name>
+            <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
+            <low>0.09</low>
+            <high>0.93</high>
+        </property>
+        <property>
+            <name>city</name>
+            <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
+            <low>0.09</low>
+            <high>0.93</high>
+        </property>
+    </schema>
+
+    <jdbc>
+        <param name="driver-class" value="com.mysql.jdbc.Driver"/>
+        <param name="connection-string" value="jdbc:mysql://localhost:8889/phoibe?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <param name="user-name" value="root"/>
+        <param name="password" value="root"/>
+        <param name="query" value="select id,company,firstName,lastName,street,city from Contact"/>
+
+        <column name="id"/>
+        <column name="company"/>
+        <column name="firstName"/>
+        <column name="lastName"/>
+        <column name="street"/>
+        <column name="city"/>
+
+    </jdbc>
+</duke>

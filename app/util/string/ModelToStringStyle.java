@@ -9,6 +9,8 @@ import java.util.List;
 
 public class ModelToStringStyle extends ToStringStyle {
 
+    private static final String SEPARATOR = ", ";
+
     private static ToStringStyle modelToStringStyle;
 
     public static ToStringStyle getModelToStringStyle() {
@@ -33,6 +35,16 @@ public class ModelToStringStyle extends ToStringStyle {
         } else {
             super.append(buffer, fieldName, value, fullDetail);
         }
+    }
+
+    @Override
+    protected String getFieldSeparator() {
+        return SEPARATOR;
+    }
+
+    @Override
+    protected String getArraySeparator() {
+        return SEPARATOR;
     }
 
     @Override

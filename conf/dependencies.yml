@@ -7,6 +7,7 @@ require:
     - org.apache.commons -> commons-lang3 3.1
     - org.elasticsearch -> elasticsearch 0.19.2
     - com.googlecode.flyway -> flyway-core 1.6
+    - no.priv.garshol.duke -> duke 0.5
     - net.sf.jasperreports -> jasperreports 4.5.1:
         exclude:
             - org.hibernate -> *
@@ -22,3 +23,8 @@ repositories:
         root:       "https://oss.sonatype.org/content/repositories/releases/"
         contains:
             - org.elasticsearch -> *
+    - duke:
+        type:       iBiblio
+        root:       "http://duke.googlecode.com/hg/maven-repository/"
+        contains:
+            - no.priv.garshol.duke -> *
