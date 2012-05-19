@@ -1,7 +1,7 @@
 <duke>
     <schema>
-        <threshold>0.998</threshold>
-        <maybe-threshold>0.998</maybe-threshold>
+        <threshold>0.9057339039936381</threshold>
+        <maybe-threshold>0.9057339039936381</maybe-threshold>
         <path>data/duke</path>
 
         <property type="id">
@@ -11,32 +11,32 @@
         <property>
             <name>company</name>
             <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
-            <low>0.09</low>
-            <high>0.93</high>
+            <low>0.46558278093899846</low>
+            <high>0.980293137592496</high>
         </property>
         <property>
             <name>firstName</name>
-            <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
-            <low>0.09</low>
-            <high>0.93</high>
+            <comparator>no.priv.garshol.duke.comparators.JaroWinklerTokenized</comparator>
+            <low>0.3894780895403918</low>
+            <high>0.737258653002584</high>
         </property>
         <property>
             <name>lastName</name>
-            <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
-            <low>0.09</low>
-            <high>0.93</high>
+            <comparator>no.priv.garshol.duke.comparators.PersonNameComparator</comparator>
+            <low>0.33473200176209683</low>
+            <high>0.6895391273091356</high>
         </property>
         <property>
             <name>street</name>
             <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
-            <low>0.09</low>
-            <high>0.93</high>
+            <low>0.030475349613534597</low>
+            <high>0.7644584183350849</high>
         </property>
         <property>
             <name>city</name>
-            <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
-            <low>0.09</low>
-            <high>0.93</high>
+            <comparator>no.priv.garshol.duke.comparators.DiceCoefficientComparator</comparator>
+            <low>0.4590544044617058</low>
+            <high>0.6784963225856417</high>
         </property>
     </schema>
 
