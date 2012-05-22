@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.common.base.Strings;
 import models.Account;
 import models.Creditor;
 import models.CreditorAttachment;
@@ -7,10 +8,18 @@ import models.CreditorStatus;
 import models.DebitorStatus;
 import models.ValueAddedTaxRate;
 import org.apache.commons.io.FileUtils;
+import org.elasticsearch.action.search.SearchPhaseExecutionException;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortOrder;
+import play.Logger;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.i18n.Messages;
+import search.ElasticSearch;
+import search.Query;
+import search.SearchResults;
 import util.i18n.CurrencyProvider;
 
 import java.io.File;
@@ -24,24 +33,53 @@ public class Creditors extends ApplicationController {
             page = 1;
         }
 
-        String where = null;
-        for(DebitorStatus debitorStatus : DebitorStatus.values()) {
-            if(debitorStatus.toString().equals(filter)) {
-                where = String.format("creditorStatus = '%s'", filter);
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if(Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
             }
         }
 
-        List<Model> creditors = Model.Manager.factoryFor(Creditor.class).fetch(
-                (page - 1) * getPageSize(),
-                getPageSize(),
-                orderBy,
-                order,
-                new ArrayList<String>(),
-                search,
-                where
-        );
+        if(filter != null && !filter.isEmpty()) {
+            try {
+                CreditorStatus creditorStatus = CreditorStatus.valueOf(filter);
+                qb.must(QueryBuilders.fieldQuery("creditorStatus", creditorStatus.toString()));
+            } catch (IllegalArgumentException e) {
+                // do nothing
+            }
+        }
 
-        Long count = Model.Manager.factoryFor(Creditor.class).count(new ArrayList<String>(), search, where);
+        Query<Creditor> query = ElasticSearch.query(qb, Creditor.class);
+
+        query.from((page - 1) * getPageSize()).size(getPageSize());
+
+        if(!Strings.isNullOrEmpty(orderBy)) {
+            SortOrder sortOrder = SortOrder.ASC;
+            if(!Strings.isNullOrEmpty(order)) {
+                if(order.toLowerCase().equals("desc")) {
+                    sortOrder = SortOrder.DESC;
+                }
+            }
+
+            query.addSort(orderBy, sortOrder);
+        }
+
+        List<Creditor> creditors;
+        Long count;
+
+        try {
+            SearchResults<Creditor> results = query.fetch();
+            creditors = results.objects;
+            count = results.totalCount;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+            flash.now("warning", Messages.get("errorInSearchQuery"));
+
+            creditors = new ArrayList<Creditor>();
+            count = 0l;
+        }
 
         renderArgs.put("pageSize", getPageSize());
         render(creditors, count, filter);

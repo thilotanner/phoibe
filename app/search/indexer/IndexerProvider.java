@@ -1,6 +1,8 @@
 package search.indexer;
 
 import models.Contact;
+import models.Creditor;
+import models.Debitor;
 import models.EnhancedModel;
 import models.MetricProduct;
 import models.Order;
@@ -23,6 +25,8 @@ public class IndexerProvider {
         indexerMap.put(Contact.class, new ContactIndexer());
         indexerMap.put(MetricProduct.class, new MetricProductIndexer());
         indexerMap.put(Order.class, new OrderIndexer());
+        indexerMap.put(Debitor.class, new DebitorIndexer());
+        indexerMap.put(Creditor.class, new CreditorIndexer());
     }
 
     public <M extends EnhancedModel> void index(M entity)
@@ -52,7 +56,9 @@ public class IndexerProvider {
     }
 
     public <M extends EnhancedModel> void deleteIndex(Class<M> clazz) {
+        Indexer indexer = getIndexer(clazz);
 
+        indexer.removeIndex();
     }
 
     public <M extends EnhancedModel> SearchRequestBuilder builder(QueryBuilder builder, Class<M> clazz) {

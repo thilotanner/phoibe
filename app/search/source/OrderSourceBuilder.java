@@ -14,7 +14,7 @@ public class OrderSourceBuilder implements SourceBuilder<Order> {
         builder.startObject()
                 .field("id", order.id)
                 .field("description", order.description)
-                .field(SourceBuilder.SORTABLE_INDEX_PREFIX + "name", order.description)
+                .field(SourceBuilder.SORTABLE_INDEX_PREFIX + "description", order.description)
                 .field("comments", order.comments)
 
                 // ordering contact

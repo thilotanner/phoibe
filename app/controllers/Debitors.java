@@ -1,10 +1,19 @@
 package controllers;
 
+import com.google.common.base.Strings;
 import models.Debitor;
 import models.DebitorStatus;
+import org.elasticsearch.action.search.SearchPhaseExecutionException;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortOrder;
+import play.Logger;
 import play.data.validation.Valid;
 import play.db.Model;
 import play.i18n.Messages;
+import search.ElasticSearch;
+import search.Query;
+import search.SearchResults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,24 +24,53 @@ public class Debitors extends ApplicationController {
             page = 1;
         }
 
-        String where = null;
-        for(DebitorStatus debitorStatus : DebitorStatus.values()) {
-            if(debitorStatus.toString().equals(filter)) {
-                where = String.format("debitorStatus = '%s'", filter);
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if(Strings.isNullOrEmpty(search)) {
+            qb.must(QueryBuilders.matchAllQuery());
+        } else {
+            for(String searchPart : search.split("\\s+")) {
+                qb.must(QueryBuilders.queryString(String.format("*%s*", searchPart)).defaultField("_all"));
             }
         }
 
-        List<Model> debitors = Model.Manager.factoryFor(Debitor.class).fetch(
-                (page - 1) * getPageSize(),
-                getPageSize(),
-                orderBy,
-                order,
-                new ArrayList<String>(),
-                search,
-                where
-        );
+        if(filter != null && !filter.isEmpty()) {
+            try {
+                DebitorStatus debitorStatus = DebitorStatus.valueOf(filter);
+                qb.must(QueryBuilders.fieldQuery("debitorStatus", debitorStatus.toString()));
+            } catch (IllegalArgumentException e) {
+                // do nothing
+            }
+        }
 
-        Long count = Model.Manager.factoryFor(Debitor.class).count(new ArrayList<String>(), search, where);
+        Query<Debitor> query = ElasticSearch.query(qb, Debitor.class);
+
+        query.from((page - 1) * getPageSize()).size(getPageSize());
+
+        if(!Strings.isNullOrEmpty(orderBy)) {
+            SortOrder sortOrder = SortOrder.ASC;
+            if(!Strings.isNullOrEmpty(order)) {
+                if(order.toLowerCase().equals("desc")) {
+                    sortOrder = SortOrder.DESC;
+                }
+            }
+
+            query.addSort(orderBy, sortOrder);
+        }
+
+        List<Debitor> debitors;
+        Long count;
+
+        try {
+            SearchResults<Debitor> results = query.fetch();
+            debitors = results.objects;
+            count = results.totalCount;
+        } catch (SearchPhaseExecutionException e) {
+            Logger.warn(String.format("Error in search query: %s", search), e);
+            flash.now("warning", Messages.get("errorInSearchQuery"));
+
+            debitors = new ArrayList<Debitor>();
+            count = 0l;
+        }
 
         renderArgs.put("pageSize", getPageSize());
         render(debitors, count, filter);

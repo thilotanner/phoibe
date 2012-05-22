@@ -2,6 +2,8 @@ package controllers;
 
 import deduplication.ContactDeduplicator;
 import models.Contact;
+import models.Creditor;
+import models.Debitor;
 import models.MetricProduct;
 import models.Order;
 import play.i18n.Messages;
@@ -49,6 +51,28 @@ public class Search extends ApplicationController {
         }
 
         flash.success(Messages.get("indexingSuccessfullyStarted", Messages.get("orders")));
+        index();
+    }
+
+    public static void indexDebitors() {
+        ElasticSearch.deleteIndex(Debitor.class);
+
+        for(Debitor debitor : Debitor.<Debitor>findAll()) {
+            ElasticSearch.index(debitor);
+        }
+
+        flash.success(Messages.get("indexingSuccessfullyStarted", Messages.get("debitors")));
+        index();
+    }
+
+    public static void indexCreditors() {
+        ElasticSearch.deleteIndex(Creditor.class);
+
+        for(Creditor creditor : Creditor.<Creditor>findAll()) {
+            ElasticSearch.index(creditor);
+        }
+
+        flash.success(Messages.get("indexingSuccessfullyStarted", Messages.get("creditors")));
         index();
     }
 
