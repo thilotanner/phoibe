@@ -4,7 +4,9 @@ import org.joda.time.DateTime;
 import play.Play;
 import play.data.validation.Required;
 import play.data.validation.Valid;
+import play.db.jpa.JPA;
 import play.i18n.Messages;
+import search.ElasticSearch;
 import util.i18n.CurrencyProvider;
 
 import javax.persistence.Embedded;
@@ -198,5 +200,29 @@ public class Creditor extends EnhancedModel {
         }
 
         return creditorAttachments;
+    }
+
+    @Override
+    public Creditor save() {
+        Creditor creditor = super.save();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.index(creditor);
+        return creditor;
+    }
+
+    @Override
+    public Creditor delete() {
+        Creditor creditor = super.delete();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.remove(creditor);
+        return creditor;
     }
 }

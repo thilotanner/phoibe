@@ -1,7 +1,9 @@
 package models;
 
 import play.data.validation.Required;
+import play.db.jpa.JPA;
 import play.i18n.Messages;
+import search.ElasticSearch;
 import util.i18n.CurrencyProvider;
 
 import javax.persistence.Entity;
@@ -159,6 +161,30 @@ public class Debitor extends EnhancedModel {
 
     public boolean isEditable() {
         return debitorStatus == DebitorStatus.DUE;
+    }
+
+    @Override
+    public Debitor save() {
+        Debitor debitor = super.save();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.index(debitor);
+        return debitor;
+    }
+
+    @Override
+    public Debitor delete() {
+        Debitor debitor = super.delete();
+
+        // commit transaction prior to index in order to make entity visible to indexer job
+        JPA.em().getTransaction().commit();
+        JPA.em().getTransaction().begin();
+
+        ElasticSearch.remove(debitor);
+        return debitor;
     }
 
     private void buildAndSaveVatCorrectionEntry() {
