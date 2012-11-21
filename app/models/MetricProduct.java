@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.db.jpa.JPA;
@@ -52,6 +53,7 @@ public class MetricProduct extends Product {
 
     public String orderNumber;
 
+    @JsonIgnore
     @Lob
     public String comments;
 

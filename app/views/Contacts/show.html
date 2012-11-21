@@ -8,49 +8,83 @@
 
 #{editHeader contact.id /}
 
-<dl>
+<dl class="dl-horizontal">
+    #{if contact.company }
     <dt>&{'contact.company'}</dt>
     <dd>${contact.company}</dd>
+    #{/if}
 
+    #{if contact.title }
     <dt>&{'contact.title'}</dt>
     <dd>#{if contact.title}&{"contact.title." + contact.title}#{/if}</dd>
+    #{/if}
 
+    #{if contact.firstName }
     <dt>&{'contact.firstName'}</dt>
     <dd>${contact.firstName}</dd>
+    #{/if}
 
+    #{if contact.lastName }
     <dt>&{'contact.lastName'}</dt>
     <dd>${contact.lastName}</dd>
+    #{/if}
 
+    #{if contact.street }
     <dt>&{'contact.street'}</dt>
     <dd>${contact.street}</dd>
+    #{/if}
 
+    #{if contact.postOfficeBox }
     <dt>&{'contact.postOfficeBox'}</dt>
     <dd>${contact.postOfficeBox}</dd>
+    #{/if}
 
+    #{if contact.postalCode }
     <dt>&{'contact.postalCode'}</dt>
     <dd>${contact.postalCode}</dd>
+    #{/if}
 
+    #{if contact.city }
     <dt>&{'contact.city'}</dt>
     <dd>${contact.city}</dd>
+    #{/if}
 
+    #{if contact.countryCode }
     <dt>&{'contact.countryCode'}</dt>
     <dd>${contact.countryCode}</dd>
+    #{/if}
 
+    #{if contact.phone }
     <dt>&{'contact.phone'}</dt>
     <dd>${contact.phone}</dd>
+    #{/if}
 
+    #{if contact.fax }
     <dt>&{'contact.fax'}</dt>
     <dd>${contact.fax}</dd>
+    #{/if}
 
+    #{if contact.mobile }
     <dt>&{'contact.mobile'}</dt>
     <dd>${contact.mobile}</dd>
+    #{/if}
 
+    #{if contact.email }
     <dt>&{'contact.email'}</dt>
-    <dd>${contact.email}</dd>
+    <dd><a href="mailto:${contact.email}">${contact.email}</a></dd>
+    #{/if}
 
+    #{if contact.website }
     <dt>&{'contact.website'}</dt>
-    <dd>${contact.website}</dd>
+    <dd><a href="${contact.website}">${contact.website}</a></dd>
+    #{/if}
 
+
+    #{if contact.comments }
     <dt>&{'contact.comments'}</dt>
     <dd>${contact.comments?.raw()}</dd>
+    #{/if}
 </dl>
+
+<h2>Karte</h2>
+<iframe width="600" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.ch/maps?q=${contact.street},+${contact.postalCode}+${contact.city}&amp;hl=de&amp;ie=UTF8&amp;iwloc=A&amp;output=embed"></iframe>

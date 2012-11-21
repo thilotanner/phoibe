@@ -2,6 +2,10 @@ body {
     padding-top: 60px;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .modal {
     width: 750px;
 }
@@ -14,6 +18,11 @@ body {
 .modal form {
     margin-bottom: 0; /* fix margin for modal dialogs */
 }
+
+.popover {
+    width: auto;
+}
+
 
 .move {
     cursor: move;
@@ -31,12 +40,24 @@ body {
     -webkit-animation-duration: 4s;
 }
 
-[class^="icon-"] {
-    background-image: url(../images/glyphicons-halflings.png); /* Overwrite sprites path */
+a i {
+    font-size: 18px;
+    width: 18px;
 }
 
-.icon-white {
-    background-image: url(../images/glyphicons-halflings-white.png); /* Overwrite sprites path */
+.table-hover tbody tr:hover td {
+    background: #fff6d9;
+}
+
+table td {
+    padding: 0;
+}
+
+table .tdlink {
+    width: 100%;
+    height: 100%;
+    line-height: 100%;
+    display: inline-block;
 }
 
 /* Table headers ported from Bootstrap 1.4.0 */

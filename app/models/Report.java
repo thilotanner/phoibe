@@ -1,6 +1,8 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
+import com.google.gson.annotations.Expose;
 import play.data.validation.Required;
 import play.i18n.Messages;
 import util.extensions.PercentageExtensions;
@@ -25,9 +27,11 @@ import java.util.Set;
 @Entity
 public class Report extends EnhancedModel {
 
+    @JsonIgnore
     @ManyToOne
     public ReportType reportType;
 
+    @JsonIgnore
     @ManyToOne
     public Order order;
 

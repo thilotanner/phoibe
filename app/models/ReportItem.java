@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ReportItem extends EnhancedModel {
 
+    @JsonIgnore
     @ManyToOne
     public Report report;
 

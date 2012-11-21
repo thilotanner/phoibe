@@ -9,6 +9,7 @@ all=alle
 cancel=abbrechen
 chargeOffQuestion=Sind Sie sicher, dass Sie den Restbetrag in Höhe von «%s» abschreiben möchten?
 correction=Korrektur
+corrections=Korrekturen
 create=%s erstellen
 createAction=erstellen
 createQuestion=Sind Sie sicher, dass Sie «%s» erstellen möchten?
@@ -17,6 +18,7 @@ database=Datenbank
 deduplicate=%s deduplizieren
 delete=löschen
 deleteQuestion=Sind Sie sicher, dass Sie «%s» löschen möchten?
+description=Beschreibung
 discountQuestion=Sind Sie sicher, dass Sie den Restbetrag in Höhe von «%s» skontieren möchten?
 downloadPdf=PDF herunterladen
 duplicate=duplizieren
@@ -46,6 +48,7 @@ successfullyFinished=%s wurde erfolgreich beendet
 successfullySaved=%s wurde erfolgreich gespeichert
 successfullyStarted=%s wurde erfolgreich gestartet
 true=Ja
+total=Total
 updated=Änderungsdatum
 valueAddedTax=MWSt.
 workflow=Auftragsdurchlauf
@@ -167,6 +170,7 @@ creditor.expenseAccount.id=Aufwands-Konto
 creditor.inputTaxAccount.id=Vorsteuer-Konto
 creditor.valueAddedTaxRate.id=Mehrwertsteuersatz
 creditor.amountDue=Restbetrag
+creditor.dateOfInvoice=Rechnungsdatum
 creditor.due=Fälligkeit
 creditor.paid=Bezahlt am
 creditor.creditorStatus=Kreditorstatus
@@ -355,6 +359,15 @@ valueAddedTaxRate.description=Beschreibung
 valueAddedTaxRate.rate=Steuersatz
 valueAddedTaxRate.recapitulation=Rekapitulation MWSt.
 valueAddedTaxRate.zeroRate=Ohne MWSt.
+
+valueAddedTaxRateJournal=MWSt.-Journal
+valueAddedTaxRateJournal.from=Von
+valueAddedTaxRateJournal.to=Bis
+valueAddedTaxRateJournal.netAmount=Nettobetrag
+valueAddedTaxRateJournal.inputValueAddedTax=Vorsteuer
+journal.from=Von
+journal.to=Bis
+
 
 # Paging
 # ~~~~~

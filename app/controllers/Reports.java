@@ -1,5 +1,8 @@
 package controllers;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.GsonBuilder;
 import models.AdditionalReportItem;
 import models.MetricProductReportItem;
 import models.Order;
@@ -20,6 +23,7 @@ import util.transition.TransitionStrategy;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +87,16 @@ public class Reports extends ApplicationController {
         }
 
         render(report);
+    }
+
+    public static void json(Long id) throws IOException {
+        notFoundIfNull(id);
+        Report report = Report.findById(id);
+        notFoundIfNull(report);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(report);
+        renderJSON(json);
     }
 
     public static void download(Long id) {

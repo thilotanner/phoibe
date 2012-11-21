@@ -9,7 +9,7 @@
 #{addHeader 'valueAddedTaxRate' /}
 
 #{tableSearch /}
-<table class="table table-striped">
+<table class="table table-hover table-striped">
     <thead>
         <tr>
             #{tableSorter objectName:'valueAddedTaxRate', fieldName:'description' /}
@@ -23,7 +23,7 @@
             <td>${valueAddedTaxRate.description}</td>
             <td>${valueAddedTaxRate}</td>
             <td>
-                <a href="@{form(valueAddedTaxRate.id)}">&{'edit'}</a>
+                <a href="@{form(valueAddedTaxRate.id)}"><i class="icon-pencil"></i> &{'edit'}</a>
             </td>
         </tr>
         #{/list}

@@ -36,7 +36,7 @@
     <h1>#{get 'title' /}</h1>
 </div>
 
-<dl>
+<dl class="dl-horizontal">
     <dt>&{'order.description'}</dt>
     <dd>${report.order.description}</dd>
 
@@ -103,9 +103,10 @@
 </div>
 #{/if}
 
-<table id="report_item_table" class="table table-striped">
+<table id="report_item_table" class="table table-hover table-striped">
     <thead>
         <tr>
+            <th></th>
             <th>&{'reportItem.amount'}</th>
             <th>&{'reportItem.metric.symbol'}</th>
             <th>&{'reportItem.description'}</th>
@@ -117,6 +118,7 @@
     <tbody>
         #{list items:report.reportItems, as:'reportItem'}
         <tr id="${reportItem.id}"#{if report.isEditable()} class="move"#{/if}>
+            <td><i class="icon-reorder"></i></td>
             <td>${reportItem.amount}</td>
             <td>${reportItem.metric.symbol}</td>
             <td>${reportItem.description?.raw()}</td>
@@ -124,9 +126,9 @@
             <td>${reportItem.totalPrice}</td>
             <td>
                 #{if report.isEditable()}
-                <a href="@{reportItemForm(reportItem.id)}">&{'edit'}</a>
-                | <a href="@{duplicateReportItem(reportItem.id)}">&{'duplicate'}</a>
-                | <a href="@{confirmDeleteItem(reportItem.id)}" modal=modal>&{'delete'}</a>
+                <a href="@{reportItemForm(reportItem.id)}"><i class="icon-pencil"></i> &{'edit'}</a><br />
+                <a href="@{duplicateReportItem(reportItem.id)}"><i class="icon-copy"></i> &{'duplicate'}</a><br />
+                <a href="@{confirmDeleteItem(reportItem.id)}" modal=modal><i class="icon-remove"></i> &{'delete'}</a>
                 #{/if}
             </td>
         </tr>

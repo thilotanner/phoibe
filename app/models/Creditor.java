@@ -51,6 +51,10 @@ public class Creditor extends EnhancedModel {
 
     @Required
     @Temporal(TemporalType.DATE)
+    public Date dateOfInvoice;
+
+    @Required
+    @Temporal(TemporalType.DATE)
     public Date due;
 
     @Enumerated(EnumType.STRING)

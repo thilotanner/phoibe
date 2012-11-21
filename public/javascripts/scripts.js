@@ -21,6 +21,7 @@ $(document).ready(function() {
     $("[rel=popover]")
         .popover({
             placement: 'bottom',
+            html: true,
             content: function() {
                 $.ajax({
                     url: $(this).attr('data-source'),

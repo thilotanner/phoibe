@@ -9,7 +9,7 @@
 #{addHeader 'metric' /}
 
 #{tableSearch /}
-<table class="table table-striped">
+<table class="table table-hover table-striped">
     <thead>
         <tr>
             #{tableSorter objectName:'metric', fieldName:'name' /}
@@ -23,7 +23,7 @@
             <td>${metric.name}</td>
             <td>${metric.symbol}</td>
             <td>
-                <a href="@{form(metric.id)}">&{'edit'}</a>
+                <a href="@{form(metric.id)}"><i class="icon-pencil"></i> &{'edit'}</a>
             </td>
         </tr>
         #{/list}

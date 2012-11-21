@@ -12,10 +12,10 @@
         <a href="@{acknowledge(batchJobRun.id)}" class="btn btn-success"><span class="icon-ok icon-white"></span> &{'acknowledge'}</a>
     </span>
     #{/if}
-    <h1>#{get 'title' /}</h1>
+    <h1>#{get 'title' /} <small>${batchJobRun.jobClassName}</small></h1>
 </div>
 
-<dl>
+<dl class="dl-horizontal">
     <dt>&{'batchJobRun.batchJobRunStatus'}</dt>
     <dd>#{batchJobRunStatus batchJobRun /}</dd>
 

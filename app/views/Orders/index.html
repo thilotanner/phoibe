@@ -31,25 +31,32 @@
 </ul>
 
 #{tableSearch /}
-<table class="table table-striped">
+<table class="table table-hover table-striped ">
     <thead>
         <tr>
             <th>&{'order.orderStatus'}</th>
             #{tableSorter objectName:'order', fieldName:'description' /}
             <th>&{'order.orderingContact.id'}</th>
+            <th></th>
             <th>&{'actions'}</th>
         </tr>
     </thead>
     <tbody>
         #{list items:orders, as:'order'}
         <tr>
-            <td>#{orderStatus order /}</td>
-            <td>${order.description}</td>
-            <td><a href="@{Contacts.show(order.orderingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.orderingContact.id)}">${order.orderingContact.label}</a></td>
+            <td><a href="@{show(order.id)}" class="tdlink">#{orderStatus order /}</a></td>
+            <td><a href="@{show(order.id)}" class="tdlink">${order.description}</a></td>
             <td>
-                <a href="@{show(order.id)}">&{'show'}</a>
+                <a href="@{show(order.id)}" class="tdlink">
+                    ${order.orderingContact.label}
+                </a>
+            </td>
+            <td>
+                <span rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(order.orderingContact.id)}" class="label">Info</span>
+            </td>
+            <td>
                 #{if order.isEditable()}
-                | <a href="@{form(order.id)}">&{'edit'}</a>
+                <a href="@{form(order.id)}"><i class="icon-pencil"></i> &{'edit'}</a>
                 #{/if}
                 #{if order.isDeletable()}
                 | <a modal="modal" href="@{delete(order.id)}">&{'delete'}</a>

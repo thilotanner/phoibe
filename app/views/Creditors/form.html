@@ -8,6 +8,8 @@
 <fieldset>
     <legend>&{'creditor'}</legend>
 
+    #{dateField property:'creditor.dateOfInvoice', object:creditor /}
+
     #{dateField property:'creditor.due', object:creditor /}
 
     <div class="control-group ${errors.forKey('file') ? 'error' : ''}">

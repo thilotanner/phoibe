@@ -9,7 +9,7 @@
 #{addHeader 'reportType' /}
 
 #{tableSearch /}
-<table class="table table-striped">
+<table class="table table-hover table-striped">
     <thead>
         <tr>
             #{tableSorter objectName:'reportType', fieldName:'name' /}
@@ -37,12 +37,11 @@
 
 
         <tr>
-            <td>${reportType.name}</td>
-            <td>&{reportType.rootReportType}</td>
-            <td><span class="label" style="background-color: ${reportType.reportColor};">${reportType.name}</span></td>
+            <td><a href="@{show(reportType.id)}" class="tdlink">${reportType.name}</a></td>
+            <td><a href="@{show(reportType.id)}" class="tdlink">&{reportType.rootReportType}</a></td>
+            <td><a href="@{show(reportType.id)}" class="tdlink"><span class="label" style="background-color: ${reportType.reportColor};">${reportType.name}</span></a></td>
             <td>
-                <a href="@{show(reportType.id)}">&{'show'}</a> |
-                <a href="@{form(reportType.id)}">&{'edit'}</a>
+                <a href="@{form(reportType.id)}"><i class="icon-pencil"></i> &{'edit'}</a>
             </td>
         </tr>
         #{/list}

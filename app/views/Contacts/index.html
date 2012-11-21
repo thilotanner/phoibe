@@ -8,7 +8,7 @@
 #{addHeader 'contact' /}
 
 #{tableSearch /}
-<table class="table table-striped">
+<table class="table table-hover table-striped">
     <thead>
         <tr>
             #{tableSorter objectName:'contact', fieldName:'company' /}
@@ -22,16 +22,15 @@
     <tbody>
         #{list items:contacts, as:'contact'}
         <tr>
-            <td>${contact.company}</td>
-            <td>${contact.firstName}</td>
-            <td>${contact.lastName}</td>
-            <td>${contact.street}</td>
-            <td>${contact.city}</td>
+            <td><a href="@{show(contact.id)}" class="tdlink">${contact.company}</a></td>
+            <td><a href="@{show(contact.id)}" class="tdlink">${contact.firstName}</a></td>
+            <td><a href="@{show(contact.id)}" class="tdlink">${contact.lastName}</a></td>
+            <td><a href="@{show(contact.id)}" class="tdlink">${contact.street}</a></td>
+            <td><a href="@{show(contact.id)}" class="tdlink">${contact.city}</a></td>
             <td>
-                <a href="@{show(contact.id)}">&{'show'}</a>
-                | <a href="@{form(contact.id)}">&{'edit'}</a>
+                <a href="@{form(contact.id)}"><i class="icon-pencil"></i> &{'edit'}</a><br />
                 #{if contact.isDeletable()}
-                | <a modal="modal" href="@{delete(contact.id)}">&{'delete'}</a>
+                <a modal="modal" href="@{delete(contact.id)}"><i class="icon-trash"></i> &{'delete'}</a>
                 #{/if}
             </td>
         </tr>

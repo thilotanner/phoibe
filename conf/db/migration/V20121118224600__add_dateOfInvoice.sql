@@ -1,0 +1,1 @@
+UPDATE Creditor SET dateOfInvoice = DATE_SUB(due, INTERVAL 1 MONTH);

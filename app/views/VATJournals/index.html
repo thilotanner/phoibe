@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+#{set title:messages.get('valueAddedTaxRateJournal') /}
+
+<ul class="breadcrumb">
+    <li class="active">&{'accounting'} <span class="divider">/</span></li>
+    <li class="active">&{'valueAddedTaxRateJournal'}</li>
+</ul>
+
+#{form @journal(), class:'form-horizontal'}
+
+<fieldset>
+    <legend>&{'valueAddedTaxRateJournal'}</legend>
+
+    #{dateField property:'journal.from', object:journal /}
+
+    #{dateField property:'journal.to', object:journal /}
+</fieldset>
+
+<div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="&{'submit'}">
+    <a href="@{index}" class="btn">&{'cancel'}</a>
+</div>
+#{/form}

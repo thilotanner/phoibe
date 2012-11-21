@@ -9,7 +9,7 @@
 
 #{editHeader reportType.id /}
 
-<dl>
+<dl class="dl-horizontal">
     <dt>&{'reportType.name'}</dt>
     <dd>${reportType.name}</dd>
 </dl>
@@ -19,7 +19,7 @@
     <a href="@{ReportTransitions.create(reportType.id)}" class="btn btn-primary">&{'create', messages.get('reportTransition')}</a>
 </div>
 
-<table class="table table-striped">
+<table class="table table-hover table-striped">
     <thead>
         <tr>
             <th>&{'reportType.name'}</th>
@@ -31,7 +31,7 @@
         <tr>
             <td>${reportTransition.targetReportType.name}</td>
             <td>
-                <a href="@{ReportTransitions.form(reportTransition.id)}">&{'edit'}</a>
+                <a href="@{ReportTransitions.form(reportTransition.id)}"><i class="icon-pencil"></i> &{'edit'}</a>
             </td>
         </tr>
         #{/list}

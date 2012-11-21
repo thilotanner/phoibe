@@ -2,70 +2,79 @@
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-        <div class="container">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
             <a href="@{Dashboard.index}" class="brand">${applicationName}</a>
-            <ul class="nav">
-                <li><a href="@{Dashboard.index}">&{'dashboard'}</a></li>
-                <li><a href="@{Contacts.index}">&{'contacts'}</a></li>
-                <li><a href="@{Orders.index}">&{'orders'}</a></li>
-                <li class="dropdown">
-                    <a href="#"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown">&{'products'} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="@{MetricProducts.index}">&{'metricProducts'}</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown">&{'accounting'} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="@{Debitors.index}">&{'debitors'}</a></li>
-                        <li><a href="@{Creditors.index}">&{'creditors'}</a></li>
-                        <li><a href="@{Entries.index}">&{'entries'}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@{BalanceSheets.index}">&{'balanceSheet'}</a></li>
-                        <li><a href="@{ProfitAndLossAccounts.index}">&{'profitAndLossAccount'}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@{AccountingPeriods.index}">&{'accountingPeriods'}</a></li>
-                        <li><a href="@{EntryTemplates.index}">&{'entryTemplates'}</a></li>
-                        <li><a href="@{Accounts.index}">&{'accounts'}</a></li>
-                        <li><a href="@{AccountGroups.index}">&{'accountGroups'}</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown">&{'administration'} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="@{ReportTypes.index}">&{'reportTypes'}</a></li>
-                        <li><a href="@{Metrics.index}">&{'metrics'}</a></li>
-                        <li><a href="@{ValueAddedTaxRates.index}">&{'valueAddedTaxRates'}</a></li>
-                        <li><a href="@{Currencies.index}">&{'currencies'}</a></li>
-                        <li><a href="@{Countries.index}">&{'countries'}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@{Search.index}">&{'indexing'}</a></li>
-                        <li><a href="@{Search.administration}">&{'searchAdministration'}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@{Backup.index}">&{'backup'}</a></li>
-                        <li><a href="@{BatchJobRuns.index}">&{'batchJobRuns'}</a></li>
-                        <li><a href="@{Status.index}">&{'status'}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@{ActivityLogEntries.index}">&{'activityLogEntries'}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@{Users.index}">&{'users'}</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <p class="navbar-text pull-right">
-                <a href="@{Secure.logout}">&{'logout', currentUser?.username}</a>
-            </p>
+            <div class="nav-collapse collapse">
+                <p class="navbar-text pull-right">
+                    <a href="@{Secure.logout}"><i class="icon-signout"></i> &{'logout', currentUser?.username}</a>
+                </p>
+                <ul class="nav">
+                    <li><a href="@{Dashboard.index}"><i class="icon-dashboard"></i> &{'dashboard'}</a></li>
+                    <li><a href="@{Contacts.index}"><i class="icon-user"></i> &{'contacts'}</a></li>
+                    <li><a href="@{Orders.index('IN_PROGRESS')}"><i class="icon-tasks"></i> &{'orders'}</a></li>
+                    <li class="dropdown">
+                        <a href="#"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown"><i class="icon-truck"></i> &{'products'} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@{MetricProducts.index}">&{'metricProducts'}</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown"><i class="icon-book"></i> &{'accounting'} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@{Debitors.index('DUE')}">&{'debitors'}</a></li>
+                            <li><a href="@{Creditors.index('DUE')}">&{'creditors'}</a></li>
+                            <li><a href="@{Entries.index}">&{'entries'}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@{BalanceSheets.index}">&{'balanceSheet'}</a></li>
+                            <li><a href="@{ProfitAndLossAccounts.index}">&{'profitAndLossAccount'}</a></li>
+                            <li><a href="@{VATJournals.index}">&{'valueAddedTaxRateJournal'}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@{AccountingPeriods.index}">&{'accountingPeriods'}</a></li>
+                            <li><a href="@{EntryTemplates.index}">&{'entryTemplates'}</a></li>
+                            <li><a href="@{Accounts.index}">&{'accounts'}</a></li>
+                            <li><a href="@{AccountGroups.index}">&{'accountGroups'}</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown"><i class="icon-cogs"></i> &{'administration'} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@{ReportTypes.index}">&{'reportTypes'}</a></li>
+                            <li><a href="@{Metrics.index}">&{'metrics'}</a></li>
+                            <li><a href="@{ValueAddedTaxRates.index}">&{'valueAddedTaxRates'}</a></li>
+                            <li><a href="@{Currencies.index}">&{'currencies'}</a></li>
+                            <li><a href="@{Countries.index}">&{'countries'}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@{Search.index}">&{'indexing'}</a></li>
+                            <li><a href="@{Search.administration}">&{'searchAdministration'}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@{Backup.index}">&{'backup'}</a></li>
+                            <li><a href="@{BatchJobRuns.index}">&{'batchJobRuns'}</a></li>
+                            <li><a href="@{Status.index}">&{'status'}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@{ActivityLogEntries.index}">&{'activityLogEntries'}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@{Users.index}">&{'users'}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <section id="content">
         #{if flash.success}
         <div class="alert alert-success">

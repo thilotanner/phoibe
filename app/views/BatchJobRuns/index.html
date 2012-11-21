@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 #{set title:messages.get('batchJobRuns') /}
 
-<ul class="breadcrumb">
+<ul class="breadcrumb" xmlns="http://www.w3.org/1999/html">
     <li class="active">&{'administration'} <span class="divider">/</span></li>
     <li class="active">&{'batchJobRuns'}</li>
 </ul>
@@ -18,7 +18,7 @@ ${status}
     <h2>&{'batchJobRun.runningJobs'}</h2>
 </div>
 
-<table class="table table-striped">
+<table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>&{'batchJobRun.batchJobRunStatus'}</th>
@@ -45,7 +45,7 @@ ${status}
     <h2>&{'batchJobRun.finishedJobRuns'}</h2>
 </div>
 
-<table class="table table-striped">
+<table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>&{'batchJobRun.batchJobRunStatus'}</th>
@@ -58,14 +58,13 @@ ${status}
     <tbody>
     #{list items:batchJobRuns, as:'batchJobRun'}
     <tr>
-        <td>#{batchJobRunStatus batchJobRun /}</td>
-        <td>${batchJobRun.jobClassName}</td>
-        <td>${batchJobRun.startDate}</td>
-        <td>${batchJobRun.endDate}</td>
+        <td><a href="@{show(batchJobRun.id)}" class="tdlink">#{batchJobRunStatus batchJobRun /}</a></td>
+        <td><a href="@{show(batchJobRun.id)}" class="tdlink">${batchJobRun.jobClassName}</a></td>
+        <td><a href="@{show(batchJobRun.id)}" class="tdlink">${batchJobRun.startDate}</a></td>
+        <td><a href="@{show(batchJobRun.id)}" class="tdlink">${batchJobRun.endDate}</a></td>
         <td>
-            <a href="@{show(batchJobRun.id)}">&{'show'}</a>
             #{if batchJobRun.isUnacknowledged()}
-            | <a href="@{acknowledge(batchJobRun.id)}">&{'acknowledge'}</a>
+            <a href="@{acknowledge(batchJobRun.id)}"><i class="icon-ok"></i> &{'acknowledge'}</a>
             #{/if}
         </td>
     </tr>

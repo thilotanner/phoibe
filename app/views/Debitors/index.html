@@ -23,12 +23,13 @@
 </ul>
 
 #{tableSearch /}
-<table class="table table-striped">
+<table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>&{'debitor.debitorStatus'}</th>
         <th>&{'order'}</th>
         <th>&{'order.billingContact.id'}</th>
+        <th></th>
         <th>&{'debitor.due'}</th>
         <th>&{'debitor.amountDue'}</th>
         <th>&{'actions'}</th>
@@ -37,15 +38,15 @@
     <tbody>
     #{list items:debitors, as:'debitor'}
     <tr>
-        <td>#{debitorStatus debitor /}</td>
-        <td><a href="@{Reports.show(debitor.report.id)}">${debitor.report.order.description}</a></td>
-        <td><a href="@{Contacts.show(debitor.report.order.billingContact.id)}" rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(debitor.report.order.billingContact.id)}">${debitor.report.order.billingContact.label}</a></td>
-        <td>${debitor.due.format()}</td>
-        <td>${debitor.getAmountDue().asRounded()}</td>
+        <td><a href="@{show(debitor.id)}" class="tdlink">#{debitorStatus debitor /}</a></td>
+        <td><a href="@{show(debitor.id)}" class="tdlink">${debitor.report.order.description}</a></td>
+        <td><a href="@{show(debitor.id)}" class="tdlink">${debitor.report.order.billingContact.label}</a></td>
+        <td><a rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(debitor.report.order.billingContact.id)}"><span class="label">Info</span></a></td>
+        <td><a href="@{show(debitor.id)}" class="tdlink">${debitor.due.format()}</a></td>
+        <td><a href="@{show(debitor.id)}" class="tdlink">${debitor.getAmountDue().asRounded()}</a></td>
         <td>
-            <a href="@{show(debitor.id)}">&{'show'}</a>
             #{if debitor.isEditable()}
-            | <a href="@{form(debitor.id)}">&{'edit'}</a>
+            <a href="@{form(debitor.id)}"><i class="icon-pencil"></i>&{'edit'}</a>
             #{/if}
         </td>
     </tr>
