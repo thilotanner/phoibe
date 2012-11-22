@@ -1,7 +1,12 @@
 package models;
 
+import util.i18n.CurrencyProvider;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VATJournal {
 
@@ -9,31 +14,117 @@ public class VATJournal {
 
     public Date to;
 
-    public List<Debitor> debitors;
+    private List<Debitor> debitors = new ArrayList<Debitor>();
 
-    public Money totalNetAmountDebitors;
+    private Money totalNetAmountDebitors = new Money(CurrencyProvider.getDefaultCurrency());
 
-    public Money totalValueAddedTaxDebitors;
+    private Money totalValueAddedTaxDebitors = new Money(CurrencyProvider.getDefaultCurrency());
 
-    public List<Debitor> correctionDebitors;
+    private List<Debitor> correctionDebitors = new ArrayList<Debitor>();
 
-    public Money totalNetAmountCorrectionDebitors;
+    private Money totalNetAmountCorrectionDebitors = new Money(CurrencyProvider.getDefaultCurrency());
 
-    public Money totalValueAddedTaxCorrectionDebitors;
+    private Money totalValueAddedTaxCorrectionDebitors = new Money(CurrencyProvider.getDefaultCurrency());
 
-    public List<Creditor> creditors;
+    private Map<Account, InputTaxJournal> inputTaxJournals = new HashMap<Account, InputTaxJournal>();
 
-    public Money totalNetAmountCreditors;
+    public List<Debitor> getCorrectionDebitors() {
+        return correctionDebitors;
+    }
 
-    public Money totalValueAddedTaxCreditors;
+    public void setCorrectionDebitors(List<Debitor> correctionDebitors) {
+        for(Debitor debitor : correctionDebitors) {
+            addCorrectionDebitor(debitor);
+        }
+    }
 
-    public List<Creditor> correctionCreditors;
+    public void addCorrectionDebitor(Debitor debitor) {
+        correctionDebitors.add(debitor);
 
-    public Money totalNetAmountCorrectionCreditors;
+        totalNetAmountCorrectionDebitors = totalNetAmountCorrectionDebitors.add(debitor.amountDueEntry.amount);
 
-    public Money totalValueAddedTaxCorrectionCreditors;
+        totalValueAddedTaxCorrectionDebitors = totalValueAddedTaxCorrectionDebitors.add(debitor.valueAddedTaxCorrectionEntry.amount);
+    }
 
-    public Money totalNetAmount;
+    public List<Debitor> getDebitors() {
+        return debitors;
+    }
 
-    public Money totalValueAddedTax;
+    public void setDebitors(List<Debitor> debitors) {
+        for(Debitor debitor : debitors) {
+            addDebitor(debitor);
+        }
+    }
+
+    public void addDebitor(Debitor debitor) {
+        debitors.add(debitor);
+
+        totalNetAmountDebitors = totalNetAmountDebitors.add(debitor.debitorEntry.amount);
+
+        totalValueAddedTaxDebitors = totalValueAddedTaxDebitors.add(debitor.valueAddedTaxEntry.amount);
+    }
+
+    public Money getTotalNetAmountCorrectionDebitors() {
+        return totalNetAmountCorrectionDebitors;
+    }
+
+    public Money getTotalNetAmountDebitors() {
+        return totalNetAmountDebitors;
+    }
+
+    public Money getTotalValueAddedTaxCorrectionDebitors() {
+        return totalValueAddedTaxCorrectionDebitors;
+    }
+
+    public Money getTotalValueAddedTaxDebitors() {
+        return totalValueAddedTaxDebitors;
+    }
+
+    public void addCreditor(Creditor creditor) {
+        Account inputTaxAccount = creditor.valueAddedTaxEntry.debit;
+
+        if(!inputTaxJournals.containsKey(inputTaxAccount)) {
+            inputTaxJournals.put(inputTaxAccount, new InputTaxJournal(inputTaxAccount));
+        }
+
+        inputTaxJournals.get(inputTaxAccount).addCreditor(creditor);
+    }
+
+    public void addCorrectionCreditor(Creditor correctionCreditor) {
+        Account inputTaxAccount = correctionCreditor.valueAddedTaxEntry.debit;
+
+        if(!inputTaxJournals.containsKey(inputTaxAccount)) {
+            inputTaxJournals.put(inputTaxAccount, new InputTaxJournal(inputTaxAccount));
+        }
+
+        inputTaxJournals.get(inputTaxAccount).addCorrectionCreditor(correctionCreditor);
+    }
+
+    public List<InputTaxJournal> getInputTaxJournals() {
+        return new ArrayList<InputTaxJournal>(inputTaxJournals.values());
+    }
+
+    public Money getTotalNetAmountSumDebitors() {
+        return getTotalNetAmountDebitors().subtract(getTotalNetAmountCorrectionDebitors());
+    }
+
+    public Money getTotalValueAddedTaxSumDebitors() {
+        return getTotalValueAddedTaxDebitors().subtract(getTotalValueAddedTaxCorrectionDebitors());
+    }
+
+    public Money getTotalNetAmount() {
+        Money totalNetAmount = getTotalNetAmountSumDebitors();
+        for(InputTaxJournal inputTaxJournal : inputTaxJournals.values()) {
+            totalNetAmount = totalNetAmount.subtract(inputTaxJournal.getTotalNetAmountSumCreditors());
+        }
+        return totalNetAmount;
+    }
+
+    public Money getTotalValueAddedTax() {
+        Money totalValueAddedTax = getTotalValueAddedTaxSumDebitors();
+        for(InputTaxJournal inputTaxJournal : inputTaxJournals.values()) {
+            totalValueAddedTax = totalValueAddedTax.subtract(inputTaxJournal.getTotalValueAddedTaxSumCreditors());
+        }
+        return totalValueAddedTax;
+    }
 }

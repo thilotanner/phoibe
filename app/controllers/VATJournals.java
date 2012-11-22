@@ -2,10 +2,10 @@ package controllers;
 
 import models.Creditor;
 import models.Debitor;
-import models.Money;
 import models.VATJournal;
 import play.data.validation.Valid;
-import util.i18n.CurrencyProvider;
+
+import java.util.List;
 
 public class VATJournals extends ApplicationController {
     public static void index() {
@@ -26,86 +26,36 @@ public class VATJournals extends ApplicationController {
         calculateCreditors(journal);
 
         calculateCorrectionCreditors(journal);
-
-        Money totalNetAmount = journal.totalNetAmountDebitors;
-        totalNetAmount = totalNetAmount.subtract(journal.totalNetAmountCorrectionDebitors);
-        totalNetAmount = totalNetAmount.subtract(journal.totalNetAmountCreditors);
-        totalNetAmount = totalNetAmount.subtract(journal.totalNetAmountCorrectionCreditors);
-        journal.totalNetAmount = totalNetAmount;
-
-        Money totalValueAddedTax = journal.totalValueAddedTaxDebitors;
-        totalValueAddedTax = totalValueAddedTax.subtract(journal.totalValueAddedTaxCorrectionDebitors);
-        totalValueAddedTax = totalValueAddedTax.subtract(journal.totalValueAddedTaxCreditors);
-        totalValueAddedTax = totalValueAddedTax.subtract(journal.totalValueAddedTaxCorrectionCreditors);
-        journal.totalValueAddedTax = totalValueAddedTax;
     }
 
     private static void calculateDebitors(VATJournal journal) {
-        journal.debitors =
-                Debitor.find("debitorEntry.date >= ? and debitorEntry.date <= ?", journal.from, journal.to).fetch();
+        List<Debitor> debitors = Debitor.find("debitorEntry.date >= ? and debitorEntry.date <= ?", journal.from, journal.to).fetch();
 
-        Money totalNetAmount = new Money(CurrencyProvider.getDefaultCurrency());
-        for(Debitor debitor : journal.debitors) {
-            totalNetAmount = totalNetAmount.add(debitor.debitorEntry.amount);
-        }
-        journal.totalNetAmountDebitors = totalNetAmount;
-
-        Money totalValueAddedTax = new Money(CurrencyProvider.getDefaultCurrency());
-        for(Debitor debitor : journal.debitors) {
-            totalValueAddedTax = totalValueAddedTax.add(debitor.valueAddedTaxEntry.amount);
-        }
-        journal.totalValueAddedTaxDebitors = totalValueAddedTax;
-
+        journal.setDebitors(debitors);
     }
 
     private static void calculateCorrectionDebitors(VATJournal journal) {
-        journal.correctionDebitors =
+        List<Debitor> correctionDebitors =
                 Debitor.find("valueAddedTaxCorrectionEntry.date >= ? and valueAddedTaxCorrectionEntry.date <= ?", journal.from, journal.to).fetch();
 
-        Money totalNetAmount = new Money(CurrencyProvider.getDefaultCurrency());
-        for(Debitor debitor : journal.correctionDebitors) {
-            totalNetAmount = totalNetAmount.add(debitor.amountDueEntry.amount);
-        }
-        journal.totalNetAmountCorrectionDebitors = totalNetAmount;
-
-        Money totalValueAddedTax = new Money(CurrencyProvider.getDefaultCurrency());
-        for(Debitor debitor : journal.correctionDebitors) {
-            totalValueAddedTax = totalValueAddedTax.add(debitor.valueAddedTaxCorrectionEntry.amount);
-        }
-        journal.totalValueAddedTaxCorrectionDebitors = totalValueAddedTax;
+        journal.setCorrectionDebitors(correctionDebitors);
     }
 
     private static void calculateCreditors(VATJournal journal) {
-        journal.creditors =
+        List<Creditor> creditors =
                 Creditor.find("dateOfInvoice >= ? and dateOfInvoice <= ? and valueAddedTaxRate != null", journal.from, journal.to).fetch();
 
-        Money totalNetAmount = new Money(CurrencyProvider.getDefaultCurrency());
-        for(Creditor creditor : journal.creditors) {
-            totalNetAmount = totalNetAmount.add(creditor.creditorEntry.amount);
+        for(Creditor creditor : creditors) {
+            journal.addCreditor(creditor);
         }
-        journal.totalNetAmountCreditors = totalNetAmount;
-
-        Money totalValueAddedTax = new Money(CurrencyProvider.getDefaultCurrency());
-        for(Creditor creditor : journal.creditors) {
-            totalValueAddedTax = totalValueAddedTax.add(creditor.valueAddedTaxEntry.amount);
-        }
-        journal.totalValueAddedTaxCreditors = totalValueAddedTax;
     }
 
     private static void calculateCorrectionCreditors(VATJournal journal) {
-        journal.correctionCreditors =
+        List<Creditor> correctionCreditors =
                 Creditor.find("valueAddedTaxCorrectionEntry.date >= ? and valueAddedTaxCorrectionEntry.date <= ? and valueAddedTaxRate != null", journal.from, journal.to).fetch();
 
-        Money totalNetAmount = new Money(CurrencyProvider.getDefaultCurrency());
-        for(Creditor creditor : journal.correctionCreditors) {
-            totalNetAmount = totalNetAmount.add(creditor.amountDueEntry.amount);
+        for(Creditor correctionCreditor : correctionCreditors) {
+            journal.addCorrectionCreditor(correctionCreditor);
         }
-        journal.totalNetAmountCorrectionCreditors = totalNetAmount;
-
-        Money totalValueAddedTax = new Money(CurrencyProvider.getDefaultCurrency());
-        for(Creditor creditor : journal.correctionCreditors) {
-            totalValueAddedTax = totalValueAddedTax.add(creditor.valueAddedTaxCorrectionEntry.amount);
-        }
-        journal.totalValueAddedTaxCorrectionCreditors = totalValueAddedTax;
     }
 }

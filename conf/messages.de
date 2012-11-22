@@ -40,6 +40,7 @@ searchAdministration=Such-Administration
 show=anzeigen
 status=Status
 submit=senden
+sub-total=Subtotal
 successfullyAborted=%s wurde erfolgreich abgebrochen
 successfullyCreated=%s wurde erfolgreich erstellt
 successfullyDeleted=%s wurde erfolgreich gelöscht

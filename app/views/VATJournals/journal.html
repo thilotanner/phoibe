@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:messages.get('valueAddedTaxRates') /}
+#{set title:messages.get('valueAddedTaxRateJournal') /}
 
 <ul class="breadcrumb">
     <li class="active">&{'accounting'} <span class="divider">/</span></li>
@@ -80,23 +80,24 @@
     </tbody>
 </table>
 
-<h2>&{'valueAddedTaxRateJournal.inputValueAddedTax'}</h2>
+#{list items:journal.inputTaxJournals, as:'inputTaxJournal'}
+<h2>&{'valueAddedTaxRateJournal.inputValueAddedTax'} ${inputTaxJournal.inputTaxAccount.description}</h2>
 <table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>&{'entry.date'}</th>
         <th>&{'entry.voucher'}</th>
-        <th>&{'entry.description'}</th>
+        <th>&{'creditor.supplier.id'}</th>
         <th>&{'valueAddedTaxRateJournal.netAmount'}</th>
         <th>&{'valueAddedTax'}</th>
     </tr>
     </thead>
     <tbody>
-    #{list items:journal.creditors, as:'creditor'}
+    #{list items:inputTaxJournal.creditors, as:'creditor'}
     <tr>
         <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.dateOfInvoice.format()}</a></td>
         <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.reference}</a></td>
-        <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.reference}</a></td>
+        <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.supplier.label}</a></td>
         <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.creditorEntry.amount}</a></td>
         <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.valueAddedTaxEntry.amount}</a></td>
     </tr>
@@ -104,9 +105,9 @@
     <tr>
         <td></td>
         <td></td>
-        <td><strong>&{'total'}</strong</td>
-        <td><strong>${journal.totalNetAmountCreditors}</strong></td>
-        <td><strong>${journal.totalValueAddedTaxCreditors}</strong></td>
+        <td><strong>&{'total'}</strong></td>
+        <td><strong>${inputTaxJournal.totalNetAmountCreditors}</strong></td>
+        <td><strong>${inputTaxJournal.totalValueAddedTaxCreditors}</strong></td>
     </tr>
     </tbody>
 </table>
@@ -117,17 +118,17 @@
     <tr>
         <th>&{'entry.date'}</th>
         <th>&{'entry.voucher'}</th>
-        <th>&{'entry.description'}</th>
+        <th>&{'creditor.supplier.id'}</th>
         <th>&{'valueAddedTaxRateJournal.netAmount'}</th>
         <th>&{'valueAddedTax'}</th>
     </tr>
     </thead>
     <tbody>
-    #{list items:journal.correctionCreditors, as:'creditor'}
+    #{list items:inputTaxJournal.correctionCreditors, as:'creditor'}
     <tr>
         <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.dateOfInvoice.format()}</a></td>
         <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.reference}</a></td>
-        <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.reference}</a></td>
+        <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.supplier.label}</a></td>
         <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.amountDueEntry.amount}</a></td>
         <td><a href="@{Creditors.show(creditor.id)}" class="tdlink">${creditor.valueAddedTaxCorrectionEntry.amount}</a></td>
     </tr>
@@ -135,17 +136,19 @@
     <tr>
         <td></td>
         <td></td>
-        <td><strong>&{'total'}</strong</td>
-        <td><strong>${journal.totalNetAmountCorrectionCreditors}</strong></td>
-        <td><strong>${journal.totalValueAddedTaxCorrectionCreditors}</strong></td>
+        <td><strong>&{'total'}</strong></td>
+        <td><strong>${inputTaxJournal.totalNetAmountCorrectionCreditors}</strong></td>
+        <td><strong>${inputTaxJournal.totalValueAddedTaxCorrectionCreditors}</strong></td>
     </tr>
     </tbody>
 </table>
+#{/list}
 
 <h3>&{'total'}</h3>
 <table class="table table-hover table-striped">
     <thead>
     <tr>
+        <th></th>
         <th>&{'description'}</th>
         <th>&{'valueAddedTaxRateJournal.netAmount'}</th>
         <th>&{'valueAddedTax'}</th>
@@ -153,29 +156,42 @@
     </thead>
     <tbody>
     <tr>
+        <td></td>
         <td>&{'valueAddedTax'}</td>
         <td>${journal.totalNetAmountDebitors}</td>
         <td>${journal.totalValueAddedTaxDebitors}</td>
     </tr>
     <tr>
+        <td>-</td>
         <td>&{'corrections'}</td>
         <td>${journal.totalNetAmountCorrectionDebitors}</td>
         <td>${journal.totalValueAddedTaxCorrectionDebitors}</td>
     </tr>
     <tr>
-        <td>&{'valueAddedTaxRateJournal.inputValueAddedTax'}</td>
-        <td>${journal.totalNetAmountCreditors}</td>
-        <td>${journal.totalValueAddedTaxCreditors}</td>
+        <td>=</td>
+        <td><strong>&{'sub-total'}</strong></td>
+        <td><strong>${journal.totalNetAmountSumDebitors}</strong></td>
+        <td><strong>${journal.totalValueAddedTaxSumDebitors}</strong></td>
+    </tr>
+    #{list items:journal.inputTaxJournals, as:'inputTaxJournal'}
+    <tr>
+        <td>-</td>
+        <td>&{'valueAddedTaxRateJournal.inputValueAddedTax'} ${inputTaxJournal.inputTaxAccount.description}</td>
+        <td>${inputTaxJournal.totalNetAmountCreditors}</td>
+        <td>${inputTaxJournal.totalValueAddedTaxCreditors}</td>
     </tr>
     <tr>
+        <td>-</td>
         <td>&{'corrections'}</td>
-        <td>${journal.totalNetAmountCorrectionCreditors}</td>
-        <td>${journal.totalValueAddedTaxCorrectionCreditors}</td>
+        <td>${inputTaxJournal.totalNetAmountCorrectionCreditors}</td>
+        <td>${inputTaxJournal.totalValueAddedTaxCorrectionCreditors}</td>
     </tr>
+    #{/list}
     <tr>
+        <td>=</td>
         <td><strong>&{'total'}</strong></td>
         <td><strong>${journal.totalNetAmount}</strong></td>
-        <td><strong>${journal.totalValueAddedTax}</strong</td>
+        <td><strong>${journal.totalValueAddedTax}</strong></td>
     </tr>
     </tbody>
 </table>
