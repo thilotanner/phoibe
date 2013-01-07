@@ -195,6 +195,10 @@ public class Entry extends EnhancedModel {
         return super.loggedSave(user);
     }
 
+    public synchronized <Entry extends JPABase> Entry superuserSave() {
+        return super.save();
+    }
+
     @Override
     public synchronized <Entry extends JPABase> Entry save() {
         check();

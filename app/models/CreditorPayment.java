@@ -34,7 +34,7 @@ public class CreditorPayment extends EnhancedModel {
 
     public void buildEntry() {
         paymentEntry = new Entry();
-        paymentEntry.date = new Date();
+        paymentEntry.date = paid;
         paymentEntry.debit = Account.getCreditorAccount();
         paymentEntry.credit = paymentAccount;
         paymentEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();

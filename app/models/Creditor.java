@@ -112,15 +112,15 @@ public class Creditor extends EnhancedModel {
     public void buildAndSaveCreditorEntries() {
         Money netAmount;
         if(valueAddedTaxRate != null) {
-            // with value added text
+            // with value added tax
             netAmount = getAmountDue().divide(BigDecimal.ONE.add(valueAddedTaxRate.getRateFactor()));
         } else {
-            // without value added text
+            // without value added tax
             netAmount = getAmountDue();
         }
        
         creditorEntry = new Entry();
-        creditorEntry.date = new Date();
+        creditorEntry.date = dateOfInvoice;
         creditorEntry.amount = new Money(netAmount);
         creditorEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
         creditorEntry.debit = expenseAccount;
@@ -134,7 +134,7 @@ public class Creditor extends EnhancedModel {
             valueAddedTaxEntry.debit = inputTaxAccount;
             valueAddedTaxEntry.credit = Account.getCreditorAccount();
             valueAddedTaxEntry.amount = this.amount.subtract(creditorEntry.amount);
-            valueAddedTaxEntry.date = new Date();
+            valueAddedTaxEntry.date = dateOfInvoice;
             valueAddedTaxEntry.accountingPeriod = AccountingPeriod.getActiveAccountingPeriod();
             valueAddedTaxEntry.voucher = reference;
             valueAddedTaxEntry.description = String.format("%s %s: %s - %s", Messages.get("valueAddedTax"), Messages.get("creditor"), supplier.getLabel(), reference);

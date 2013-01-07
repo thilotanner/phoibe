@@ -34,7 +34,7 @@ public class DebitorPaymentReceipt extends EnhancedModel {
 
     public void buildEntry() {
         paymentEntry = new Entry();
-        paymentEntry.date = new Date();
+        paymentEntry.date = paid;
         paymentEntry.debit = paymentAccount;
         paymentEntry.credit = Account.getDebitorAccount();
         paymentEntry.accountingPeriod = debitor.report.order.accountingPeriod;

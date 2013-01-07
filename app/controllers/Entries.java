@@ -96,7 +96,7 @@ public class Entries extends ApplicationController {
         flash.success(Messages.get("successfullyCreated", Messages.get("entry.reverseEntry")));
         index(null, 1, null, null, null);
     }
-    
+
     private static void initRenderArgs() {
         renderArgs.put("accountingPeriods", AccountingPeriod.findAll());
         renderArgs.put("defaultCurrency", CurrencyProvider.getDefaultCurrency());
