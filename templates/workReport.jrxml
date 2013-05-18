@@ -107,6 +107,9 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{report}.order.comments]]></textFieldExpression>
 			</textField>
+			<break>
+				<reportElement x="0" y="149" width="483" height="1"/>
+			</break>
 		</band>
 	</title>
 	<pageHeader>
