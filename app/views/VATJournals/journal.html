@@ -169,7 +169,7 @@
     </tr>
     <tr>
         <td>=</td>
-        <td><strong>&{'sub-total'}</strong></td>
+        <td><strong>&{'sub-total'}</strong> (200)</td>
         <td><strong>${journal.totalNetAmountSumDebitors}</strong></td>
         <td><strong>${journal.totalValueAddedTaxSumDebitors}</strong></td>
     </tr>
@@ -186,10 +186,22 @@
         <td>${inputTaxJournal.totalNetAmountCorrectionCreditors}</td>
         <td>${inputTaxJournal.totalValueAddedTaxCorrectionCreditors}</td>
     </tr>
+    <tr>
+        <td>=</td>
+        <td><strong>&{'sub-total'} ${inputTaxJournal.inputTaxAccount.description}</strong> (4xx)</td>
+        <td><strong>${inputTaxJournal.totalNetAmountSumCreditors}</strong></td>
+        <td><strong>${inputTaxJournal.totalValueAddedTaxSumCreditors}</strong></td>
+    </tr>
     #{/list}
     <tr>
         <td>=</td>
-        <td><strong>&{'total'}</strong></td>
+        <td><strong>&{'total'} &{'valueAddedTaxRateJournal.inputValueAddedTax'}</strong> (479)</td>
+        <td><strong>${journal.totalNetSumInputTax}</strong></td>
+        <td><strong>${journal.totalValueAddedTaxInputTax}</strong></td>
+    </tr>
+    <tr>
+        <td>=</td>
+        <td><strong>&{'total'}</strong> (500)</td>
         <td><strong>${journal.totalNetAmount}</strong></td>
         <td><strong>${journal.totalValueAddedTax}</strong></td>
     </tr>

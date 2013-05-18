@@ -112,19 +112,27 @@ public class VATJournal {
         return getTotalValueAddedTaxDebitors().subtract(getTotalValueAddedTaxCorrectionDebitors());
     }
 
-    public Money getTotalNetAmount() {
-        Money totalNetAmount = getTotalNetAmountSumDebitors();
+    public Money getTotalNetSumInputTax() {
+        Money totalNetSumInputTax = new Money(CurrencyProvider.getDefaultCurrency());
         for(InputTaxJournal inputTaxJournal : inputTaxJournals.values()) {
-            totalNetAmount = totalNetAmount.subtract(inputTaxJournal.getTotalNetAmountSumCreditors());
+            totalNetSumInputTax = totalNetSumInputTax.add(inputTaxJournal.getTotalNetAmountSumCreditors());
         }
-        return totalNetAmount;
+        return totalNetSumInputTax;
+    }
+
+    public Money getTotalValueAddedTaxInputTax() {
+        Money totalValueAddedTaxInputTax = new Money(CurrencyProvider.getDefaultCurrency());
+        for(InputTaxJournal inputTaxJournal : inputTaxJournals.values()) {
+            totalValueAddedTaxInputTax = totalValueAddedTaxInputTax.add(inputTaxJournal.getTotalValueAddedTaxSumCreditors());
+        }
+        return totalValueAddedTaxInputTax;
+    }
+
+    public Money getTotalNetAmount() {
+        return getTotalNetAmountSumDebitors().subtract(getTotalNetSumInputTax());
     }
 
     public Money getTotalValueAddedTax() {
-        Money totalValueAddedTax = getTotalValueAddedTaxSumDebitors();
-        for(InputTaxJournal inputTaxJournal : inputTaxJournals.values()) {
-            totalValueAddedTax = totalValueAddedTax.subtract(inputTaxJournal.getTotalValueAddedTaxSumCreditors());
-        }
-        return totalValueAddedTax;
+        return getTotalValueAddedTaxSumDebitors().subtract(getTotalValueAddedTaxInputTax());
     }
 }
