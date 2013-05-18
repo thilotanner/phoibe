@@ -16,6 +16,7 @@ public class CreditorSourceBuilder implements SourceBuilder<Creditor> {
                 .field("reference", creditor.reference)
                 .field(SourceBuilder.SORTABLE_INDEX_PREFIX + "reference", creditor.reference)
                 .field("creditorStatus", creditor.creditorStatus.toString())
+                .field("amount", creditor.amount.getLabel().replaceAll("'", ""))
 
                 // supplier
                 .field("supplier.company", creditor.supplier.company)
@@ -64,6 +65,10 @@ public class CreditorSourceBuilder implements SourceBuilder<Creditor> {
                 .startObject("creditorStatus")
                 .field("type", "string")
                 .field("index", "not_analyzed")
+                .endObject()
+
+                .startObject("amount")
+                .field("type", "string")
                 .endObject()
 
                 // --- supplier ---

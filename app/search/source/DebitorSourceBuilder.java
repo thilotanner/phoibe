@@ -18,6 +18,7 @@ public class DebitorSourceBuilder implements SourceBuilder<Debitor> {
                 .field(SourceBuilder.SORTABLE_INDEX_PREFIX + "report.order.description", debitor.report.order.description)
                 .field("report.order.comments", debitor.report.order.comments)
                 .field("debitorStatus", debitor.debitorStatus.toString())
+                .field("report.taxedTotalPrice", debitor.report.getTaxedTotalPrice().getLabel().replaceAll("'", ""))
 
                 // billing address
                 .field("report.order.billingContact.company", debitor.report.order.billingContact.company)
@@ -70,6 +71,10 @@ public class DebitorSourceBuilder implements SourceBuilder<Debitor> {
                 .startObject("debitorStatus")
                 .field("type", "string")
                 .field("index", "not_analyzed")
+                .endObject()
+
+                .startObject("report.taxedTotalPrice")
+                .field("type", "string")
                 .endObject()
 
                 // --- billing contact ---

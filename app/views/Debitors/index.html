@@ -31,6 +31,7 @@
         <th>&{'order.billingContact.id'}</th>
         <th></th>
         <th>&{'debitor.due'}</th>
+        <th>&{'debitor.amount'}</th>
         <th>&{'debitor.amountDue'}</th>
         <th>&{'actions'}</th>
     </tr>
@@ -43,6 +44,7 @@
         <td><a href="@{show(debitor.id)}" class="tdlink">${debitor.report.order.billingContact.label}</a></td>
         <td><a rel="popover" title="&{'contact'}" data-source="@{Contacts.popover(debitor.report.order.billingContact.id)}"><span class="label">Info</span></a></td>
         <td><a href="@{show(debitor.id)}" class="tdlink">${debitor.due.format()}</a></td>
+        <td><a href="@{show(debitor.id)}" class="tdlink">${debitor.report.getTaxedTotalPrice()}</a></td>
         <td><a href="@{show(debitor.id)}" class="tdlink">${debitor.getAmountDue().asRounded()}</a></td>
         <td>
             #{if debitor.isEditable()}

@@ -28,6 +28,7 @@
             <th>&{'creditor.supplier.id'}</th>
             #{tableSorter objectName:'creditor', fieldName:'reference' /}
             <th>&{'creditor.due'}</th>
+            <th>&{'creditor.amount.rawValue'}</th>
             <th>&{'creditor.amountDue'}</th>
             <th>&{'actions'}</th>
         </tr>
@@ -39,6 +40,7 @@
             <td>${creditor.supplier.label}</td>
             <td>${creditor.reference}</td>
             <td>${creditor.due.format()}</td>
+            <td>${creditor.amount.getLabel()}</td>
             <td>${creditor.getAmountDue().getLabel()}</td>
             <td>
                 <a href="@{show(creditor.id)}">&{'show'}</a>

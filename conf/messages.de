@@ -204,6 +204,7 @@ debitor=Debitor
 debitors=Debitoren
 debitors.overdue=Überfällige Debitoren
 debitor.due=Fälligkeit
+debitor.amount=Betrag
 debitor.amountDue=Restbetrag
 debitor.debitorStatus=Debitorstatus
 debitor.debitorStatus.DUE=fällig
